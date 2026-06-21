@@ -73,7 +73,7 @@ function ProductCard({ product, onAddToCart, onAddToWishlist }) {
     <div className="product-card">
       <div className="product-image-wrapper">
         <Link href={productId ? `/product/${productSlug}` : '/shop'}>
-          <img src={getProductImg(product.image || product.img)} alt={product.name} />
+          <img loading="lazy" src={getProductImg(product.image || product.img)} alt={product.name} />
         </Link>
         <span className="product-badge">{product.category?.name || product.badge || product.type}</span>
         <button className="wishlist-btn" onClick={() => onAddToWishlist(product)}><i className="fa-regular fa-heart"></i></button>
@@ -118,7 +118,7 @@ function TestimonialCarousel({ testimonials }) {
               </div>
               <p className="testimonial-text">"{client.text}"</p>
               <div className="testimonial-author">
-                <img src={client.image?.startsWith('http') ? client.image : client.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${client.image}` : client.img || '/assets/images/client-img1.jpg'} alt={client.name} />
+                <img loading="lazy" src={client.image?.startsWith('http') ? client.image : client.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${client.image}` : client.img || '/assets/images/client-img1.jpg'} alt={client.name} />
                 <div>
                   <p className="testimonial-name">{client.name}</p>
                   <span className="testimonial-role">{client.role}</span>
@@ -222,19 +222,19 @@ export default function Home() {
             <div className="benefits-inner-con">
               <ul className="d-flex list-unstyled p-0 mb-0 align-items-center justify-content-between">
                 <li className="position-relative d-flex align-items-center">
-                  <figure><img src="/assets/images/benefits-icon1.png" alt="Free Shipping" className="img-fluid" /></figure>
+                  <figure><img loading="lazy" src="/assets/images/benefits-icon1.png" alt="Free Shipping" className="img-fluid" /></figure>
                   <div className="sub-info-inner"><h6>Free Shipping &amp; Returns</h6><p className="mb-0 sub-p">For all order over $200</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
-                  <figure><img src="/assets/images/benefits-icon2.png" alt="Secure Payment" className="img-fluid" /></figure>
+                  <figure><img loading="lazy" src="/assets/images/benefits-icon2.png" alt="Secure Payment" className="img-fluid" /></figure>
                   <div className="sub-info-inner"><h6>Secure Payment</h6><p className="mb-0 sub-p">Ensure Secure Payment</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
-                  <figure><img src="/assets/images/benefits-icon3.png" alt="Money Back" className="img-fluid" /></figure>
+                  <figure><img loading="lazy" src="/assets/images/benefits-icon3.png" alt="Money Back" className="img-fluid" /></figure>
                   <div className="sub-info-inner"><h6>Money Back Guarantee</h6><p className="mb-0 sub-p">Returning Money in 30 days</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
-                  <figure><img src="/assets/images/benefits-icon4.png" alt="24/7 Support" className="img-fluid" /></figure>
+                  <figure><img loading="lazy" src="/assets/images/benefits-icon4.png" alt="24/7 Support" className="img-fluid" /></figure>
                   <div className="sub-info-inner"><h6>24/7 Customer Support</h6><p className="mb-0 sub-p">Friendly Customer Support</p></div>
                 </li>
               </ul>
@@ -253,7 +253,7 @@ export default function Home() {
             {categories.map((cat, i) => (
               <Link href="/shop" className="category-card" key={i}>
                 <div className="category-image-wrapper">
-                  <img src={cat.img} alt={cat.name} />
+                  <img loading="lazy" src={cat.img} alt={cat.name} />
                   <div className="category-overlay"><span className="category-name">{cat.name}</span></div>
                 </div>
               </Link>
@@ -272,7 +272,7 @@ export default function Home() {
             {processSteps.map((step, i) => (
               <div className="process-step" key={i}>
                 <div className="step-number-badge">{String(i + 1).padStart(2, '0')}</div>
-                <div className="step-icon-wrap"><img src={step.icon} alt={step.title} /></div>
+                <div className="step-icon-wrap"><img loading="lazy" src={step.icon} alt={step.title} /></div>
                 <h3 className="step-title">{step.title}</h3>
                 <p className="step-desc">{step.desc}</p>
               </div>
@@ -343,7 +343,7 @@ export default function Home() {
           <div className="why-grid">
             {whyChooseUs.map((item, i) => (
               <div className="why-card" key={i}>
-                <div className="why-icon-wrap"><img src={item.icon} alt={item.title} /></div>
+                <div className="why-icon-wrap"><img loading="lazy" src={item.icon} alt={item.title} /></div>
                 <h3 className="why-title">{item.title}</h3>
                 <p className="why-desc">{item.desc}</p>
               </div>
@@ -408,7 +408,7 @@ export default function Home() {
             ]).map((post, i) => (
               <div className="blog-card" key={post._id || i}>
                 <div className="blog-image-wrap">
-                  <img src={post.image?.startsWith('http') ? post.image : post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.img || '/assets/images/news-and-articles-img1.jpg'} alt={post.title} />
+                  <img loading="lazy" src={post.image?.startsWith('http') ? post.image : post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.img || '/assets/images/news-and-articles-img1.jpg'} alt={post.title} />
                   {post.category && <span className="blog-tag">{post.category}</span>}
                 </div>
                 <div className="blog-content">
@@ -426,3 +426,4 @@ export default function Home() {
     </>
   )
 }
+

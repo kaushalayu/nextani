@@ -123,7 +123,7 @@ function ProductMegaMenu() {
                     <Link key={p._id} href={`/product/${p.slug || p._id}`}
                       className="mega-product-card" onClick={() => setOpen(false)}>
                       <div className="mega-product-card__img">
-                        <img src={getImg(p.image)} alt={p.name} />
+                        <img loading="lazy" src={getImg(p.image)} alt={p.name} />
                       </div>
                       <div className="mega-product-card__info">
                         <span className="mega-product-card__name">{p.name}</span>
@@ -185,7 +185,7 @@ function Header() {
           <nav className="navbar navbar-expand-lg navbar-light">
             <Link className="navbar-brand" href="/">
               <figure className="mb-0">
-                <img src="/assets/images/logo.png" alt="Pharmez Logo" />
+                <img loading="lazy" src="/assets/images/logo.png" alt="Pharmez Logo" />
               </figure>
             </Link>
             <button className={`navbar-toggler collapsed${mobileNavOpen ? '' : ' collapsed'}`}
@@ -236,13 +236,13 @@ function Header() {
             <div className="header-contact d-flex align-items-center">
               <div className="last_list">
                 <a className="search ml-0" href="#search">
-                  <img src="/assets/images/header-search.png" alt="Search" />
+                  <img loading="lazy" src="/assets/images/header-search.png" alt="Search" />
                 </a>
                 <Link className="cart" href="/wishlist" title="Wishlist">
                   <i className="fa-regular fa-heart" style={{ fontSize: 20, color: '#0f0200' }} />
                 </Link>
                 <Link className="cart" href="/cart" title="Cart">
-                  <img src="/assets/images/header-cart.png" alt="Cart" />
+                  <img loading="lazy" src="/assets/images/header-cart.png" alt="Cart" />
                   {cart.length > 0 && <span>{cart.length}</span>}
                 </Link>
                 {isLoggedIn ? (
@@ -305,7 +305,7 @@ function Header() {
                   </div>
                 ) : (
                   <Link className="admin mr-0" href="/login" title="Login">
-                    <img src="/assets/images/header-admin.png" alt="Login" />
+                    <img loading="lazy" src="/assets/images/header-admin.png" alt="Login" />
                   </Link>
                 )}
               </div>
@@ -323,3 +323,4 @@ function Header() {
 }
 
 export default Header
+

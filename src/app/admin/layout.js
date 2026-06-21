@@ -13,6 +13,7 @@ const adminLinks = [
   { href: '/admin/categories', label: 'Categories', icon: 'fa-solid fa-tags' },
   { href: '/admin/blogs', label: 'Blogs', icon: 'fa-solid fa-blog' },
   { href: '/admin/seo', label: 'SEO', icon: 'fa-solid fa-magnifying-glass' },
+  { href: '/admin/page-meta', label: 'Page Meta', icon: 'fa-solid fa-file-pen' },
   { href: '/admin/testimonials', label: 'Testimonials', icon: 'fa-solid fa-star' },
   { href: '/admin/faqs', label: 'FAQs', icon: 'fa-solid fa-question' },
   { href: '/admin/team', label: 'Team', icon: 'fa-solid fa-user-tie' },

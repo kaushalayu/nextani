@@ -245,7 +245,7 @@ export default function AdminOrderDetail() {
               <tr key={i}>
                 <td style={tdStyle}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    {item.image && <img src={item.image.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${item.image}` : item.image} alt={item.name} style={{ width: 44, height: 44, borderRadius: 6, objectFit: 'cover' }} />}
+                    {item.image && <img loading="lazy" src={item.image.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${item.image}` : item.image} alt={item.name} style={{ width: 44, height: 44, borderRadius: 6, objectFit: 'cover' }} />}
                     <div>
                       <p style={{ margin: 0, fontWeight: 600 }}>{item.name}</p>
                       <Link href={`/admin/products/edit/${item.product}`} style={{ fontSize: 12, color: '#6366f1' }}>View Product</Link>
@@ -305,3 +305,4 @@ export default function AdminOrderDetail() {
 
 const thStyle = { padding: '10px 12px', textAlign: 'left', fontWeight: 600, borderBottom: '2px solid #e5e7eb', fontSize: 13, color: '#6b7280' }
 const tdStyle = { padding: '10px 12px', borderBottom: '1px solid #f3f4f6', verticalAlign: 'middle' }
+

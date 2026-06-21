@@ -288,7 +288,7 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
 
                   {cart.map((item, i) => (
                     <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 12, paddingBottom: 12, borderBottom: '1px solid #f3f4f6' }}>
-                      <img src={imgUrl(item.img)} alt={item.name} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />
+                      <img loading="lazy" src={imgUrl(item.img)} alt={item.name} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <p style={{ fontSize: 13, fontWeight: 600, color: '#111827', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</p>
                         <p style={{ fontSize: 12, color: '#6b7280', margin: '2px 0' }}>Qty: {item.qty}</p>
@@ -340,3 +340,4 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
     </div>
   )
 }
+

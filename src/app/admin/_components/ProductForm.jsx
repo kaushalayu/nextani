@@ -215,7 +215,7 @@ export default function AdminProductForm({ productId }) {
           const file = e.target.files[0]
           if (file) { setImageFile(file); setImagePreview(URL.createObjectURL(file)) }
         }} />
-        {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: 200, maxHeight: 200, marginTop: 12, borderRadius: 8, objectFit: 'cover' }} />}
+        {imagePreview && <img loading="lazy" src={imagePreview} alt="Preview" style={{ maxWidth: 200, maxHeight: 200, marginTop: 12, borderRadius: 8, objectFit: 'cover' }} />}
       </div>
 
       {/* Pills Options */}
@@ -298,3 +298,4 @@ export default function AdminProductForm({ productId }) {
 
 const thStyle = { padding: '8px 12px', textAlign: 'left', fontWeight: 600, borderBottom: '2px solid #e5e7eb', fontSize: 13 }
 const tdStyle = { padding: '6px 8px', borderBottom: '1px solid #f3f4f6' }
+

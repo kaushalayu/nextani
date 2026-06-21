@@ -107,7 +107,7 @@ export default function SingleProduct() {
           <div className="sp-layout">
             <div className="sp-image-col">
               <div className="sp-image-box">
-                <figure><img src={imgSrc} alt={product.name} /></figure>
+                <figure><img loading="lazy" src={imgSrc} alt={product.name} /></figure>
               </div>
             </div>
             <div className="sp-info-col">
@@ -177,11 +177,11 @@ export default function SingleProduct() {
 
               <div className="sp-detail-icons">
                 <div className="sp-detail-item">
-                  <img src="/assets/images/product-icon1.png" alt="" />
+                  <img loading="lazy" src="/assets/images/product-icon1.png" alt="Free Worldwide Shipping" />
                   <span>Free Worldwide Shipping on All Orders Over $250</span>
                 </div>
                 <div className="sp-detail-item">
-                  <img src="/assets/images/product-icon2.png" alt="" />
+                  <img loading="lazy" src="/assets/images/product-icon2.png" alt="Delivery Information" />
                   <span>Delivers In: 4-7 Working Days <Link href="/terms-of-use">Terms &amp; Conditions</Link></span>
                 </div>
               </div>
@@ -283,7 +283,7 @@ export default function SingleProduct() {
                   return (
                     <div key={prod._id} className="sp-more-card">
                       <Link href={`/product/${prod.slug || prod._id}`}>
-                        <div className="sp-more-img"><figure><img src={pImg} alt={prod.name} /></figure></div>
+                        <div className="sp-more-img"><figure><img loading="lazy" src={pImg} alt={prod.name} /></figure></div>
                       </Link>
                       <div className="sp-more-info">
                         <span className="sp-more-type">{prod.badge || prod.category?.name}</span>
@@ -302,3 +302,4 @@ export default function SingleProduct() {
     </>
   )
 }
+

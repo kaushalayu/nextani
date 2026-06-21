@@ -1,10 +1,14 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
+import { getPageMeta, buildMetadata } from '../../lib/page-meta'
 
-export const metadata = generatePageMetadata(
-  'Our Services',
-  'Explore Pharmez services: prescription upload, medicine delivery, health consultations, and more. Your health, our priority.',
-  '/services'
-)
+export async function generateMetadata() {
+  const meta = await getPageMeta('/services')
+  return buildMetadata(meta, 'Our Services', 'Explore Pharmez services: prescription upload, medicine delivery, health consultations, and more. Your health, our priority.') || generatePageMetadata(
+    'Our Services',
+    'Explore Pharmez services: prescription upload, medicine delivery, health consultations, and more. Your health, our priority.',
+    '/services'
+  )
+}
 
 export default function Services() {
   return (

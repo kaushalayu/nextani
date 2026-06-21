@@ -58,7 +58,7 @@ function Footer() {
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="logo-content">
                   <Link href="/" className="footer-logo d-flex align-items-center">
-                    <img src="/assets/images/footer-icon.png" alt="Pharmez" className="d-inline-block" />
+                    <img loading="lazy" src="/assets/images/footer-icon.png" alt="Pharmez" className="d-inline-block" />
                     <span className="text-white d-inline-block special-heading1">Pharmez.</span>
                   </Link>
                   <h4 className="text-white">Subscribe to Our Newsletter:</h4>
@@ -122,7 +122,7 @@ function Footer() {
           </div>
           <div className="copyright d-flex justify-content-between align-items-center padding-rl-responsive">
             <p className="mb-0">{footerText || 'Copyright © 2025 pharmez. All Rights Reserved.'}</p>
-            <img src="/assets/images/payment-cards.png" alt="Payment Cards" className="img-fluid" />
+            <img loading="lazy" src="/assets/images/payment-cards.png" alt="Payment Cards" className="img-fluid" />
           </div>
         </div>
       </section>
@@ -132,3 +132,4 @@ function Footer() {
 }
 
 export default Footer
+

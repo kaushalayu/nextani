@@ -143,7 +143,7 @@ export default function AdminSeo() {
               <label>OG Image</label>
               {form.ogImage ? (
                 <div style={{ marginBottom: 8 }}>
-                  <img src={`${process.env.NEXT_PUBLIC_API_URL}${form.ogImage}`} alt="OG" style={{ maxWidth: 200, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+                  <img loading="lazy" src={`${process.env.NEXT_PUBLIC_API_URL}${form.ogImage}`} alt="OG" style={{ maxWidth: 200, borderRadius: 8, border: '1px solid #e2e8f0' }} />
                 </div>
               ) : (
                 <p style={{ fontSize: 12, color: '#9ca3af', marginBottom: 8 }}>No OG image uploaded</p>
@@ -186,3 +186,4 @@ export default function AdminSeo() {
     </>
   )
 }
+

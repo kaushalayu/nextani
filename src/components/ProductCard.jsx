@@ -54,7 +54,7 @@ function ProductCard({ product, layout = 'grid' }) {
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <div className="product-card-image">
           <Link href={productLink}>
-            <img src={imgSrc} alt={product.name} />
+            <img loading="lazy" src={imgSrc} alt={product.name} />
           </Link>
           <button className="wishlist-btn" title="Add to wishlist" onClick={handleAddToWishlist}>
             <i className={isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} />
@@ -91,7 +91,7 @@ function ProductCard({ product, layout = 'grid' }) {
         <div className="premium-card-img">
           <Link href={productLink}>
             <figure className="mb-0">
-              <img src={imgSrc} alt={product.name} className="img-fluid" />
+              <img loading="lazy" src={imgSrc} alt={product.name} className="img-fluid" />
             </figure>
           </Link>
           {product.badge && <div className="premium-card-badge">{product.badge}</div>}
@@ -120,3 +120,4 @@ function ProductCard({ product, layout = 'grid' }) {
 }
 
 export default ProductCard
+

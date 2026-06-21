@@ -27,7 +27,7 @@ export default function Cart() {
                     <tr key={i}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                          <img src={item.img} alt={item.name} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }} />
+                          <img loading="lazy" src={item.img} alt={item.name} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 8 }} />
                           <span>{item.name}</span>
                         </div>
                       </td>
@@ -59,3 +59,4 @@ export default function Cart() {
     </div>
   )
 }
+

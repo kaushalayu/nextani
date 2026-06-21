@@ -33,7 +33,7 @@ export default function BlogDetail() {
         <div className="container" style={{ padding: '40px 0' }}>
           <h1>{post.title}</h1>
           {post.image && (
-            <img src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}
+            <img loading="lazy" src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}
               alt={post.title} style={{ width: '100%', maxHeight: 400, objectFit: 'cover', borderRadius: 12, marginBottom: 24 }} />
           )}
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -42,3 +42,4 @@ export default function BlogDetail() {
     </>
   )
 }
+

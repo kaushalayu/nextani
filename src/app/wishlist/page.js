@@ -21,7 +21,7 @@ export default function Wishlist() {
               {wishlist.map((item, i) => (
                 <div className="col-lg-3 col-md-4 col-6" key={i}>
                   <div className="product-card" style={{ marginBottom: 20 }}>
-                    <img src={item.img} alt={item.name} style={{ width: '100%', height: 200, objectFit: 'cover' }} />
+                    <img loading="lazy" src={item.img} alt={item.name} style={{ width: '100%', height: 200, objectFit: 'cover' }} />
                     <div style={{ padding: 12 }}>
                       <h5>{item.name}</h5>
                       <p>${item.price?.toFixed(2)}</p>
@@ -38,3 +38,4 @@ export default function Wishlist() {
     </div>
   )
 }
+

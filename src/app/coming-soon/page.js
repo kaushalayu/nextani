@@ -1,10 +1,14 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
+import { getPageMeta, buildMetadata } from '../../lib/page-meta'
 
-export const metadata = generatePageMetadata(
-  'Coming Soon',
-  'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.',
-  '/coming-soon'
-)
+export async function generateMetadata() {
+  const meta = await getPageMeta('/coming-soon')
+  return buildMetadata(meta, 'Coming Soon', 'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.') || generatePageMetadata(
+    'Coming Soon',
+    'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.',
+    '/coming-soon'
+  )
+}
 
 export default function ComingSoon() {
   return (

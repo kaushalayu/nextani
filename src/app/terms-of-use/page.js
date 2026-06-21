@@ -1,10 +1,14 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
+import { getPageMeta, buildMetadata } from '../../lib/page-meta'
 
-export const metadata = generatePageMetadata(
-  'Terms of Use',
-  'Read the terms and conditions for using Pharmez online pharmacy services, including ordering, delivery, and prescription policies.',
-  '/terms-of-use'
-)
+export async function generateMetadata() {
+  const meta = await getPageMeta('/terms-of-use')
+  return buildMetadata(meta, 'Terms of Use', 'Read the terms and conditions for using Pharmez online pharmacy services, including ordering, delivery, and prescription policies.') || generatePageMetadata(
+    'Terms of Use',
+    'Read the terms and conditions for using Pharmez online pharmacy services, including ordering, delivery, and prescription policies.',
+    '/terms-of-use'
+  )
+}
 
 export default function TermsOfUse() {
   return (

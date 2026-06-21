@@ -25,7 +25,7 @@ export default function Blog() {
               <div className="col-lg-4 col-md-6" key={post._id}>
                 <div className="blog-card">
                   <div className="blog-image-wrap">
-                    <img src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image || '/assets/images/blog-image1.jpg'} alt={post.title} style={{ width: '100%', height: 200, objectFit: 'cover' }} />
+                    <img loading="lazy" src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image || '/assets/images/blog-image1.jpg'} alt={post.title} style={{ width: '100%', height: 200, objectFit: 'cover' }} />
                   </div>
                   <div className="blog-content" style={{ padding: '16px' }}>
                     <h3><Link href={`/blog/${post.slug || post._id}`}>{post.title}</Link></h3>
@@ -41,3 +41,4 @@ export default function Blog() {
     </div>
   )
 }
+

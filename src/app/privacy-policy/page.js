@@ -1,10 +1,14 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
+import { getPageMeta, buildMetadata } from '../../lib/page-meta'
 
-export const metadata = generatePageMetadata(
-  'Privacy Policy',
-  'Pharmez privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services.',
-  '/privacy-policy'
-)
+export async function generateMetadata() {
+  const meta = await getPageMeta('/privacy-policy')
+  return buildMetadata(meta, 'Privacy Policy', 'Pharmez privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services.') || generatePageMetadata(
+    'Privacy Policy',
+    'Pharmez privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services.',
+    '/privacy-policy'
+  )
+}
 
 export default function PrivacyPolicy() {
   return (
