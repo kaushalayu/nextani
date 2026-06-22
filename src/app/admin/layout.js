@@ -53,6 +53,19 @@ export default function AdminLayout({ children }) {
     return () => window.removeEventListener('resize', check)
   }, [])
 
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarCollapsed(false)
+      setSidebarOpen(false)
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (isMobile) {
+      setSidebarOpen(false)
+    }
+  }, [pathname, isMobile])
+
   const toggleSidebar = useCallback(() => {
     if (isMobile) {
       setSidebarOpen(prev => !prev)
@@ -62,8 +75,8 @@ export default function AdminLayout({ children }) {
   }, [isMobile])
 
   const closeSidebar = useCallback(() => {
-    setSidebarOpen(false)
-  }, [])
+    if (isMobile) setSidebarOpen(false)
+  }, [isMobile])
 
   if (!isLoggedIn || !isAdmin) {
     router.push('/login')
