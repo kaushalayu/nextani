@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '../../context/AuthContext'
+import './admin.css'
 
 const adminLinks = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: 'fa-solid fa-gauge' },
