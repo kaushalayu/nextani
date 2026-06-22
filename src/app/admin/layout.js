@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '../../context/AuthContext'
@@ -43,6 +43,27 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname()
   const router = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const toggleSidebar = useCallback(() => {
+    if (isMobile) {
+      setSidebarOpen(prev => !prev)
+    } else {
+      setSidebarCollapsed(prev => !prev)
+    }
+  }, [isMobile])
+
+  const closeSidebar = useCallback(() => {
+    setSidebarOpen(false)
+  }, [])
 
   if (!isLoggedIn || !isAdmin) {
     router.push('/login')
@@ -50,8 +71,8 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="admin-wrapper">
-      <div className={`admin-mobile-overlay${sidebarOpen ? ' show' : ''}`} onClick={() => setSidebarOpen(false)} />
+    <div className={`admin-wrapper${sidebarCollapsed ? ' sidebar-collapsed' : ''}`}>
+      <div className={`admin-mobile-overlay${sidebarOpen ? ' show' : ''}`} onClick={closeSidebar} />
 
       <aside className={`admin-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="admin-sidebar-header">
@@ -69,7 +90,7 @@ export default function AdminLayout({ children }) {
                   key={link.href}
                   href={link.href}
                   className={`admin-nav-item${pathname === link.href ? ' active' : ''}`}
-                  onClick={() => setSidebarOpen(false)}
+                  onClick={closeSidebar}
                 >
                   <span className="admin-nav-icon">
                     <i className={link.icon} />
@@ -94,11 +115,11 @@ export default function AdminLayout({ children }) {
       <main className="admin-main">
         <div className="admin-topbar">
           <div className="admin-topbar-left">
-            <button className="admin-mobile-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <button className="admin-mobile-toggle" onClick={toggleSidebar}>
               <i className="fa-solid fa-bars" />
             </button>
-            <button className="admin-toggle-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
-              <i className="fa-solid fa-bars" />
+            <button className="admin-toggle-btn" onClick={toggleSidebar}>
+              <i className={`fa-solid ${sidebarCollapsed ? 'fa-bars-staggered' : 'fa-bars'}`} />
             </button>
             <div className="admin-topbar-search">
               <i className="fa-solid fa-search" />
