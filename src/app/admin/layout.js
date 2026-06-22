@@ -33,6 +33,7 @@ const navSections = [
       { href: '/admin/seo', label: 'SEO', icon: 'fa-solid fa-magnifying-glass' },
       { href: '/admin/page-meta', label: 'Page Meta', icon: 'fa-solid fa-file-pen' },
       { href: '/admin/messages', label: 'Messages', icon: 'fa-solid fa-envelope' },
+      { href: '/admin/newsletter', label: 'Newsletter', icon: 'fa-solid fa-newspaper' },
     ],
   },
 ]
