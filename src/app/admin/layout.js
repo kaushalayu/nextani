@@ -6,26 +6,42 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '../../context/AuthContext'
 import './admin.css'
 
-const adminLinks = [
-  { href: '/admin/dashboard', label: 'Dashboard', icon: 'fa-solid fa-gauge' },
-  { href: '/admin/products', label: 'Products', icon: 'fa-solid fa-capsules' },
-  { href: '/admin/orders', label: 'Orders', icon: 'fa-solid fa-truck' },
-  { href: '/admin/users', label: 'Users', icon: 'fa-solid fa-users' },
-  { href: '/admin/categories', label: 'Categories', icon: 'fa-solid fa-tags' },
-  { href: '/admin/blogs', label: 'Blogs', icon: 'fa-solid fa-blog' },
-  { href: '/admin/seo', label: 'SEO', icon: 'fa-solid fa-magnifying-glass' },
-  { href: '/admin/page-meta', label: 'Page Meta', icon: 'fa-solid fa-file-pen' },
-  { href: '/admin/testimonials', label: 'Testimonials', icon: 'fa-solid fa-star' },
-  { href: '/admin/faqs', label: 'FAQs', icon: 'fa-solid fa-question' },
-  { href: '/admin/team', label: 'Team', icon: 'fa-solid fa-user-tie' },
-  { href: '/admin/services', label: 'Services', icon: 'fa-solid fa-hand-holding-heart' },
-  { href: '/admin/messages', label: 'Messages', icon: 'fa-solid fa-envelope' },
+const navSections = [
+  {
+    label: 'Main',
+    links: [
+      { href: '/admin/dashboard', label: 'Dashboard', icon: 'fa-solid fa-gauge' },
+      { href: '/admin/products', label: 'Products', icon: 'fa-solid fa-capsules' },
+      { href: '/admin/orders', label: 'Orders', icon: 'fa-solid fa-truck' },
+    ],
+  },
+  {
+    label: 'Content',
+    links: [
+      { href: '/admin/categories', label: 'Categories', icon: 'fa-solid fa-tags' },
+      { href: '/admin/blogs', label: 'Blogs', icon: 'fa-solid fa-blog' },
+      { href: '/admin/testimonials', label: 'Testimonials', icon: 'fa-solid fa-star' },
+      { href: '/admin/faqs', label: 'FAQs', icon: 'fa-solid fa-question' },
+      { href: '/admin/team', label: 'Team', icon: 'fa-solid fa-user-tie' },
+      { href: '/admin/services', label: 'Services', icon: 'fa-solid fa-hand-holding-heart' },
+    ],
+  },
+  {
+    label: 'Settings',
+    links: [
+      { href: '/admin/users', label: 'Users', icon: 'fa-solid fa-users' },
+      { href: '/admin/seo', label: 'SEO', icon: 'fa-solid fa-magnifying-glass' },
+      { href: '/admin/page-meta', label: 'Page Meta', icon: 'fa-solid fa-file-pen' },
+      { href: '/admin/messages', label: 'Messages', icon: 'fa-solid fa-envelope' },
+    ],
+  },
 ]
 
 export default function AdminLayout({ children }) {
-  const { isLoggedIn, isAdmin, logout } = useAuth()
+  const { isLoggedIn, isAdmin, user, logout } = useAuth()
   const pathname = usePathname()
   const router = useRouter()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   if (!isLoggedIn || !isAdmin) {
     router.push('/login')
@@ -33,28 +49,79 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="admin-layout">
-      <aside className="admin-sidebar">
+    <div className="admin-wrapper">
+      <div className={`admin-mobile-overlay${sidebarOpen ? ' show' : ''}`} onClick={() => setSidebarOpen(false)} />
+
+      <aside className={`admin-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="admin-sidebar-header">
-          <Link href="/admin/dashboard" className="admin-sidebar-brand">Pharmez Admin</Link>
+          <div className="admin-logo-icon">P</div>
+          <span className="admin-logo-text">Pharmez <span>Admin</span></span>
+          <span className="admin-sidebar-badge">v2.0</span>
         </div>
-        <nav className="admin-sidebar-nav">
-          {adminLinks.map(link => (
-            <Link key={link.href} href={link.href}
-              className={`admin-sidebar-link${pathname === link.href ? ' active' : ''}`}>
-              <i className={link.icon} />
-              {link.label}
-            </Link>
+
+        <nav className="admin-nav">
+          {navSections.map(section => (
+            <div key={section.label}>
+              <div className="admin-nav-section-label">{section.label}</div>
+              {section.links.map(link => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`admin-nav-item${pathname === link.href ? ' active' : ''}`}
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <span className="admin-nav-icon">
+                    <i className={link.icon} />
+                  </span>
+                  <span className="admin-nav-label">{link.label}</span>
+                </Link>
+              ))}
+            </div>
           ))}
         </nav>
+
         <div className="admin-sidebar-footer">
-          <button onClick={() => { logout(); router.push('/login'); }} className="admin-sidebar-logout">
-            <i className="fa-solid fa-right-from-bracket" /> Sign Out
+          <button onClick={() => { logout(); router.push('/login'); }} className="admin-logout-btn">
+            <span className="admin-nav-icon">
+              <i className="fa-solid fa-right-from-bracket" />
+            </span>
+            Sign Out
           </button>
         </div>
       </aside>
+
       <main className="admin-main">
-        {children}
+        <div className="admin-topbar">
+          <div className="admin-topbar-left">
+            <button className="admin-mobile-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+              <i className="fa-solid fa-bars" />
+            </button>
+            <button className="admin-toggle-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+              <i className="fa-solid fa-bars" />
+            </button>
+            <div className="admin-topbar-search">
+              <i className="fa-solid fa-search" />
+              <input type="text" placeholder="Search..." />
+            </div>
+          </div>
+          <div className="admin-topbar-right">
+            <Link href="/" className="admin-visit-site">
+              <i className="fa-solid fa-arrow-up-right-from-square" />
+              <span>Visit Site</span>
+            </Link>
+            <div className="admin-user-info">
+              <div className="admin-user-avatar">
+                {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+              </div>
+              <span className="admin-user-name">{user?.name || 'Admin'}</span>
+              <span className="admin-role-badge">Admin</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="admin-content">
+          {children}
+        </div>
       </main>
     </div>
   )

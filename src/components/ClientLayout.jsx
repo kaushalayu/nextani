@@ -45,6 +45,7 @@ import { useEffect } from 'react'
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname()
+  const isAdmin = pathname?.startsWith('/admin')
 
   return (
     <ErrorBoundary>
@@ -53,12 +54,12 @@ export default function ClientLayout({ children }) {
           <WishlistProvider>
             <ToastProvider>
               <GAPageView GA_MEASUREMENT_ID={GA_ID} />
-              <Preloader />
-              <BackToTop />
-              <SearchOverlay />
-              <Header />
+              {!isAdmin && <Preloader />}
+              {!isAdmin && <BackToTop />}
+              {!isAdmin && <SearchOverlay />}
+              {!isAdmin && <Header />}
               <main>{children}</main>
-              <Footer />
+              {!isAdmin && <Footer />}
             </ToastProvider>
           </WishlistProvider>
         </CartProvider>

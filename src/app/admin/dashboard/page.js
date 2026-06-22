@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react'
 import API from '../../../lib/api'
 
+const statConfig = [
+  { label: 'Total Products', key: 'products', icon: 'fa-capsules', color: '#6366f1', bg: 'rgba(99,102,241,0.12)' },
+  { label: 'Total Orders', key: 'orders', icon: 'fa-truck', color: '#0f766e', bg: 'rgba(15,118,110,0.12)' },
+  { label: 'Total Users', key: 'users', icon: 'fa-users', color: '#7c3aed', bg: 'rgba(124,58,237,0.12)' },
+  { label: 'Revenue', key: 'revenue', icon: 'fa-dollar-sign', color: '#d97706', bg: 'rgba(217,119,6,0.12)', format: 'currency' },
+]
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ products: 0, orders: 0, users: 0, revenue: 0 })
 
@@ -21,27 +28,22 @@ export default function AdminDashboard() {
     })
   }, [])
 
-  const cards = [
-    { label: 'Total Products', value: stats.products, icon: 'fa-capsules', color: '#6366f1' },
-    { label: 'Total Orders', value: stats.orders, icon: 'fa-truck', color: '#0f766e' },
-    { label: 'Total Users', value: stats.users, icon: 'fa-users', color: '#7c3aed' },
-    { label: 'Revenue', value: `$${stats.revenue.toFixed(2)}`, icon: 'fa-dollar-sign', color: '#d97706' },
-  ]
-
   return (
     <div className="admin-dashboard">
-      <h2>Dashboard</h2>
-      <div className="admin-dashboard-grid">
-        {cards.map(card => (
-          <div key={card.label} className="admin-dashboard-card">
-            <div className="admin-dashboard-card-inner">
-              <div className="admin-dashboard-card-icon" style={{ background: `${card.color}15` }}>
-                <i className={`fa-solid ${card.icon}`} style={{ color: card.color }} />
-              </div>
-              <div>
-                <p className="admin-dashboard-card-label">{card.label}</p>
-                <p className="admin-dashboard-card-value">{card.value}</p>
-              </div>
+      <div className="admin-dashboard-hero">
+        <h1>Welcome back, Admin</h1>
+        <p>Here is what&apos;s happening at Pharmez today.</p>
+      </div>
+
+      <div className="admin-stats-grid">
+        {statConfig.map(s => (
+          <div key={s.key} className="admin-stat-card">
+            <div className="admin-stat-icon" style={{ background: s.bg, color: s.color }}>
+              <i className={`fa-solid ${s.icon}`} />
+            </div>
+            <div className="admin-stat-info">
+              <h3>{s.format === 'currency' ? `$${stats[s.key].toFixed(2)}` : stats[s.key]}</h3>
+              <p>{s.label}</p>
             </div>
           </div>
         ))}
