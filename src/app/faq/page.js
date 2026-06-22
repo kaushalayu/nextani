@@ -1,22 +1,53 @@
-import { generatePageMetadata } from '../../lib/seo-metadata'
-import { getPageMeta, buildMetadata } from '../../lib/page-meta'
+'use client'
 
-export async function generateMetadata() {
-  const meta = await getPageMeta('/faq')
-  return buildMetadata(meta, 'Frequently Asked Questions', 'Find answers to commonly asked questions about Pharmez online pharmacy, ordering, delivery, prescriptions and more.') || generatePageMetadata(
-    'Frequently Asked Questions',
-    'Find answers to commonly asked questions about Pharmez online pharmacy, ordering, delivery, prescriptions and more.',
-    '/faq'
-  )
-}
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import API from '../../lib/api'
+import SubBanner from '../../components/SubBanner'
 
 export default function FAQ() {
+  const [faqs, setFaqs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [openIndex, setOpenIndex] = useState(null)
+
+  useEffect(() => {
+    API.get('/faqs').then(({ data }) => setFaqs(data.faqs)).catch(() => setFaqs([])).finally(() => setLoading(false))
+  }, [])
+
+  const toggleFAQ = (index) => setOpenIndex(openIndex === index ? null : index)
+
   return (
-    <div className="faq-page">
-      <div className="container" style={{ padding: '60px 0' }}>
-        <h1>Frequently Asked Questions</h1>
-        <p>Find answers to common questions about our service.</p>
+    <>
+      <SubBanner title="Frequently Asked Questions" description="Find answers to common questions about our products, orders, and delivery services." page="FAQ" />
+
+      <div className="float-left w-100 faq-con position-relative padding-top padding-bottom padding-rl">
+        <div className="main-container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8 col-12">
+              <div className="faq-list">
+                {loading ? (
+                  <div className="faq-state">
+                    <i className="fa-solid fa-spinner fa-spin faq-state-icon" />
+                    <p>Loading FAQs...</p>
+                  </div>
+                ) : faqs.length === 0 ? (
+                  <div className="faq-state"><p>No FAQs available at the moment.</p></div>
+                ) : (
+                  faqs.map((item, index) => (
+                    <div key={item._id} className={`faq-item${openIndex === index ? ' open' : ''}`}>
+                      <div className="faq-question" onClick={() => toggleFAQ(index)}>
+                        <span>{item.question}</span>
+                        <i className="fa-solid fa-chevron-down" />
+                      </div>
+                      <div className={`faq-answer${openIndex === index ? '' : ' faq-answer-hidden'}`}>{item.answer}</div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

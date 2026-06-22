@@ -29,8 +29,8 @@ export default function SingleProduct() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: 'center', padding: '100px 0', color: '#888' }}>
-        <i className="fa-solid fa-spinner fa-spin" style={{ fontSize: 40, marginBottom: 16 }} />
+      <div className="sp-state sp-state-loading">
+        <i className="fa-solid fa-spinner fa-spin sp-state-icon-lg" />
         <p>Loading product...</p>
       </div>
     )
@@ -38,8 +38,8 @@ export default function SingleProduct() {
 
   if (error || !product) {
     return (
-      <div style={{ textAlign: 'center', padding: '100px 0' }}>
-        <h3 style={{ color: '#e05b5b', marginBottom: 12 }}>Product not found</h3>
+      <div className="sp-state">
+        <h3 className="sp-state-error-title">Product not found</h3>
         <Link href="/shop" className="sp-add-cart">Back to Shop</Link>
       </div>
     )
@@ -149,22 +149,18 @@ export default function SingleProduct() {
               </div>
 
               {!isLoggedIn && (
-                <div style={{
-                  background: '#fef3c7', border: '1px solid #fde68a', borderRadius: 8,
-                  padding: '10px 14px', fontSize: 13, color: '#92400e', marginTop: 10,
-                  display: 'flex', alignItems: 'center', gap: 8
-                }}>
+                <div className="sp-login-notice">
                   <i className="fa-solid fa-circle-info" />
                   <span>
-                    <Link href="/login" style={{ fontWeight: 700, color: '#92400e' }}>Login</Link> or{' '}
-                    <Link href="/join-now" style={{ fontWeight: 700, color: '#92400e' }}>Register</Link> to place an order.
+                    <Link href="/login" className="sp-login-notice-link">Login</Link> or{' '}
+                    <Link href="/join-now" className="sp-login-notice-link">Register</Link> to place an order.
                     You can freely add to cart &amp; wishlist.
                   </span>
                 </div>
               )}
 
               <div className="sp-actions">
-                <span style={{ cursor: 'pointer' }} onClick={handleAddToWishlist}>
+                <span className="sp-wishlist-trigger" onClick={handleAddToWishlist}>
                   <i className={isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} /> Add to wishlist
                 </span>
               </div>
@@ -191,39 +187,39 @@ export default function SingleProduct() {
           <section className="sp-section">
             <h2 className="sp-section-heading">Description</h2>
             <div className="sp-section-body">
-              <p style={{ whiteSpace: 'pre-line' }}>{product.description}</p>
-              {product.ingredients && (<><h4>Ingredients</h4><p>{product.ingredients}</p></>)}
+              <p className="sp-pre-line">{product.description}</p>
+              {product.ingredients && (<><h4>Ingredients</h4><p className="sp-pre-line">{product.ingredients}</p></>)}
             </div>
           </section>
 
           {product.howToUse && (
             <section className="sp-section">
               <h2 className="sp-section-heading">How to Use</h2>
-              <div className="sp-section-body"><p style={{ whiteSpace: 'pre-line' }}>{product.howToUse}</p></div>
+              <div className="sp-section-body"><p className="sp-pre-line">{product.howToUse}</p></div>
             </section>
           )}
 
           {product.sideEffects && (
             <section className="sp-section">
               <h2 className="sp-section-heading">Side Effects</h2>
-              <div className="sp-section-body"><p style={{ whiteSpace: 'pre-line' }}>{product.sideEffects}</p></div>
+              <div className="sp-section-body"><p className="sp-pre-line">{product.sideEffects}</p></div>
             </section>
           )}
 
           {product.additionalInfo && (
             <section className="sp-section">
               <h2 className="sp-section-heading">Additional Information</h2>
-              <div className="sp-section-body"><p style={{ whiteSpace: 'pre-line' }}>{product.additionalInfo}</p></div>
+              <div className="sp-section-body"><p className="sp-pre-line">{product.additionalInfo}</p></div>
             </section>
           )}
 
           <section className="sp-section">
             <h2 className="sp-section-heading">Customer Reviews</h2>
             <div className="sp-section-body">
-              {product.reviews?.length === 0 && <p style={{ color: '#888', marginBottom: 24 }}>No reviews yet. Be the first!</p>}
+              {product.reviews?.length === 0 && <p className="sp-no-reviews">No reviews yet. Be the first!</p>}
               {product.reviews?.map((review, i) => (
                 <div key={i} className="sp-review">
-                  <div className="sp-review-avatar" style={{ width: 44, height: 44, borderRadius: '50%', background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: '#4f46e5', fontSize: 18, flexShrink: 0 }}>
+                  <div className="sp-review-avatar">
                     {review.name?.charAt(0).toUpperCase()}
                   </div>
                   <div className="sp-review-body">
@@ -254,7 +250,7 @@ export default function SingleProduct() {
                       <label>Rating</label>
                       <div className="sp-review-star-select">
                         {[1, 2, 3, 4, 5].map((s) => (
-                          <i key={s} className={s <= reviewStars ? 'fa-solid fa-star' : 'fa-regular fa-star'} onClick={() => setReviewStars(s)} style={{ cursor: 'pointer' }} />
+                          <i key={s} className={s <= reviewStars ? 'fa-solid fa-star' : 'fa-regular fa-star'} onClick={() => setReviewStars(s)} />
                         ))}
                       </div>
                     </div>
@@ -265,8 +261,8 @@ export default function SingleProduct() {
                     <button type="submit" className="sp-submit-review">Submit Review <i className="fa-solid fa-arrow-right" /></button>
                   </form>
                 ) : (
-                  <div style={{ background: '#f3f4f6', borderRadius: 8, padding: '16px 20px', fontSize: 14, color: '#374151' }}>
-                    <Link href="/login" style={{ fontWeight: 700, color: '#4f46e5' }}>Login</Link> to write a review.
+                  <div className="sp-review-login-prompt">
+                    <Link href="/login" className="sp-review-login-link">Login</Link> to write a review.
                   </div>
                 )}
               </div>

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/Toast'
+import SubBanner from '../../components/SubBanner'
 
 export default function Login() {
   const router = useRouter()
@@ -30,26 +31,41 @@ export default function Login() {
   }
 
   return (
-    <div className="login-page">
-      <div className="container" style={{ padding: '60px 0', maxWidth: 450, margin: '0 auto' }}>
-        <h1 className="text-center mb-4">Login</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label>Email</label>
-            <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} required />
+    <>
+      <SubBanner title="Login" description="Sign in to your Pharmez account to manage orders and more." page="Login" />
+      <div className="login-page">
+        <div className="login-form-box">
+          <div className="login-form-title">
+            <img src="/assets/images/logo.png" alt="Pharmez" />
+            <h2>Welcome Back</h2>
+            <p>Sign in to your account to continue</p>
           </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} required />
-          </div>
-          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-          <p className="text-center mt-3">
-            Don't have an account? <Link href="/join-now">Register</Link>
-          </p>
-        </form>
+          <form onSubmit={handleSubmit} className="login-card">
+            <div className="form-group">
+              <div className="input-icon-wrap">
+                <i className="fa-regular fa-envelope" />
+                <input type="email" className="input-field" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required />
+              </div>
+            </div>
+            <div className="form-group">
+              <div className="input-icon-wrap">
+                <i className="fa-solid fa-lock" />
+                <input type="password" className="input-field" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required />
+              </div>
+            </div>
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Sign In'}
+            </button>
+            <div className="login-extra">
+              <label><input type="checkbox" defaultChecked /> Remember me</label>
+              <a href="#" className="forgot-password" onClick={(e) => e.preventDefault()}>Forgot Password?</a>
+            </div>
+            <div className="join-now-outer">
+              Don&apos;t have an account? <Link href="/join-now">Join Now</Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

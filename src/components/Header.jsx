@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '../context/AuthContext'
@@ -322,5 +322,5 @@ function Header() {
   )
 }
 
-export default Header
+export default memo(Header)
 

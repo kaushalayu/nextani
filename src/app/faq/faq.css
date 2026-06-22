@@ -1,0 +1,14 @@
+.faq-state {
+  text-align: center;
+  padding: 60px 0;
+  color: #888;
+}
+
+.faq-state-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.faq-answer-hidden {
+  display: none;
+}

@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import API from '../../../lib/api'
 import { BlogPostSchema, BreadcrumbSchema } from '../../../components/Seo/SchemaMarkup'
+import SubBanner from '../../../components/SubBanner'
 
 export default function BlogDetail() {
   const { id } = useParams()
@@ -12,14 +13,26 @@ export default function BlogDetail() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    API.get(`/blogs/${id}`)
-      .then(({ data }) => setPost(data.blog || data))
-      .catch(() => setPost(null))
-      .finally(() => setLoading(false))
+    API.get(`/blogs/${id}`).then(({ data }) => setPost(data.blog || data)).catch(() => setPost(null)).finally(() => setLoading(false))
   }, [id])
 
-  if (loading) return <div className="container" style={{ padding: '80px 0', textAlign: 'center' }}><p>Loading...</p></div>
-  if (!post) return <div className="container" style={{ padding: '80px 0', textAlign: 'center' }}><h3>Blog not found</h3><Link href="/blog">Back to Blog</Link></div>
+  const bannerDesc = useMemo(() => {
+    if (!post?.excerpt) return ''
+    return post.excerpt.length > 120 ? post.excerpt.slice(0, 120) + '...' : post.excerpt
+  }, [post])
+
+  if (loading) return (
+    <>
+      <SubBanner title="Blog" description="Loading..." page="Blog" />
+      <div className="blog-detail-page"><div className="blog-detail-container blog-detail-center"><p>Loading...</p></div></div>
+    </>
+  )
+  if (!post) return (
+    <>
+      <SubBanner title="Blog" description="Post not found" page="Blog" />
+      <div className="blog-detail-page"><div className="blog-detail-container blog-detail-center"><h3>Blog not found</h3><Link href="/blog" className="blog-detail-back">Back to Blog</Link></div></div>
+    </>
+  )
 
   return (
     <>
@@ -29,17 +42,25 @@ export default function BlogDetail() {
         { name: 'Blog', path: '/blog' },
         { name: post.title, path: `/blog/${id}` },
       ]} />
+      <SubBanner title={post.title} description={bannerDesc} page="Blog" />
+
       <div className="blog-detail-page">
-        <div className="container" style={{ padding: '40px 0' }}>
-          <h1>{post.title}</h1>
+        <div className="blog-detail-container">
           {post.image && (
-            <img loading="lazy" src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}
-              alt={post.title} style={{ width: '100%', maxHeight: 400, objectFit: 'cover', borderRadius: 12, marginBottom: 24 }} />
+            <img loading="lazy" className="blog-detail-image"
+              src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}
+              alt={post.title} />
           )}
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div className="blog-detail-meta">
+            {post.createdAt && <span><i className="fa-regular fa-calendar" />{new Date(post.createdAt).toLocaleDateString()}</span>}
+            {post.author && <span><i className="fa-regular fa-user" />{post.author}</span>}
+          </div>
+          <div className="blog-detail-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+          <Link href="/blog" className="blog-detail-back">
+            <i className="fa-solid fa-arrow-left" /> Back to Blog
+          </Link>
         </div>
       </div>
     </>
   )
 }
-

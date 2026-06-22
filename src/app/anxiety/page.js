@@ -2,12 +2,15 @@
 
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
+import SubBanner from '../../components/SubBanner'
 
 export default function Anxiety() {
   const { products, loading } = useProducts({ badge: 'calm', limit: 20 })
 
   return (
-    <div className="page-container" style={{ padding: '40px 0' }}>
+    <>
+      <SubBanner title="Anxiety Pills" description="Effective anxiety relief medications to help you manage stress and find calm." page="Anxiety" />
+      <div className="cat-page">
       <div className="container">
         <h1>Anxiety Relief</h1>
         {loading ? <p>Loading...</p> : (
@@ -15,5 +18,6 @@ export default function Anxiety() {
         )}
       </div>
     </div>
+    </>
   )
 }

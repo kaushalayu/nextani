@@ -1,0 +1,144 @@
+.login-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 80px;
+  background: var(--light--lemon--color, #fffeef);
+}
+.login-page .login-form-box {
+  background: #fff;
+  border-radius: 24px;
+  padding: 48px 40px 40px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+  border: 1px solid var(--border--color, #f0f0f0);
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+}
+.login-page .login-form-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.login-page .login-form-title img {
+  max-height: 48px;
+  margin-bottom: 16px;
+}
+.login-page .login-form-title h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--black--color, #111);
+  margin: 0 0 8px;
+}
+.login-page .login-form-title p {
+  font-size: 14px;
+  color: var(--text--color, #555);
+  margin: 0;
+}
+.login-page .login-card { width: 100%; }
+.login-page .form-group { margin-bottom: 20px; }
+.login-page .input-icon-wrap {
+  position: relative;
+}
+.login-page .input-icon-wrap i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text--color2, #999);
+  font-size: 16px;
+  z-index: 2;
+}
+.login-page .input-field {
+  width: 100%;
+  padding: 14px 16px 14px 46px;
+  border: 2px solid var(--border--color, #e8e8e8);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--text--color, #555);
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: var(--light--lemon--color, #fffeef);
+}
+.login-page .input-field:focus {
+  border-color: var(--accent--color, #5c45bf);
+  box-shadow: 0 0 0 4px rgba(92,69,191,0.06);
+  outline: none;
+  background: #fff;
+}
+.login-page .input-field::placeholder { color: var(--text--color2, #bbb); }
+.login-page .btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent--color, #5c45bf);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+.login-page .btn-primary:hover {
+  background: var(--primary--color, #fbd12a);
+  color: var(--black--color, #111);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(92,69,191,0.2);
+}
+.login-page .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.login-page .login-extra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  font-size: 13px;
+}
+.login-page .login-extra label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text--color, #555);
+  cursor: pointer;
+  font-weight: 500;
+}
+.login-page .login-extra label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent--color, #5c45bf);
+}
+.login-page .forgot-password {
+  color: var(--accent--color, #5c45bf);
+  text-decoration: none;
+  font-weight: 600;
+}
+.login-page .forgot-password:hover { text-decoration: underline; }
+.login-page .join-now-outer {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border--color, #f0f0f0);
+  font-size: 14px;
+  color: var(--text--color, #555);
+}
+.login-page .join-now-outer a {
+  color: var(--accent--color, #5c45bf);
+  font-weight: 700;
+  text-decoration: none;
+}
+.login-page .join-now-outer a:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .login-page { padding: 30px 16px 60px; }
+  .login-page .login-form-box { padding: 32px 24px 28px; border-radius: 18px; }
+  .login-page .login-form-title h2 { font-size: 22px; }
+  .login-page .login-form-title img { max-height: 40px; }
+}
+@media (max-width: 480px) {
+  .login-page .login-form-box { padding: 24px 18px 24px; border-radius: 16px; }
+  .login-page .login-form-title h2 { font-size: 20px; }
+  .login-page .login-form-title { margin-bottom: 24px; }
+  .login-page .form-group { margin-bottom: 16px; }
+  .login-page .input-field { padding: 12px 14px 12px 42px; font-size: 13px; }
+  .login-page .login-extra { flex-direction: column; gap: 10px; align-items: flex-start; }
+}

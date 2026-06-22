@@ -3529,6 +3529,7 @@
 
 /* ========== PREMIUM CARDS ========== */
 .premium-card {
+    position: relative;
     background: var(--secondary--color);
     border-radius: 16px;
     overflow: hidden;
@@ -3536,6 +3537,7 @@
     border: 1px solid rgba(0, 0, 0, 0.04);
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
     margin-bottom: 30px;
+    z-index: 1;
 }
 .premium-card:hover {
     transform: translateY(-6px);

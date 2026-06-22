@@ -183,11 +183,11 @@ export default function Home() {
   }
 
   const ProductSkeleton = () => (
-    <div className="product-card skeleton-card" style={{ opacity: 0.5 }}>
-      <div style={{ background: '#e5e7eb', height: 200, borderRadius: 8 }} />
-      <div style={{ padding: '12px 0' }}>
-        <div style={{ background: '#e5e7eb', height: 14, borderRadius: 4, marginBottom: 8 }} />
-        <div style={{ background: '#e5e7eb', height: 14, borderRadius: 4, width: '60%' }} />
+    <div className="product-card skeleton-card">
+      <div className="skel-img" />
+      <div className="skel-body">
+        <div className="skel-line" />
+        <div className="skel-line skel-line-short" />
       </div>
     </div>
   )
@@ -303,8 +303,8 @@ export default function Home() {
                     <ProductCard product={product} key={product._id}
                       onAddToCart={handleAddToCart} onAddToWishlist={handleAddToWishlist} />
                   ))
-                : (<div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#9ca3af' }}>
-                    <i className="fa-solid fa-box-open" style={{ fontSize: 32, marginBottom: 8 }} />
+                : (<div className="home-empty">
+                    <i className="fa-solid fa-box-open" />
                     <p>No featured products yet. Add them from the admin panel.</p>
                   </div>)
             }
@@ -325,8 +325,8 @@ export default function Home() {
                     <ProductCard product={product} key={product._id}
                       onAddToCart={handleAddToCart} onAddToWishlist={handleAddToWishlist} />
                   ))
-                : (<div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px', color: '#9ca3af' }}>
-                    <i className="fa-solid fa-box-open" style={{ fontSize: 32, marginBottom: 8 }} />
+                : (<div className="home-empty">
+                    <i className="fa-solid fa-box-open" />
                     <p>No best sellers yet. Add them from the admin panel.</p>
                   </div>)
             }

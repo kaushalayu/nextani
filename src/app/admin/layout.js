@@ -32,34 +32,27 @@ export default function AdminLayout({ children }) {
   }
 
   return (
-    <div className="admin-layout" style={{ display: 'flex', minHeight: '100vh' }}>
-      <aside style={{ width: 240, background: '#1e293b', color: '#fff', padding: '20px 0', flexShrink: 0 }}>
-        <div style={{ padding: '0 20px 20px', borderBottom: '1px solid #334155', marginBottom: 16 }}>
-          <Link href="/admin/dashboard" style={{ color: '#fff', textDecoration: 'none', fontSize: 20, fontWeight: 700 }}>Pharmez Admin</Link>
+    <div className="admin-layout">
+      <aside className="admin-sidebar">
+        <div className="admin-sidebar-header">
+          <Link href="/admin/dashboard" className="admin-sidebar-brand">Pharmez Admin</Link>
         </div>
-        <nav>
+        <nav className="admin-sidebar-nav">
           {adminLinks.map(link => (
             <Link key={link.href} href={link.href}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px',
-                color: pathname === link.href ? '#fff' : '#94a3b8',
-                background: pathname === link.href ? '#334155' : 'transparent',
-                textDecoration: 'none', fontSize: 14, fontWeight: 500,
-                borderLeft: pathname === link.href ? '3px solid #6366f1' : '3px solid transparent',
-              }}>
-              <i className={link.icon} style={{ width: 16 }} />
+              className={`admin-sidebar-link${pathname === link.href ? ' active' : ''}`}>
+              <i className={link.icon} />
               {link.label}
             </Link>
           ))}
         </nav>
-        <div style={{ padding: '20px', borderTop: '1px solid #334155', marginTop: 'auto' }}>
-          <button onClick={() => { logout(); router.push('/login'); }}
-            style={{ background: 'none', border: '1px solid #475569', color: '#94a3b8', padding: '8px 16px', borderRadius: 6, cursor: 'pointer', width: '100%' }}>
+        <div className="admin-sidebar-footer">
+          <button onClick={() => { logout(); router.push('/login'); }} className="admin-sidebar-logout">
             <i className="fa-solid fa-right-from-bracket" /> Sign Out
           </button>
         </div>
       </aside>
-      <main style={{ flex: 1, padding: 24, background: '#f1f5f9', overflow: 'auto' }}>
+      <main className="admin-main">
         {children}
       </main>
     </div>

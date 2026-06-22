@@ -29,18 +29,18 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div>
-      <h2 style={{ marginBottom: 24 }}>Dashboard</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16 }}>
+    <div className="admin-dashboard">
+      <h2>Dashboard</h2>
+      <div className="admin-dashboard-grid">
         {cards.map(card => (
-          <div key={card.label} style={{ background: '#fff', borderRadius: 12, padding: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 48, height: 48, borderRadius: 12, background: `${card.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <i className={`fa-solid ${card.icon}`} style={{ color: card.color, fontSize: 20 }} />
+          <div key={card.label} className="admin-dashboard-card">
+            <div className="admin-dashboard-card-inner">
+              <div className="admin-dashboard-card-icon" style={{ background: `${card.color}15` }}>
+                <i className={`fa-solid ${card.icon}`} style={{ color: card.color }} />
               </div>
               <div>
-                <p style={{ fontSize: 12, color: '#6b7280', margin: 0 }}>{card.label}</p>
-                <p style={{ fontSize: 24, fontWeight: 700, color: '#111827', margin: 0 }}>{card.value}</p>
+                <p className="admin-dashboard-card-label">{card.label}</p>
+                <p className="admin-dashboard-card-value">{card.value}</p>
               </div>
             </div>
           </div>

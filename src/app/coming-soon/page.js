@@ -1,22 +1,23 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
-import { getPageMeta, buildMetadata } from '../../lib/page-meta'
+import SubBanner from '../../components/SubBanner'
+import Link from 'next/link'
 
-export async function generateMetadata() {
-  const meta = await getPageMeta('/coming-soon')
-  return buildMetadata(meta, 'Coming Soon', 'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.') || generatePageMetadata(
-    'Coming Soon',
-    'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.',
-    '/coming-soon'
-  )
-}
+export const metadata = generatePageMetadata('Coming Soon', 'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.', '/coming-soon')
 
 export default function ComingSoon() {
   return (
-    <div className="coming-soon-page">
-      <div className="container" style={{ padding: '60px 0', textAlign: 'center' }}>
-        <h1>Coming Soon</h1>
-        <p>Something exciting is on its way!</p>
+    <>
+      <SubBanner title="Coming Soon" description="Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy." page="Coming Soon" />
+      <div className="padding-rl float-left w-100">
+        <div className="container">
+          <div className="coming-soon-section">
+            <div className="coming-soon-icon"><i className="fa-regular fa-clock" /></div>
+            <h2>Something Exciting is Coming!</h2>
+            <p className="coming-soon-text">We&apos;re working on something special. Stay tuned for updates on our latest products and services.</p>
+            <Link href="/shop" className="coming-soon-btn">Browse Products</Link>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

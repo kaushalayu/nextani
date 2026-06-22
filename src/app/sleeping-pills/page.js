@@ -2,12 +2,15 @@
 
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
+import SubBanner from '../../components/SubBanner'
 
 export default function SleepingPills() {
   const { products, loading } = useProducts({ badge: 'sleep aid', limit: 20 })
 
   return (
-    <div className="page-container" style={{ padding: '40px 0' }}>
+    <>
+      <SubBanner title="Sleeping Pills" description="Quality sleep aids to help you get the rest you deserve." page="Sleeping Pills" />
+      <div className="cat-page">
       <div className="container">
         <h1>Sleeping Pills</h1>
         {loading ? <p>Loading...</p> : (
@@ -15,5 +18,6 @@ export default function SleepingPills() {
         )}
       </div>
     </div>
+    </>
   )
 }

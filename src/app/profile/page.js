@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
 import API from '../../lib/api'
+import SubBanner from '../../components/SubBanner'
 
 export default function Profile() {
   const { isLoggedIn, user, logout } = useAuth()
@@ -18,26 +19,79 @@ export default function Profile() {
   }, [isLoggedIn])
 
   if (!isLoggedIn) {
-    return <div className="container" style={{ padding: '60px 0' }}><p>Please login.</p><Link href="/login">Login</Link></div>
-  }
-
-  return (
-    <div className="profile-page">
-      <div className="container" style={{ padding: '40px 0' }}>
-        <h1>My Profile</h1>
-        <div className="card" style={{ maxWidth: 500, marginBottom: 24 }}>
-          <div className="card-body">
-            <h5 className="card-title">{user?.name}</h5>
-            <p className="card-text">{user?.email}</p>
-            <button onClick={logout} className="btn btn-outline-danger">Logout</button>
+    return (
+      <>
+        <SubBanner title="My Profile" description="Please login to view your profile." page="Profile" />
+        <div className="profile-page">
+          <div className="profile-login-prompt">
+            <h3>Please Login</h3>
+            <p>You need to be logged in to view your profile.</p>
+            <Link href="/login" className="btn">Login</Link>
           </div>
         </div>
-        <h2>Recent Orders</h2>
-        {orders.length > 0 ? (
-          <ul>{orders.map(order => <li key={order._id}>#{order._id?.slice(-6)} — ${order.total?.toFixed(2)}</li>)}</ul>
-        ) : <p>No recent orders.</p>}
-        <Link href="/my-orders">View All Orders</Link>
+      </>
+    )
+  }
+
+  const initials = user?.name
+    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : 'U'
+
+  return (
+    <>
+      <SubBanner title="My Profile" description="Manage your account details and view recent orders." page="Profile" />
+      <div className="profile-page">
+        <div className="container">
+          <h1>My Profile</h1>
+          <div className="profile-card">
+            <div className="profile-card-header">
+              <div className="profile-avatar">{initials}</div>
+              <div className="profile-card-info">
+                <h5>{user?.name}</h5>
+                <p>{user?.email}</p>
+              </div>
+            </div>
+            <div className="profile-card-body">
+              <div className="detail-row">
+                <span>Name</span>
+                <span>{user?.name || '-'}</span>
+              </div>
+              <div className="detail-row">
+                <span>Email</span>
+                <span>{user?.email || '-'}</span>
+              </div>
+              {user?.phone && (
+                <div className="detail-row">
+                  <span>Phone</span>
+                  <span>{user.phone}</span>
+                </div>
+              )}
+            </div>
+            <button onClick={logout} className="profile-logout-btn">
+              <i className="fa-solid fa-right-from-bracket" /> Sign Out
+            </button>
+          </div>
+
+          <h2>Recent Orders</h2>
+          {orders.length > 0 ? (
+            <>
+              <div className="profile-orders-list">
+                {orders.map(order => (
+                  <div key={order._id} className="profile-order-item">
+                    <span className="profile-order-id">#{order._id?.slice(-8).toUpperCase()}</span>
+                    <span className="profile-order-total">${order.total?.toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/my-orders" className="profile-view-link">
+                View All Orders <i className="fa-solid fa-arrow-right" />
+              </Link>
+            </>
+          ) : (
+            <p className="profile-no-orders">No recent orders.</p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

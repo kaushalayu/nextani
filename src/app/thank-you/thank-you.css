@@ -1,0 +1,42 @@
+.thank-you-section {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.thank-you-icon {
+  font-size: 64px;
+  color: #059669;
+  margin-bottom: 16px;
+}
+
+.thank-you-section h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--black--color, #111);
+  margin: 0 0 12px;
+}
+
+.thank-you-text {
+  font-size: 16px;
+  color: #6b7280;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .thank-you-section {
+    padding: 60px 0;
+  }
+  .thank-you-section h1 {
+    font-size: 24px;
+  }
+  .thank-you-icon {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .thank-you-section {
+    padding: 40px 0;
+  }
+}

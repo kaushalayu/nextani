@@ -1,0 +1,110 @@
+.join-page {
+  background: var(--light--lemon--color, #fffeef);
+  min-height: 60vh;
+  padding: 40px 0 80px;
+}
+
+.join-page .container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.join-page h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--black--color, #111);
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.join-form-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 32px;
+  border: 1px solid var(--border--color, #f0f0f0);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.join-form-group {
+  margin-bottom: 18px;
+}
+
+.join-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.join-form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  font-family: inherit;
+  background: #fff;
+}
+
+.join-form-input:focus {
+  border-color: var(--accent--color, #5c45bf);
+  box-shadow: 0 0 0 3px rgba(92,69,191,0.08);
+}
+
+.join-submit-btn {
+  width: 100%;
+  padding: 14px 0;
+  background: var(--accent--color, #5c45bf);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.join-submit-btn:hover {
+  background: #4a3799;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(92,69,191,0.25);
+}
+
+.join-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.join-login-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text--color, #656565);
+}
+
+.join-login-link a {
+  color: var(--accent--color, #5c45bf);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.join-login-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .join-page h1 { font-size: 22px; }
+  .join-form-card { padding: 24px 20px; border-radius: 14px; }
+}
+
+@media (max-width: 480px) {
+  .join-page { padding: 24px 0 48px; }
+  .join-page h1 { font-size: 20px; }
+}

@@ -124,101 +124,85 @@ export default function Checkout() {
   const bitcoinAddress = seo?.bitcoinAddress || ''
 const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUBLIC_API_URL}${path}` : path
 
-  const inputStyle = {
-    width: '100%', padding: '10px 14px', border: '1px solid #d1d5db', borderRadius: 8,
-    fontSize: 14, outline: 'none', transition: 'border-color 0.15s',
-    boxSizing: 'border-box', background: '#fff',
-  }
-  const labelStyle = { display: 'block', fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 4 }
-
   return (
-    <div className="checkout-page" style={{ background: '#f9fafb', minHeight: '100vh' }}>
-      <div className="container" style={{ padding: '40px 0' }}>
-        <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 24 }}>Checkout</h1>
+    <div className="checkout-page">
+      <div className="container">
+        <h1>Checkout</h1>
 
         {cart.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: 60, background: '#fff', borderRadius: 12 }}>
-            <i className="fa-solid fa-cart-shopping" style={{ fontSize: 48, color: '#d1d5db', marginBottom: 16 }} />
-            <p style={{ color: '#6b7280', marginBottom: 16 }}>Your cart is empty</p>
-            <Link href="/shop" className="btn btn-primary">Continue Shopping</Link>
+          <div className="checkout-empty">
+            <div className="checkout-empty-icon"><i className="fa-solid fa-cart-shopping" /></div>
+            <h3>Your cart is empty</h3>
+            <p>Add items to your cart before checking out.</p>
+            <Link href="/shop" className="btn">Continue Shopping</Link>
           </div>
         ) : (
           <form onSubmit={handlePlaceOrder}>
             <div className="row">
-              {/* Left Column */}
               <div className="col-lg-8">
-                {/* Shipping Info */}
-                <div style={{ background: '#fff', borderRadius: 12, padding: 24, marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#111827' }}>
-                    <i className="fa-solid fa-location-dot" style={{ marginRight: 8, color: '#6366f1' }} />Shipping Information
+                <div className="checkout-section">
+                  <h3 className="checkout-section-title">
+                    <i className="fa-solid fa-location-dot" />Shipping Information
                   </h3>
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                      <label style={labelStyle}>First Name *</label>
-                      <input name="firstName" value={form.firstName} onChange={handleChange} required style={inputStyle} />
+                      <label className="checkout-form-label">First Name *</label>
+                      <input name="firstName" value={form.firstName} onChange={handleChange} required className="checkout-form-input" />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label style={labelStyle}>Last Name</label>
-                      <input name="lastName" value={form.lastName} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">Last Name</label>
+                      <input name="lastName" value={form.lastName} onChange={handleChange} className="checkout-form-input" />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label style={labelStyle}>Email</label>
-                      <input name="email" type="email" value={form.email} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">Email</label>
+                      <input name="email" type="email" value={form.email} onChange={handleChange} className="checkout-form-input" />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label style={labelStyle}>Phone *</label>
-                      <input name="phone" type="tel" value={form.phone} onChange={handleChange} required style={inputStyle} />
+                      <label className="checkout-form-label">Phone *</label>
+                      <input name="phone" type="tel" value={form.phone} onChange={handleChange} required className="checkout-form-input" />
                     </div>
                     <div className="col-12 mb-3">
-                      <label style={labelStyle}>Address *</label>
-                      <textarea name="address" value={form.address} onChange={handleChange} required rows={2} style={inputStyle} />
+                      <label className="checkout-form-label">Address *</label>
+                      <textarea name="address" value={form.address} onChange={handleChange} required rows={2} className="checkout-form-textarea" />
                     </div>
                     <div className="col-md-4 mb-3">
-                      <label style={labelStyle}>City</label>
-                      <input name="city" value={form.city} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">City</label>
+                      <input name="city" value={form.city} onChange={handleChange} className="checkout-form-input" />
                     </div>
                     <div className="col-md-4 mb-3">
-                      <label style={labelStyle}>State</label>
-                      <input name="state" value={form.state} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">State</label>
+                      <input name="state" value={form.state} onChange={handleChange} className="checkout-form-input" />
                     </div>
                     <div className="col-md-4 mb-3">
-                      <label style={labelStyle}>ZIP Code</label>
-                      <input name="zip" value={form.zip} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">ZIP Code</label>
+                      <input name="zip" value={form.zip} onChange={handleChange} className="checkout-form-input" />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label style={labelStyle}>Country</label>
-                      <input name="country" value={form.country} onChange={handleChange} style={inputStyle} />
+                      <label className="checkout-form-label">Country</label>
+                      <input name="country" value={form.country} onChange={handleChange} className="checkout-form-input" />
                     </div>
                   </div>
                 </div>
 
-                {/* Payment Method */}
-                <div style={{ background: '#fff', borderRadius: 12, padding: 24, marginBottom: 16, boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#111827' }}>
-                    <i className="fa-solid fa-credit-card" style={{ marginRight: 8, color: '#6366f1' }} />Payment Method
+                <div className="checkout-section">
+                  <h3 className="checkout-section-title">
+                    <i className="fa-solid fa-credit-card" />Payment Method
                   </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 16 }}>
+                  <div className="checkout-payment-grid">
                     {PAYMENT_METHODS.map(method => (
-                      <label key={method.id} style={{
-                        display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px',
-                        border: `2px solid ${form.paymentMethod === method.id ? '#6366f1' : '#e5e7eb'}`,
-                        borderRadius: 10, cursor: 'pointer', transition: 'all 0.15s',
-                        background: form.paymentMethod === method.id ? '#f5f3ff' : '#fff',
-                      }}>
+                      <label key={method.id} className={`checkout-payment-option${form.paymentMethod === method.id ? ' active' : ''}`}>
                         <input type="radio" name="paymentMethod" value={method.id}
-                          checked={form.paymentMethod === method.id} onChange={handleChange}
-                          style={{ accentColor: '#6366f1' }} />
-                        <i className={method.icon} style={{ fontSize: 18, color: form.paymentMethod === method.id ? '#6366f1' : '#6b7280' }} />
-                        <span style={{ fontSize: 14, fontWeight: 500 }}>{method.label}</span>
+                          checked={form.paymentMethod === method.id} onChange={handleChange} />
+                        <i className={method.icon} />
+                        <span>{method.label}</span>
                       </label>
                     ))}
                   </div>
 
-                  {/* Sub Payment Method */}
                   {SUB_PAYMENT_OPTIONS[form.paymentMethod] && (
                     <div className="mb-3">
-                      <label style={labelStyle}>Select Payment App</label>
-                      <select name="subPaymentMethod" value={form.subPaymentMethod} onChange={handleChange} style={inputStyle}>
+                      <label className="checkout-form-label">Select Payment App</label>
+                      <select name="subPaymentMethod" value={form.subPaymentMethod} onChange={handleChange} className="checkout-form-input">
                         <option value="">Choose...</option>
                         {SUB_PAYMENT_OPTIONS[form.paymentMethod].map(opt => (
                           <option key={opt} value={opt}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</option>
@@ -227,110 +211,88 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                     </div>
                   )}
 
-                  {/* Card Details */}
                   {form.paymentMethod === 'card' && (
-                    <div style={{ marginTop: 16, padding: 16, background: '#f9fafb', borderRadius: 8, border: '1px solid #e5e7eb' }}>
-                      <h4 style={{ fontSize: 14, fontWeight: 600, color: '#374151', marginBottom: 12 }}>Card Information</h4>
+                    <div className="checkout-card-section">
+                      <h4>Card Information</h4>
                       <div className="row">
                         <div className="col-12 mb-3">
-                          <label style={labelStyle}>Name on Card</label>
-                          <input name="nameOnCard" value={cardDetails.nameOnCard} onChange={handleCardChange} placeholder="John Doe" style={inputStyle} />
+                          <label className="checkout-form-label">Name on Card</label>
+                          <input name="nameOnCard" value={cardDetails.nameOnCard} onChange={handleCardChange} placeholder="John Doe" className="checkout-form-input" />
                         </div>
                         <div className="col-md-6 mb-3">
-                          <label style={labelStyle}>Card Number</label>
-                          <input name="cardNumber" value={cardDetails.cardNumber} onChange={handleCardChange} placeholder="1234 5678 9012 3456" style={inputStyle} maxLength={19} />
+                          <label className="checkout-form-label">Card Number</label>
+                          <input name="cardNumber" value={cardDetails.cardNumber} onChange={handleCardChange} placeholder="1234 5678 9012 3456" className="checkout-form-input" maxLength={19} />
                         </div>
                         <div className="col-md-3 mb-3">
-                          <label style={labelStyle}>Expiry</label>
-                          <input name="expiryDate" value={cardDetails.expiryDate} onChange={handleCardChange} placeholder="MM/YY" style={inputStyle} />
+                          <label className="checkout-form-label">Expiry</label>
+                          <input name="expiryDate" value={cardDetails.expiryDate} onChange={handleCardChange} placeholder="MM/YY" className="checkout-form-input" />
                         </div>
                         <div className="col-md-3 mb-3">
-                          <label style={labelStyle}>CVV</label>
-                          <input name="cvv" type="password" value={cardDetails.cvv} onChange={handleCardChange} placeholder="***" style={inputStyle} maxLength={4} />
+                          <label className="checkout-form-label">CVV</label>
+                          <input name="cvv" type="password" value={cardDetails.cvv} onChange={handleCardChange} placeholder="***" className="checkout-form-input" maxLength={4} />
                         </div>
                       </div>
-                      <p style={{ fontSize: 12, color: '#6b7280', margin: '8px 0 0' }}>
-                        <i className="fa-solid fa-shield" style={{ marginRight: 4 }} />
+                      <p className="checkout-card-note">
+                        <i className="fa-solid fa-shield" />
                         Card details are securely stored for admin verification. Order will be confirmed after admin review.
                       </p>
                     </div>
                   )}
 
-                  {/* Bitcoin Info */}
                   {form.paymentMethod === 'bitcoin' && bitcoinAddress && (
-                    <div style={{ marginTop: 16, padding: 16, background: '#fffbeb', borderRadius: 8, border: '1px solid #fde68a' }}>
-                      <h4 style={{ fontSize: 14, fontWeight: 600, color: '#92400e', marginBottom: 8 }}>
-                        <i className="fa-brands fa-bitcoin" style={{ marginRight: 6 }} />Bitcoin Payment
-                      </h4>
-                      <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 8 }}>Send the exact amount to the address below:</p>
-                      <div style={{ fontSize: 14, fontFamily: 'monospace', background: '#fff', padding: 12, borderRadius: 8, border: '1px solid #fde68a', wordBreak: 'break-all', marginBottom: 8 }}>
-                        {bitcoinAddress}
-                      </div>
-                      <p style={{ fontSize: 12, color: '#92400e' }}>
-                        <i className="fa-solid fa-circle-info" style={{ marginRight: 4 }} />
+                    <div className="checkout-bitcoin-box">
+                      <h4><i className="fa-brands fa-bitcoin" />Bitcoin Payment</h4>
+                      <p className="checkout-bitcoin-label">Send the exact amount to the address below:</p>
+                      <div className="checkout-bitcoin-address">{bitcoinAddress}</div>
+                      <p className="checkout-bitcoin-info">
+                        <i className="fa-solid fa-circle-info checkout-bitcoin-info-icon" />
                         Amount to send: <strong>${grandTotal.toFixed(2)}</strong> (equivalent in BTC)
                       </p>
                     </div>
                   )}
 
-                  {/* Order Notes */}
                   <div className="mt-3">
-                    <label style={labelStyle}>Order Notes (Optional)</label>
-                    <textarea name="notes" value={form.notes} onChange={handleChange} rows={2} placeholder="Special instructions, delivery notes..." style={inputStyle} />
+                    <label className="checkout-form-label">Order Notes (Optional)</label>
+                    <textarea name="notes" value={form.notes} onChange={handleChange} rows={2} placeholder="Special instructions, delivery notes..." className="checkout-notes" />
                   </div>
                 </div>
               </div>
 
-              {/* Right Column - Summary */}
               <div className="col-lg-4">
-                <div style={{ background: '#fff', borderRadius: 12, padding: 24, boxShadow: '0 1px 3px rgba(0,0,0,0.08)', position: 'sticky', top: 20 }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 16, color: '#111827' }}>Order Summary</h3>
+                <div className="checkout-summary-card">
+                  <h3 className="checkout-summary-title">Order Summary</h3>
 
                   {cart.map((item, i) => (
-                    <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 12, paddingBottom: 12, borderBottom: '1px solid #f3f4f6' }}>
-                      <img loading="lazy" src={imgUrl(item.img)} alt={item.name} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover', flexShrink: 0 }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <p style={{ fontSize: 13, fontWeight: 600, color: '#111827', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</p>
-                        <p style={{ fontSize: 12, color: '#6b7280', margin: '2px 0' }}>Qty: {item.qty}</p>
-                        <p style={{ fontSize: 14, fontWeight: 700, color: '#059669', margin: 0 }}>${(item.price * item.qty).toFixed(2)}</p>
+                    <div key={i} className="checkout-summary-item">
+                      <img loading="lazy" src={imgUrl(item.img)} alt={item.name} className="checkout-summary-item-img" />
+                      <div className="checkout-summary-item-info">
+                        <p className="checkout-summary-item-name">{item.name}</p>
+                        <p className="checkout-summary-item-qty">Qty: {item.qty}</p>
                       </div>
+                      <span className="checkout-summary-item-price">${(item.price * item.qty).toFixed(2)}</span>
                     </div>
                   ))}
 
-                  <div style={{ borderTop: '1px solid #e5e7eb', paddingTop: 12 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, marginBottom: 8 }}>
-                      <span style={{ color: '#6b7280' }}>Subtotal</span>
-                      <span style={{ fontWeight: 600 }}>${total.toFixed(2)}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, marginBottom: 8 }}>
-                      <span style={{ color: '#6b7280' }}>Shipping</span>
-                      <span style={{ fontWeight: 600 }}>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, fontWeight: 700, borderTop: '2px solid #e5e7eb', paddingTop: 12, marginTop: 8 }}>
-                      <span>Total</span>
-                      <span style={{ color: '#059669' }}>${grandTotal.toFixed(2)}</span>
-                    </div>
+                  <div className="checkout-summary-row">
+                    <span>Subtotal</span>
+                    <span>${total.toFixed(2)}</span>
+                  </div>
+                  <div className={`checkout-summary-row${shipping === 0 ? ' free' : ''}`}>
+                    <span>Shipping</span>
+                    <span>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
+                  </div>
+                  <div className="checkout-summary-row total">
+                    <span>Total</span>
+                    <span>${grandTotal.toFixed(2)}</span>
                   </div>
 
-                  <button type="submit" disabled={placing || cart.length === 0}
-                    style={{
-                      width: '100%', padding: '14px 24px', border: 'none', borderRadius: 10,
-                      background: placing ? '#9ca3af' : '#059669', color: '#fff',
-                      fontWeight: 700, fontSize: 16, cursor: placing ? 'not-allowed' : 'pointer',
-                      marginTop: 20, transition: 'background 0.15s',
-                    }}>
+                  <button type="submit" disabled={placing || cart.length === 0} className="checkout-place-btn">
                     {placing ? (
-                      <><i className="fa-solid fa-spinner fa-spin" style={{ marginRight: 8 }} />Processing...</>
+                      <><i className="fa-solid fa-spinner fa-spin" />Processing...</>
                     ) : (
                       <>Place Order — ${grandTotal.toFixed(2)}</>
                     )}
                   </button>
-
-                  <div style={{ marginTop: 12, textAlign: 'center' }}>
-                    <p style={{ fontSize: 12, color: '#9ca3af', margin: 0 }}>
-                      <i className="fa-solid fa-lock" style={{ marginRight: 4 }} />Secure checkout
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
