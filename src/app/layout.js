@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="google-site-verification" content="2LZK5Bc9LaQGVuXiMf62_uuczzpwmUi7kzRd4l-5Jko" />
         <meta name="theme-color" content="#ffffff" />
         <link href="/assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />

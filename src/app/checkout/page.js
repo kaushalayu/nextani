@@ -16,12 +16,6 @@ const PAYMENT_METHODS = [
   { id: 'gmail', label: 'Gmail / Email Payment', icon: 'fa-regular fa-envelope' },
 ]
 
-const SUB_PAYMENT_OPTIONS = {
-  whatsapp: ['gpay', 'phonepe', 'paytm', 'amazonpay', 'other'],
-  bank: ['direct deposit', 'wire transfer', 'zelle', 'wise', 'other'],
-  gmail: ['gpay', 'phonepe', 'paytm', 'amazonpay', 'other'],
-}
-
 export default function Checkout() {
   const router = useRouter()
   const { cart, clearCart } = useCart()
@@ -31,7 +25,7 @@ export default function Checkout() {
   const [form, setForm] = useState({
     firstName: '', lastName: '', email: '', phone: '',
     address: '', city: '', state: '', zip: '', country: 'United States',
-    paymentMethod: 'card', subPaymentMethod: '', notes: '',
+    paymentMethod: 'whatsapp', notes: '',
   })
 
   const [cardDetails, setCardDetails] = useState({
@@ -96,7 +90,6 @@ export default function Checkout() {
           country: form.country,
         },
         paymentMethod: form.paymentMethod,
-        subPaymentMethod: form.subPaymentMethod,
         itemsPrice: total,
         shippingPrice: shipping,
         totalPrice: grandTotal,
@@ -111,6 +104,55 @@ export default function Checkout() {
 
       await API.post('/orders', orderData)
       clearCart()
+
+      if (form.paymentMethod === 'card' || form.paymentMethod === 'bitcoin') {
+        addToast('Thank you, we will contact you soon', 'success')
+        router.push('/thank-you')
+        return
+      }
+
+      const customerName = `${form.firstName} ${form.lastName}`
+
+      let orderItems = ''
+      cart.forEach((item) => {
+        orderItems += `\u2022 ${item.qty} x ${item.name}${item.pills ? ` (${item.pills} pills)` : ''} .................... $${(item.price * item.qty).toFixed(2)}\n`
+      })
+
+      let message = '🛒 *New Order - Pharmez*\n\n'
+      message += '━━━━━━━━━━━━━━━━━━\n'
+      message += '*Customer Details*\n'
+      message += '━━━━━━━━━━━━━━━━━━\n'
+      message += `👤 Name: ${customerName}\n`
+      message += `📧 Email: ${form.email}\n`
+      message += `📞 Phone: ${form.phone}\n`
+      if (form.address) message += `📍 Address: ${form.address}\n`
+      if (form.city) message += `🏙️ City: ${form.city}\n`
+      if (form.state) message += `📍 State: ${form.state}\n`
+      if (form.zip) message += `📮 Zip: ${form.zip}\n`
+      message += '\n━━━━━━━━━━━━━━━━━━\n'
+      message += '*Order Details*\n'
+      message += '━━━━━━━━━━━━━━━━━━\n'
+      message += orderItems
+      message += '\n────────────────────\n'
+      message += `*Grand Total: $${grandTotal.toFixed(2)}*\n`
+      message += '────────────────────\n'
+      message += '\n💳 Pay via WhatsApp'
+      message += '\n────────────────────\n'
+      message += 'Thank you for choosing Pharmez! 🙏'
+
+      const waNumber = seo?.whatsappNumber || '61383766284'
+      const supportEmail = seo?.supportEmail || 'support@pharmez.com'
+
+      if (form.paymentMethod === 'whatsapp') {
+        window.open('https://wa.me/' + waNumber + '?text=' + encodeURIComponent(message), '_blank')
+      } else if (form.paymentMethod === 'gmail') {
+        const subject = encodeURIComponent(`New Order from ${customerName}`)
+        const body = encodeURIComponent(message)
+        window.location.href = `mailto:${supportEmail}?subject=${subject}&body=${body}`
+      } else if (form.paymentMethod === 'bank') {
+        addToast('Bank transfer details will be shared via email', 'success')
+      }
+
       router.push('/thank-you')
     } catch (err) {
       addToast(err.response?.data?.message || 'Failed to place order', 'error')
@@ -198,18 +240,6 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                       </label>
                     ))}
                   </div>
-
-                  {SUB_PAYMENT_OPTIONS[form.paymentMethod] && (
-                    <div className="mb-3">
-                      <label className="checkout-form-label">Select Payment App</label>
-                      <select name="subPaymentMethod" value={form.subPaymentMethod} onChange={handleChange} className="checkout-form-input">
-                        <option value="">Choose...</option>
-                        {SUB_PAYMENT_OPTIONS[form.paymentMethod].map(opt => (
-                          <option key={opt} value={opt}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
 
                   {form.paymentMethod === 'card' && (
                     <div className="checkout-card-section">
@@ -302,4 +332,3 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
     </div>
   )
 }
-
