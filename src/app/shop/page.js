@@ -2,11 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
 import SubBanner from '../../components/SubBanner'
 
 export default function Shop() {
+  usePageMetaFromAdmin('/shop', 'Shop', 'Browse our wide range of medicines and healthcare products.')
+
   const [search, setSearch] = useState('')
   const [searchInput, setSearchInput] = useState('')
   const [sort, setSort] = useState('')

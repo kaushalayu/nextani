@@ -90,7 +90,7 @@ export default function AdminLayout({ children }) {
       <aside className={`admin-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="admin-sidebar-header">
           <div className="admin-logo-icon">P</div>
-          <span className="admin-logo-text">Pharmez <span>Admin</span></span>
+          <span className="admin-logo-text">Painomed <span>Admin</span></span>
           <span className="admin-sidebar-badge">v2.0</span>
         </div>
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import API from '../../lib/api'
 
@@ -17,6 +18,8 @@ const PAYMENT_METHODS = [
 ]
 
 export default function Checkout() {
+  usePageMetaFromAdmin('/checkout', 'Checkout', 'Complete your order and choose your payment method.')
+
   const router = useRouter()
   const { cart, clearCart } = useCart()
   const { isLoggedIn, user } = useAuth()
@@ -118,7 +121,7 @@ export default function Checkout() {
         orderItems += `\u2022 ${item.qty} x ${item.name}${item.pills ? ` (${item.pills} pills)` : ''} .................... $${(item.price * item.qty).toFixed(2)}\n`
       })
 
-      let message = '🛒 *New Order - Pharmez*\n\n'
+      let message = '🛒 *New Order - Painomed*\n\n'
       message += '━━━━━━━━━━━━━━━━━━\n'
       message += '*Customer Details*\n'
       message += '━━━━━━━━━━━━━━━━━━\n'
@@ -138,7 +141,7 @@ export default function Checkout() {
       message += '────────────────────\n'
       message += '\n💳 Pay via WhatsApp'
       message += '\n────────────────────\n'
-      message += 'Thank you for choosing Pharmez! 🙏'
+      message += 'Thank you for choosing Painomed! 🙏'
 
       const waNumber = seo?.whatsappNumber || '61383766284'
       const supportEmail = seo?.supportEmail || 'support@pharmez.com'

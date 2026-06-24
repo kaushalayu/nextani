@@ -32,7 +32,7 @@ export default function AdminDashboard() {
     <div className="admin-dashboard">
       <div className="admin-dashboard-hero">
         <h1>Welcome back, Admin</h1>
-        <p>Here is what&apos;s happening at Pharmez today.</p>
+        <p>Here is what&apos;s happening at Painomed today.</p>
       </div>
 
       <div className="admin-stats-grid">

@@ -1,15 +1,15 @@
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
-const siteName = 'Pharmez - Online Pharmacy'
+const siteName = 'Painomed - Online Pharmacy'
 
 const metadataBase = siteUrl ? new URL(siteUrl) : undefined
 
 export const defaultMetadata = {
   title: {
-    default: 'Pharmez - Online Pharmacy | Fast & Trusted Medicine Delivery',
-    template: '%s | Pharmez',
+    default: 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery',
+    template: '%s | Painomed',
   },
-  description: 'Pharmez is your trusted online pharmacy. Upload your prescription & get medicines delivered to your doorstep. Safe, reliable & always on time.',
-  keywords: ['online pharmacy', 'medicine delivery', 'prescription', 'healthcare', 'pharmacy', 'Pharmez'],
+  description: 'Painomed is your trusted online pharmacy. Upload your prescription & get medicines delivered to your doorstep. Safe, reliable & always on time.',
+  keywords: ['online pharmacy', 'medicine delivery', 'prescription', 'healthcare', 'pharmacy', 'Painomed'],
   ...(metadataBase && { metadataBase }),
   icons: {
     icon: '/favicon.svg',
@@ -19,17 +19,17 @@ export const defaultMetadata = {
     type: 'website',
     locale: 'en_US',
     siteName,
-    title: 'Pharmez - Online Pharmacy',
+    title: 'Painomed - Online Pharmacy',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
     ...(siteUrl && { url: siteUrl }),
-    images: [{ url: '/assets/images/logo.png', width: 200, height: 60, alt: 'Pharmez' }],
+    images: [{ url: '/assets/images/logo.png', width: 200, height: 60, alt: 'Painomed' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pharmez - Online Pharmacy',
+    title: 'Painomed - Online Pharmacy',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
     images: ['/assets/images/logo.png'],
-    creator: '@pharmez',
+    creator: '@painomed',
   },
   robots: {
     index: true,
@@ -56,17 +56,17 @@ export function generateProductMetadata(product) {
     : product.image || '/assets/images/best-product1.png'
 
   return {
-    title: `${product.name} - Buy Online | Pharmez`,
-    description: product.shortDescription || product.description?.slice(0, 160) || `Buy ${product.name} online at Pharmez. Best price $${price}. Fast delivery.`,
+    title: `${product.name} - Buy Online | Painomed`,
+    description: product.shortDescription || product.description?.slice(0, 160) || `Buy ${product.name} online at Painomed. Best price $${price}. Fast delivery.`,
     keywords: [product.name, product.badge, 'online pharmacy', 'buy medicine'].filter(Boolean),
     openGraph: {
-      title: `${product.name} | Pharmez`,
+      title: `${product.name} | Painomed`,
       description: product.shortDescription || `Buy ${product.name} online. $${price}.`,
       ...(url && { url }),
       images: [{ url: img, width: 800, height: 800, alt: product.name }],
     },
     twitter: {
-      title: `${product.name} | Pharmez`,
+      title: `${product.name} | Painomed`,
       description: product.shortDescription || `Buy ${product.name} online. $${price}.`,
       images: [img],
     },
@@ -82,7 +82,7 @@ export function generateBlogMetadata(post) {
     : post.image || '/assets/images/blog-image1.jpg'
 
   return {
-    title: `${post.title} | Pharmez Blog`,
+    title: `${post.title} | Painomed Blog`,
     description: post.excerpt || post.content?.slice(0, 160) || 'Read our latest blog post.',
     openGraph: {
       title: post.title,
@@ -107,13 +107,13 @@ export function generatePageMetadata(title, description, path, ogImage) {
     title,
     description,
     openGraph: {
-      title: `${title} | Pharmez`,
+      title: `${title} | Painomed`,
       description,
       ...(url && { url }),
       images: ogImage ? [{ url: ogImage }] : undefined,
     },
     twitter: {
-      title: `${title} | Pharmez`,
+      title: `${title} | Painomed`,
       description,
     },
     ...(url && { alternates: { canonical: url } }),

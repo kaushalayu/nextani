@@ -8,7 +8,7 @@ const API = axios.create({
 API.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('pharmez_token')
+      const token = localStorage.getItem('painomed_token')
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
       }
@@ -22,8 +22,8 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      localStorage.removeItem('pharmez_token')
-      localStorage.removeItem('pharmez_user')
+      localStorage.removeItem('painomed_token')
+      localStorage.removeItem('painomed_user')
       const isAdminRoute = window.location.pathname.startsWith('/admin')
       const isAuthRoute = window.location.pathname === '/login' || window.location.pathname === '/join-now'
       if (!isAuthRoute) {

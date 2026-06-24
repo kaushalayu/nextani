@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Contact() {
+  usePageMetaFromAdmin('/contact', 'Contact Us', 'Get in touch with Painomed. We are here to help you.')
+
   const [seo, setSeo] = useState(null)
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' })
   const [loading, setLoading] = useState(false)
@@ -37,7 +40,7 @@ export default function Contact() {
   }
 
   const address = seo?.address || '121 King Street, Melbourne Victoria 3000 Australia'
-  const supportEmail = seo?.supportEmail || 'support@pharmez.com'
+  const supportEmail = seo?.supportEmail || 'support@painomed.com'
   const contactPhone = seo?.contactPhone || '+61 3 8376 6284'
   const businessHours = seo?.businessHours || 'Monday–Friday, 9 am–6 pm'
   const mapUrl = seo?.mapEmbedUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.367176743588!2d144.95736461590413!3d-37.81813957974638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65cbce858f6d7%3A0x9cc486b305ba3fb1!2s21%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2s!4v1669200882885!5m2!1sen!2s'

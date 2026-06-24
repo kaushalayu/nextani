@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
+import { usePageMeta } from '../../../context/SeoContext'
 import { useCart } from '../../../context/CartContext'
 import { useWishlist } from '../../../context/WishlistContext'
 import { useAuth } from '../../../context/AuthContext'
@@ -16,6 +17,11 @@ export default function SingleProduct() {
   const { product, loading, error } = useSingleProduct(id)
   const { products: relatedProducts } = useProducts({ limit: 8 })
   const navigate = useRouter()
+
+  usePageMeta(
+    product?.name ? `${product.name} - Buy Online` : 'Product Details',
+    product?.shortDescription || product?.description?.slice(0, 160) || 'View product details'
+  )
 
   const [selectedPillsIdx, setSelectedPillsIdx] = useState(0)
   const [quantity, setQuantity] = useState(1)
@@ -168,7 +174,7 @@ export default function SingleProduct() {
               <div className="sp-meta">
                 {product.sku && <div><i className="fa-solid fa-tag" /> <strong>SKU:</strong> {product.sku}</div>}
                 <div><i className="fa-solid fa-layer-group" /> <strong>Category:</strong> {product.category?.name || 'General'}</div>
-                <div><i className="fa-solid fa-building" /> <strong>Brand:</strong> {product.brand || 'Pharmez Healthcare'}</div>
+                <div><i className="fa-solid fa-building" /> <strong>Brand:</strong> {product.brand || 'Painomed Healthcare'}</div>
               </div>
 
               <div className="sp-detail-icons">

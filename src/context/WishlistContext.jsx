@@ -7,7 +7,7 @@ const WishlistContext = createContext()
 export function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState(() => {
     try {
-      const saved = typeof window !== 'undefined' ? localStorage.getItem('pharmez_wishlist') : null
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('painomed_wishlist') : null
       return saved ? JSON.parse(saved) : []
     } catch {
       return []
@@ -15,7 +15,7 @@ export function WishlistProvider({ children }) {
   })
 
   useEffect(() => {
-    localStorage.setItem('pharmez_wishlist', JSON.stringify(wishlist))
+    localStorage.setItem('painomed_wishlist', JSON.stringify(wishlist))
   }, [wishlist])
 
   const addToWishlist = (item) => {

@@ -5,12 +5,18 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import API from '../../../lib/api'
 import { BlogPostSchema, BreadcrumbSchema } from '../../../components/Seo/SchemaMarkup'
+import { usePageMeta } from '../../../context/SeoContext'
 import SubBanner from '../../../components/SubBanner'
 
 export default function BlogDetail() {
   const { id } = useParams()
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  usePageMeta(
+    post?.title ? `${post.title} - Blog` : 'Blog Post',
+    post?.excerpt || post?.content?.slice(0, 160) || 'Read our latest blog post.'
+  )
 
   useEffect(() => {
     API.get(`/blogs/${id}`).then(({ data }) => setPost(data.blog || data)).catch(() => setPost(null)).finally(() => setLoading(false))

@@ -1,10 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Testimonials() {
+  usePageMetaFromAdmin('/testimonials', 'Testimonials', 'Read what our customers say about Painomed.')
+
   const [testimonials, setTestimonials] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -20,7 +23,7 @@ export default function Testimonials() {
 
   return (
     <>
-      <SubBanner title="Testimonials" description="Read what our customers say about Pharmez. Real reviews from real customers who trust us for their medicine delivery needs." page="Testimonials" />
+      <SubBanner title="Testimonials" description="Read what our customers say about Painomed. Real reviews from real customers who trust us for their medicine delivery needs." page="Testimonials" />
 
       <div className="testimonials-page">
         <div className="main-container">

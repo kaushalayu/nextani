@@ -3,6 +3,7 @@
 import { AuthProvider } from '../context/AuthContext'
 import { CartProvider } from '../context/CartContext'
 import { WishlistProvider } from '../context/WishlistContext'
+import { SeoProvider } from '../context/SeoContext'
 import { ToastProvider } from '../components/Toast'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -52,6 +53,7 @@ export default function ClientLayout({ children }) {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
+            <SeoProvider>
             <ToastProvider>
               <GAPageView GA_MEASUREMENT_ID={GA_ID} />
               {!isAdmin && <Preloader />}
@@ -61,6 +63,7 @@ export default function ClientLayout({ children }) {
               <main>{children}</main>
               {!isAdmin && <Footer />}
             </ToastProvider>
+            </SeoProvider>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

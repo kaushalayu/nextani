@@ -24,7 +24,7 @@ export function buildMetadata(meta, fallbackTitle, fallbackDescription) {
       title,
       description,
       url: SITE_URL,
-      siteName: 'Pharmez',
+      siteName: 'Painomed',
       ...(meta.ogImage ? { images: [{ url: meta.ogImage.startsWith('http') ? meta.ogImage : `${process.env.NEXT_PUBLIC_API_URL}${meta.ogImage}`, width: 1200, height: 630 }] } : {}),
     },
     twitter: {

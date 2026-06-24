@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import SubBanner from '../../components/SubBanner'
 
 export default function JoinNow() {
+  usePageMetaFromAdmin('/join', 'Create Account', 'Join Painomed today and enjoy fast, reliable medicine delivery.')
+
   const router = useRouter()
   const { register } = useAuth()
   const { addToast } = useToast()
@@ -31,7 +34,7 @@ export default function JoinNow() {
 
   return (
     <>
-      <SubBanner title="Create Account" description="Join Pharmez today and enjoy fast, reliable medicine delivery." page="Register" />
+      <SubBanner title="Create Account" description="Join Painomed today and enjoy fast, reliable medicine delivery." page="Register" />
       <div className="join-page">
         <div className="container">
           <div className="join-form-card">

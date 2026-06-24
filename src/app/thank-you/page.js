@@ -1,9 +1,12 @@
 'use client'
 
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function ThankYou() {
+  usePageMetaFromAdmin('/thank-you', 'Order Confirmed', 'Your order has been placed successfully.')
+
   return (
     <>
       <SubBanner title="Order Confirmed" description="Your order has been placed successfully." page="Thank You" />

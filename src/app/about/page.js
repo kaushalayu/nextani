@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function About() {
+  usePageMetaFromAdmin('/about', 'About Us', 'Learn more about Painomed - your trusted online pharmacy.')
+
   const [testimonials, setTestimonials] = useState([])
   const [team, setTeam] = useState([])
   const [blogs, setBlogs] = useState([])
@@ -47,7 +50,7 @@ export default function About() {
                     <p>With a focus on convenience and quality, we partner with licensed pharmacies and healthcare professionals. Our mission is to simplify your healthcare journey, one delivery at a time.</p>
                   </div>
                   <div className="position-relative">
-                    <figure><img src="/assets/images/main-abt-img1.jpg" alt="About Pharmez" className="img-fluid br-30" /></figure>
+                    <figure><img src="/assets/images/main-abt-img1.jpg" alt="About Painomed" className="img-fluid br-30" /></figure>
                     <div className="vid-con bg-black br-30 text-center"><a href="https://video-previews.elements.envatousercontent.com/a8007808-5900-46c3-92dc-9c4dc55afd78/watermarked_preview/watermarked_preview.mp4" className="popup-vimeo d-inline-block"><img src="/assets/images/play-btn.png" alt="Play Video" className="img-fluid" /></a><span className="d-block text-white font-weight-bold">Watch Video</span></div>
                   </div>
                 </div>
@@ -104,7 +107,7 @@ export default function About() {
 
       <div className="padding-rl float-left w-100">
         <section className="float-left w-100 position-relative how-it-works-con br-30">
-          <figure className="pharmz-icon"><img src="/assets/images/capsule-icon.png" alt="Pharmez" className="position-absolute img-fluid" /></figure>
+          <figure className="pharmz-icon"><img src="/assets/images/capsule-icon.png" alt="Painomed" className="position-absolute img-fluid" /></figure>
           <div className="container-fluid">
             <div className="row align-items-center">
               <div className="col-lg-7 col-md-6">

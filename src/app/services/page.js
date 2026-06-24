@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 import { useCart } from '../../context/CartContext'
@@ -9,6 +10,8 @@ import { useWishlist } from '../../context/WishlistContext'
 import { useToast } from '../../components/Toast'
 
 export default function Services() {
+  usePageMetaFromAdmin('/services', 'Services', 'Explore our healthcare services at Painomed.')
+
   const [services, setServices] = useState([])
   const [categories, setCategories] = useState([])
   const [featuredProducts, setFeaturedProducts] = useState([])

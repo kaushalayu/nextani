@@ -8,7 +8,7 @@ const AuthContext = createContext()
 const getStoredUser = () => {
   if (typeof window === 'undefined') return null
   try {
-    const saved = localStorage.getItem('pharmez_user')
+    const saved = localStorage.getItem('painomed_user')
     return saved ? JSON.parse(saved) : null
   } catch {
     return null
@@ -18,7 +18,7 @@ const getStoredUser = () => {
 const getStoredToken = () => {
   if (typeof window === 'undefined') return null
   try {
-    return localStorage.getItem('pharmez_token') || null
+    return localStorage.getItem('painomed_token') || null
   } catch {
     return null
   }
@@ -50,8 +50,8 @@ export function AuthProvider({ children }) {
   const isAdmin = user?.role === 'admin'
 
   const clearAuth = useCallback(() => {
-    safeLocalStorage.removeItem('pharmez_token')
-    safeLocalStorage.removeItem('pharmez_user')
+    safeLocalStorage.removeItem('painomed_token')
+    safeLocalStorage.removeItem('painomed_user')
     setUser(null)
   }, [])
 
@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
     API.get('/auth/me')
       .then(({ data }) => {
         if (data.success && data.user) {
-          localStorage.setItem('pharmez_user', JSON.stringify(data.user))
+          localStorage.setItem('painomed_user', JSON.stringify(data.user))
           setUser(data.user)
         } else {
           clearAuth()
@@ -85,8 +85,8 @@ export function AuthProvider({ children }) {
     setError(null)
     try {
       const { data } = await API.post('/auth/register', { name, email, password })
-      safeLocalStorage.setItem('pharmez_token', data.token)
-      safeLocalStorage.setItem('pharmez_user', JSON.stringify(data.user))
+      safeLocalStorage.setItem('painomed_token', data.token)
+      safeLocalStorage.setItem('painomed_user', JSON.stringify(data.user))
       setUser(data.user)
       return { success: true }
     } catch (err) {
@@ -103,8 +103,8 @@ export function AuthProvider({ children }) {
     setError(null)
     try {
       const { data } = await API.post('/auth/login', { email, password })
-      safeLocalStorage.setItem('pharmez_token', data.token)
-      safeLocalStorage.setItem('pharmez_user', JSON.stringify(data.user))
+      safeLocalStorage.setItem('painomed_token', data.token)
+      safeLocalStorage.setItem('painomed_user', JSON.stringify(data.user))
       setUser(data.user)
       return { success: true, role: data.user.role }
     } catch (err) {
@@ -124,7 +124,7 @@ export function AuthProvider({ children }) {
     try {
       const { data } = await API.get('/auth/me')
       if (data.success && data.user) {
-        localStorage.setItem('pharmez_user', JSON.stringify(data.user))
+        localStorage.setItem('painomed_user', JSON.stringify(data.user))
         setUser(data.user)
       } else {
         clearAuth()

@@ -3,9 +3,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import API from '../../lib/api'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function Blog() {
+  usePageMetaFromAdmin('/blog', 'Blog', 'Read our latest blog posts about health and wellness.')
+
   const [activeTab, setActiveTab] = useState('All')
   const [blogs, setBlogs] = useState([])
   const [categories, setCategories] = useState(['All'])

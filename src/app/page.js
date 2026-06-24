@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useProducts } from '../hooks/useProducts'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import { usePageMetaFromAdmin } from '../context/SeoContext'
 import API from '../lib/api'
 
 const categories = [
@@ -142,6 +143,8 @@ function TestimonialCarousel({ testimonials }) {
 }
 
 export default function Home() {
+  usePageMetaFromAdmin('/', 'Home', 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery')
+
   const [activeTab, setActiveTab] = useState('all')
   const [toast, setToast] = useState(null)
   const [blogPosts, setBlogPosts] = useState([])

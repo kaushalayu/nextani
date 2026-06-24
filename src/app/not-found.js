@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const metadata = {
-  title: '404 - Page Not Found | Pharmez',
+  title: '404 - Page Not Found | Painomed',
   description: 'The page you are looking for does not exist.',
   robots: { index: false, follow: true },
 }

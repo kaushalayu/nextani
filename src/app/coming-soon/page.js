@@ -2,12 +2,12 @@ import { generatePageMetadata } from '../../lib/seo-metadata'
 import SubBanner from '../../components/SubBanner'
 import Link from 'next/link'
 
-export const metadata = generatePageMetadata('Coming Soon', 'Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy.', '/coming-soon')
+export const metadata = generatePageMetadata('Coming Soon', 'Stay tuned for exciting new products and features coming soon to Painomed online pharmacy.', '/coming-soon')
 
 export default function ComingSoon() {
   return (
     <>
-      <SubBanner title="Coming Soon" description="Stay tuned for exciting new products and features coming soon to Pharmez online pharmacy." page="Coming Soon" />
+      <SubBanner title="Coming Soon" description="Stay tuned for exciting new products and features coming soon to Painomed online pharmacy." page="Coming Soon" />
       <div className="padding-rl float-left w-100">
         <div className="container">
           <div className="coming-soon-section">

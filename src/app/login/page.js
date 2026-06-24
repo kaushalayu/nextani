@@ -4,10 +4,13 @@ import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import SubBanner from '../../components/SubBanner'
 
 export default function Login() {
+  usePageMetaFromAdmin('/login', 'Login', 'Sign in to your Painomed account to manage orders and more.')
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const { login } = useAuth()
@@ -32,11 +35,11 @@ export default function Login() {
 
   return (
     <>
-      <SubBanner title="Login" description="Sign in to your Pharmez account to manage orders and more." page="Login" />
+      <SubBanner title="Login" description="Sign in to your Painomed account to manage orders and more." page="Login" />
       <div className="login-page">
         <div className="login-form-box">
           <div className="login-form-title">
-            <img src="/assets/images/logo.png" alt="Pharmez" />
+            <img src="/assets/images/logo.png" alt="Painomed" />
             <h2>Welcome Back</h2>
             <p>Sign in to your account to continue</p>
           </div>

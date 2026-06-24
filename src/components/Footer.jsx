@@ -38,7 +38,7 @@ function Footer() {
 
   const waNumber = seo?.whatsappNumber || '61383766284'
   const phone = seo?.contactPhone || '+61 3 8376 6284'
-  const supportEmail = seo?.supportEmail || 'support@pharmez.com'
+  const supportEmail = seo?.supportEmail || 'support@painomed.com'
   const address = seo?.address || '21 King Street, Melbourne, 3000, Australia'
   const businessHours = seo?.businessHours || 'Mon - Sat: 9:00 am to 6:00 pm'
   const fb = seo?.socialLinks?.facebook || 'https://www.facebook.com/'
@@ -58,8 +58,8 @@ function Footer() {
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="logo-content">
                   <Link href="/" className="footer-logo d-flex align-items-center">
-                    <img loading="lazy" src="/assets/images/footer-icon.png" alt="Pharmez" className="d-inline-block" />
-                    <span className="text-white d-inline-block special-heading1">Pharmez.</span>
+                    <img loading="lazy" src="/assets/images/footer-icon.png" alt="Painomed" className="d-inline-block" />
+                    <span className="text-white d-inline-block special-heading1">Painomed.</span>
                   </Link>
                   <h4 className="text-white">Subscribe to Our Newsletter:</h4>
                   {subscribed ? (
@@ -121,7 +121,7 @@ function Footer() {
             </div>
           </div>
           <div className="copyright d-flex justify-content-between align-items-center padding-rl-responsive">
-            <p className="mb-0">{footerText || 'Copyright © 2025 pharmez. All Rights Reserved.'}</p>
+            <p className="mb-0">{footerText || 'Copyright © 2025 painomed. All Rights Reserved.'}</p>
             <img loading="lazy" src="/assets/images/payment-cards.png" alt="Payment Cards" className="img-fluid" />
           </div>
         </div>

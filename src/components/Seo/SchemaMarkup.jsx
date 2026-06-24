@@ -13,7 +13,7 @@ export function OrganizationSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Pharmacy',
-    name: 'Pharmez',
+    name: 'Painomed',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     logo: '/assets/images/logo.png',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
@@ -55,7 +55,7 @@ export function ProductSchema({ product }) {
     sku: product.sku || product._id,
     brand: {
       '@type': 'Brand',
-      name: product.brand || 'Pharmez Healthcare',
+      name: product.brand || 'Painomed Healthcare',
     },
     offers: {
       '@type': 'Offer',
@@ -99,7 +99,7 @@ export function BlogPostSchema({ post }) {
     datePublished: post.createdAt,
     author: {
       '@type': 'Person',
-      name: post.author || 'Pharmez',
+      name: post.author || 'Painomed',
     },
   }
   return <JsonLd data={schema} />

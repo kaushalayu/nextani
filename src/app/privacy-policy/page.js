@@ -1,16 +1,16 @@
 import { generatePageMetadata } from '../../lib/seo-metadata'
 import SubBanner from '../../components/SubBanner'
 
-export const metadata = generatePageMetadata('Privacy Policy', 'Pharmez privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services.', '/privacy-policy')
+export const metadata = generatePageMetadata('Privacy Policy', 'Painomed privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services.', '/privacy-policy')
 
 export default function PrivacyPolicy() {
   return (
     <>
-      <SubBanner title="Privacy Policy" description="Pharmez privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services." page="Privacy Policy" />
+      <SubBanner title="Privacy Policy" description="Painomed privacy policy outlines how we collect, use, and protect your personal information when using our online pharmacy services." page="Privacy Policy" />
       <div className="padding-rl float-left w-100">
         <div className="container legal-content">
           <h2>Introduction</h2>
-          <p>Pharmez (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p>
+          <p>Painomed (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p>
           <h2>Information We Collect</h2>
           <p>We may collect personal information such as your name, email address, phone number, shipping address, and payment details when you place an order or interact with our site.</p>
           <h2>How We Use Your Information</h2>

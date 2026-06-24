@@ -3,10 +3,13 @@
 import Link from 'next/link'
 import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import SubBanner from '../../components/SubBanner'
 
 export default function Wishlist() {
+  usePageMetaFromAdmin('/wishlist', 'Wishlist', 'Your saved items at Painomed.')
+
   const { wishlist, removeFromWishlist, clearWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { addToast } = useToast()

@@ -7,7 +7,7 @@ const CartContext = createContext()
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
     try {
-      const saved = typeof window !== 'undefined' ? localStorage.getItem('pharmez_cart') : null
+      const saved = typeof window !== 'undefined' ? localStorage.getItem('painomed_cart') : null
       return saved ? JSON.parse(saved) : []
     } catch {
       return []
@@ -15,7 +15,7 @@ export function CartProvider({ children }) {
   })
 
   useEffect(() => {
-    localStorage.setItem('pharmez_cart', JSON.stringify(cart))
+    localStorage.setItem('painomed_cart', JSON.stringify(cart))
   }, [cart])
 
   const addToCart = (item) => {

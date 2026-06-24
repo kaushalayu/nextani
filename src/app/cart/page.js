@@ -3,9 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function Cart() {
+  usePageMetaFromAdmin('/cart', 'Shopping Cart', 'Review your selected items and proceed to checkout securely.')
+
   const { cart, removeFromCart, updateQty, clearCart } = useCart()
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
 

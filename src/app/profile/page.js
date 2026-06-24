@@ -3,10 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Profile() {
+  usePageMetaFromAdmin('/profile', 'My Profile', 'Manage your Painomed account and view your orders.')
+
   const { isLoggedIn, user, logout } = useAuth()
   const [orders, setOrders] = useState([])
 

@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function FAQ() {
+  usePageMetaFromAdmin('/faq', 'FAQ', 'Frequently asked questions about Painomed online pharmacy.')
+
   const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(true)
   const [openIndex, setOpenIndex] = useState(null)

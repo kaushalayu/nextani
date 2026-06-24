@@ -12,7 +12,7 @@ export default function AdminProductForm({ productId }) {
 
   const [form, setForm] = useState({
     name: '', description: '', shortDescription: '', badge: '', tags: '',
-    price: '', oldPrice: '', stock: '', sku: '', brand: 'Pharmez Healthcare',
+    price: '', oldPrice: '', stock: '', sku: '', brand: 'Painomed Healthcare',
     category: '', image: '', isFeatured: false, isNewArrival: false,
     isBestSeller: false, isActive: true, hasPillsOptions: false,
     pillsOptions: [], howToUse: '', sideEffects: '', ingredients: '',
@@ -40,7 +40,7 @@ export default function AdminProductForm({ productId }) {
           shortDescription: p.shortDescription || '', badge: p.badge || '',
           tags: (p.tags || []).join(', '), price: p.price || '',
           oldPrice: p.oldPrice || '', stock: p.stock || '', sku: p.sku || '',
-          brand: p.brand || 'Pharmez Healthcare',
+          brand: p.brand || 'Painomed Healthcare',
           category: p.category?._id || p.category || '',
           image: p.image || '', isFeatured: p.isFeatured || false,
           isNewArrival: p.isNewArrival || false, isBestSeller: p.isBestSeller || false,
