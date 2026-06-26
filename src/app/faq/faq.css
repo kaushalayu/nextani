@@ -9,6 +9,10 @@
   margin-bottom: 12px;
 }
 
+.faq-answer {
+  display: block !important;
+}
+
 .faq-answer-hidden {
-  display: none;
+  display: none !important;
 }

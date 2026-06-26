@@ -47,6 +47,9 @@ function Footer() {
 
   return (
     <>
+    <Link href="/cart" className="cart-float" aria-label="View Cart">
+      <i className="fa-solid fa-cart-shopping" />
+    </Link>
     <a href={`https://wa.me/${waNumber}`} target="_blank" rel="noopener noreferrer" className="whatsapp-float" aria-label="Chat on WhatsApp">
       <i className="fa-brands fa-whatsapp" />
     </a>

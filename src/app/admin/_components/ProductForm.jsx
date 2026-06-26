@@ -2,7 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import API from '../../../lib/api'
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
+import 'react-quill-new/dist/quill.snow.css'
 
 export default function AdminProductForm({ productId }) {
   const router = useRouter()
@@ -204,7 +208,21 @@ export default function AdminProductForm({ productId }) {
         </div>
         <div style={{ marginTop: 12 }}>
           <label style={labelStyle}>Full Description *</label>
-          <textarea name="description" value={form.description} onChange={handleChange} required rows={4} style={inputStyle} />
+          <ReactQuill
+            value={form.description}
+            onChange={(val) => setForm(prev => ({ ...prev, description: val }))}
+            modules={{
+              toolbar: [
+                [{ header: [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ list: 'ordered' }, { list: 'bullet' }],
+                ['link', 'image'],
+                ['clean'],
+              ],
+            }}
+            style={{ height: 300, marginBottom: 40 }}
+            theme="snow"
+          />
         </div>
       </div>
 

@@ -14,8 +14,8 @@ export default function BlogDetail() {
   const [loading, setLoading] = useState(true)
 
   usePageMeta(
-    post?.title ? `${post.title} - Blog` : 'Blog Post',
-    post?.excerpt || post?.content?.slice(0, 160) || 'Read our latest blog post.'
+    post?.metaTitle || (post?.title ? `${post.title} - Blog` : 'Blog Post'),
+    post?.metaDescription || post?.excerpt || post?.content?.slice(0, 160) || 'Read our latest blog post.'
   )
 
   useEffect(() => {

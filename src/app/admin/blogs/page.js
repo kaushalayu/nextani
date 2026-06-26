@@ -10,7 +10,7 @@ export default function AdminBlogs() {
   const [loading, setLoading] = useState(true)
   const [modal, setModal] = useState(null)
   const [saving, setSaving] = useState(false)
-  const [form, setForm] = useState({ title: '', content: '', excerpt: '', category: 'All', author: 'Admin', isPublished: true })
+  const [form, setForm] = useState({ title: '', content: '', excerpt: '', category: 'All', author: 'Admin', isPublished: true, metaTitle: '', metaDescription: '' })
   const [imageFile, setImageFile] = useState(null)
 
   useEffect(() => { load() }, [])
@@ -25,9 +25,9 @@ export default function AdminBlogs() {
 
   const openModal = (blog) => {
     if (blog) {
-      setForm({ title: blog.title || '', content: blog.content || '', excerpt: blog.excerpt || '', category: blog.category || 'All', author: blog.author || 'Admin', isPublished: blog.isPublished !== false })
+      setForm({ title: blog.title || '', content: blog.content || '', excerpt: blog.excerpt || '', category: blog.category || 'All', author: blog.author || 'Admin', isPublished: blog.isPublished !== false, metaTitle: blog.metaTitle || '', metaDescription: blog.metaDescription || '' })
     } else {
-      setForm({ title: '', content: '', excerpt: '', category: 'All', author: 'Admin', isPublished: true })
+      setForm({ title: '', content: '', excerpt: '', category: 'All', author: 'Admin', isPublished: true, metaTitle: '', metaDescription: '' })
     }
     setImageFile(null)
     setModal(blog?._id || 'new')
@@ -46,6 +46,8 @@ export default function AdminBlogs() {
       fd.append('category', form.category)
       fd.append('author', form.author)
       fd.append('isPublished', form.isPublished)
+      fd.append('metaTitle', form.metaTitle)
+      fd.append('metaDescription', form.metaDescription)
       if (imageFile) fd.append('image', imageFile)
 
       if (modal === 'new') {
@@ -169,6 +171,18 @@ export default function AdminBlogs() {
                   <div className="admin-form-group">
                     <label>Excerpt</label>
                     <textarea value={form.excerpt} onChange={e => setForm(f => ({ ...f, excerpt: e.target.value }))} rows={2} placeholder="Short summary (max 300 chars)" />
+                  </div>
+                </div>
+                <div className="admin-form-full">
+                  <div className="admin-form-group">
+                    <label>Meta Title (SEO)</label>
+                    <input value={form.metaTitle} onChange={e => setForm(f => ({ ...f, metaTitle: e.target.value }))} placeholder="SEO title (leave empty to use blog title)" />
+                  </div>
+                </div>
+                <div className="admin-form-full">
+                  <div className="admin-form-group">
+                    <label>Meta Description (SEO)</label>
+                    <textarea value={form.metaDescription} onChange={e => setForm(f => ({ ...f, metaDescription: e.target.value }))} rows={2} placeholder="SEO meta description (leave empty to use excerpt)" />
                   </div>
                 </div>
                 <div className="admin-form-full">

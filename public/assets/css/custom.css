@@ -3379,6 +3379,43 @@
   }
 }
 
+/* ─── CART FLOATING BUTTON ─── */
+.cart-float {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 24px !important;
+  z-index: 99999 !important;
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 50% !important;
+  background: #6366f1 !important;
+  color: #fff !important;
+  font-size: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cart-float:hover {
+  background: #4f46e5 !important;
+  color: #fff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5) !important;
+}
+
+@media (max-width: 768px) {
+  .cart-float {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 20px !important;
+    bottom: 16px !important;
+    left: 16px !important;
+  }
+}
+
 /* ─── TOAST NOTIFICATION ─── */
 .toast-container {
   position: fixed;

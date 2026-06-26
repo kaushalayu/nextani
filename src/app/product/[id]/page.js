@@ -193,7 +193,7 @@ export default function SingleProduct() {
           <section className="sp-section">
             <h2 className="sp-section-heading">Description</h2>
             <div className="sp-section-body">
-              <p className="sp-pre-line">{product.description}</p>
+              <div className="sp-pre-line" dangerouslySetInnerHTML={{ __html: product.description }} />
               {product.ingredients && (<><h4>Ingredients</h4><p className="sp-pre-line">{product.ingredients}</p></>)}
             </div>
           </section>
