@@ -17,7 +17,7 @@ export default function AdminDashboard() {
     Promise.all([
       API.get('/products?limit=1').then(r => r.data).catch(() => ({ total: 0 })),
       API.get('/orders?limit=1').then(r => r.data).catch(() => ({ total: 0, orders: [] })),
-      API.get('/auth/users?limit=1').then(r => r.data).catch(() => ({ total: 0 })),
+      API.get('/admin/users?limit=1').then(r => r.data).catch(() => ({ total: 0 })),
     ]).then(([products, orders, users]) => {
       setStats({
         products: products.total || 0,

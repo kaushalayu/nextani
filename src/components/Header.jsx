@@ -9,7 +9,7 @@ import API from '../lib/api'
 
 const CATEGORIES = [
   { label: 'Sleeping Pills', path: '/sleeping-pills', badge: 'sleep aid', color: '#6366f1' },
-  { label: 'Painkillers',    path: '/painkillers',    badge: 'painkillers', color: '#0f766e' },
+  { label: 'Painkillers',    path: '/painkillers',    badge: 'painkiller', color: '#0f766e' },
   { label: 'Anxiety Pills',  path: '/anxiety',        badge: 'calm',        color: '#7c3aed' },
 ]
 
@@ -149,8 +149,17 @@ function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const userMenuRef = useRef(null)
+  const [mobileSearch, setMobileSearch] = useState('')
 
   const closeMobileNav = () => setMobileNavOpen(false)
+
+  const handleMobileSearch = (e) => {
+    e.preventDefault()
+    if (!mobileSearch.trim()) return
+    router.push(`/shop?search=${encodeURIComponent(mobileSearch.trim())}`)
+    setMobileSearch('')
+    closeMobileNav()
+  }
 
   const handleLogout = () => {
     setUserMenuOpen(false)
@@ -219,6 +228,20 @@ function Header() {
                 </li>
                 <li className="nav-item">
                   <Link className={`nav-link p-0${pathname.startsWith('/blog') ? ' active' : ''}`} href="/blog" onClick={closeMobileNav}>Blog</Link>
+                </li>
+                <li className="nav-item mobile-search-item">
+                  <form onSubmit={handleMobileSearch} className="mobile-search-form">
+                    <input
+                      type="text"
+                      value={mobileSearch}
+                      onChange={e => setMobileSearch(e.target.value)}
+                      placeholder="Search medicines..."
+                      className="mobile-search-input"
+                    />
+                    <button type="submit" className="mobile-search-btn" aria-label="Search">
+                      <i className="fa-solid fa-magnifying-glass" />
+                    </button>
+                  </form>
                 </li>
                 <li className="nav-item mobile-login-item">
                   {isLoggedIn ? (

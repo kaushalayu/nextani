@@ -5,7 +5,7 @@ import ProductCard from '../../components/ProductCard'
 import SubBanner from '../../components/SubBanner'
 
 export default function Painkillers() {
-  const { products, loading } = useProducts({ badge: 'painkillers', limit: 20 })
+  const { products, loading } = useProducts({ badge: 'painkiller', limit: 20 })
 
   return (
     <>
