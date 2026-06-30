@@ -24,6 +24,7 @@ const navSections = [
       { href: '/admin/faqs', label: 'FAQs', icon: 'fa-solid fa-question' },
       { href: '/admin/team', label: 'Team', icon: 'fa-solid fa-user-tie' },
       { href: '/admin/services', label: 'Services', icon: 'fa-solid fa-hand-holding-heart' },
+      { href: '/admin/about', label: 'About', icon: 'fa-solid fa-circle-info' },
     ],
   },
   {

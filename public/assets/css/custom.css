@@ -2528,26 +2528,7 @@
     max-width: 100%;
     box-shadow: 0 12px 40px rgba(0,0,0,0.08);
 }
-.srv-intro-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: #fff;
-    padding: 10px 18px;
-    border-radius: 14px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.10);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    color: #1f2937;
-    animation: floatBadge 3s ease-in-out infinite;
-}
-.srv-intro-badge i {
-    color: #5c45bf;
-    font-size: 18px;
-}
+
 @keyframes floatBadge {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }

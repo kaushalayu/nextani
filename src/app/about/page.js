@@ -12,11 +12,13 @@ export default function About() {
   const [testimonials, setTestimonials] = useState([])
   const [team, setTeam] = useState([])
   const [blogs, setBlogs] = useState([])
+  const [aboutMeta, setAboutMeta] = useState(null)
 
   useEffect(() => {
     API.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials || [])).catch(() => {})
     API.get('/team').then(({ data }) => setTeam(data.members || [])).catch(() => {})
     API.get('/blogs?limit=3').then(({ data }) => setBlogs(data.blogs || [])).catch(() => {})
+    API.get('/page-meta/about').then(({ data }) => setAboutMeta(data.data || null)).catch(() => {})
   }, [])
 
   const teamImg = (img) => {
@@ -51,7 +53,7 @@ export default function About() {
                   </div>
                   <div className="position-relative">
                     <figure><img src="/assets/images/main-abt-img1.jpg" alt="About Painomed" className="img-fluid br-30" /></figure>
-                    <div className="vid-con bg-black br-30 text-center"><a href="https://video-previews.elements.envatousercontent.com/a8007808-5900-46c3-92dc-9c4dc55afd78/watermarked_preview/watermarked_preview.mp4" className="popup-vimeo d-inline-block"><img src="/assets/images/play-btn.png" alt="Play Video" className="img-fluid" /></a><span className="d-block text-white font-weight-bold">Watch Video</span></div>
+                    <div className="vid-con bg-black br-30 text-center"><a href={aboutMeta?.aboutVideoUrl || 'https://video-previews.elements.envatousercontent.com/a8007808-5900-46c3-92dc-9c4dc55afd78/watermarked_preview/watermarked_preview.mp4'} className="popup-vimeo d-inline-block"><img src="/assets/images/play-btn.png" alt="Play Video" className="img-fluid" /></a><span className="d-block text-white font-weight-bold">Watch Video</span></div>
                   </div>
                 </div>
               </div>

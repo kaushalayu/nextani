@@ -4037,25 +4037,6 @@
     object-fit: cover;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
 }
-.srv-intro-badge {
-    position: absolute;
-    bottom: 30px;
-    left: -10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--secondary--color);
-    padding: 12px 22px;
-    border-radius: 14px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black--color);
-}
-.srv-intro-badge i {
-    font-size: 18px;
-    color: var(--accent--color);
-}
 .srv-intro-badge-2 {
     bottom: auto;
     top: 30px;
@@ -4325,12 +4306,6 @@
     }
     .srv-intro-con {
         padding: 50px 0 40px;
-    }
-    .srv-intro-badge {
-        padding: 10px 16px;
-        font-size: 12px;
-        bottom: 20px;
-        left: 0;
     }
     .srv-intro-badge-2 {
         top: 20px;
