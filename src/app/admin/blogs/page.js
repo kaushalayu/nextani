@@ -1,8 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import API from '../../../lib/api'
 import { useToast } from '../../../components/Toast'
+
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
+import 'react-quill-new/dist/quill.snow.css'
 
 export default function AdminBlogs() {
   const { addToast } = useToast()
@@ -188,7 +192,21 @@ export default function AdminBlogs() {
                 <div className="admin-form-full">
                   <div className="admin-form-group">
                     <label>Content *</label>
-                    <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))} rows={8} required placeholder="Blog content..." style={{ minHeight: 200 }} />
+                    <ReactQuill
+                      value={form.content}
+                      onChange={(val) => setForm(f => ({ ...f, content: val }))}
+                      modules={{
+                        toolbar: [
+                          [{ header: [1, 2, 3, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ list: 'ordered' }, { list: 'bullet' }],
+                          ['link', 'image'],
+                          ['clean'],
+                        ],
+                      }}
+                      style={{ height: 300, marginBottom: 40 }}
+                      theme="snow"
+                    />
                   </div>
                 </div>
                 <div className="admin-form-group">
