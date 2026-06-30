@@ -18,15 +18,17 @@ export default function AdminSeo() {
     footerText: '', whatsappNumber: '', supportEmail: '',
     contactPhone: '', address: '', businessHours: '',
     mapEmbedUrl: '', bitcoinAddress: '',
+    promoBanner1: '', promoBanner2: '', promoBanner3: '',
     facebook: '', instagram: '', linkedin: '',
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [iconFile, setIconFile] = useState(null)
   const [ogFile, setOgFile] = useState(null)
+  const [promoFiles, setPromoFiles] = useState({ 1: null, 2: null, 3: null })
 
   useEffect(() => {
-    API.get('/seo').then(({ data }) => {
+    API.get('/seo')      .then(({ data }) => {
       const s = data.seo || {}
       setForm({
         siteTitle: s.siteTitle || '',
@@ -44,6 +46,9 @@ export default function AdminSeo() {
         businessHours: s.businessHours || '',
         mapEmbedUrl: s.mapEmbedUrl || '',
         bitcoinAddress: s.bitcoinAddress || '',
+        promoBanner1: s.promoBanner1 || '',
+        promoBanner2: s.promoBanner2 || '',
+        promoBanner3: s.promoBanner3 || '',
         facebook: s.socialLinks?.facebook || '',
         instagram: s.socialLinks?.instagram || '',
         linkedin: s.socialLinks?.linkedin || '',
@@ -59,7 +64,7 @@ export default function AdminSeo() {
     e.preventDefault()
     setSaving(true)
     try {
-      const { ogImage: _, siteIcon: __, ...payload } = form
+      const { ogImage: _, siteIcon: __, promoBanner1: _b1, promoBanner2: _b2, promoBanner3: _b3, ...payload } = form
       const { data } = await API.put('/admin/seo', {
         ...payload,
         socialLinks: { facebook: form.facebook, instagram: form.instagram, linkedin: form.linkedin },
@@ -80,6 +85,9 @@ export default function AdminSeo() {
           bitcoinAddress: data.seo.bitcoinAddress || '',
           ogTitle: data.seo.ogTitle || '',
           ogDescription: data.seo.ogDescription || '',
+          promoBanner1: data.seo.promoBanner1 || '',
+          promoBanner2: data.seo.promoBanner2 || '',
+          promoBanner3: data.seo.promoBanner3 || '',
           facebook: data.seo.socialLinks?.facebook || '',
           instagram: data.seo.socialLinks?.instagram || '',
           linkedin: data.seo.socialLinks?.linkedin || '',
@@ -105,6 +113,18 @@ export default function AdminSeo() {
         }
         setOgFile(null)
       }
+      for (const idx of [1, 2, 3]) {
+        const file = promoFiles[idx]
+        if (file) {
+          const fd = new FormData()
+          fd.append('promoBanner', file)
+          const { data: promoData } = await API.post(`/admin/seo/upload-promo-banner/${idx}`, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+          if (promoData.seo?.[`promoBanner${idx}`]) {
+            setForm(prev => ({ ...prev, [`promoBanner${idx}`]: promoData.seo[`promoBanner${idx}`] }))
+          }
+        }
+      }
+      setPromoFiles({ 1: null, 2: null, 3: null })
     } catch (err) {
       addToast(err.response?.data?.message || 'Failed to save', 'error')
     } finally {
@@ -197,6 +217,27 @@ export default function AdminSeo() {
                 This address will be shown to customers during checkout when they select Bitcoin as payment method.
               </p>
             </div>
+          </div>
+        </div>
+
+        {/* Homepage Promo Banners */}
+        <div className="admin-form-card" style={{ marginBottom: 20 }}>
+          <h3 className="admin-section-title"><i className="fa-solid fa-rectangle-ad" /> Homepage Promo Banners</h3>
+          <div className="admin-form-grid">
+            {[1, 2, 3].map(idx => (
+              <div className="admin-form-group" key={idx}>
+                <label>Banner {idx}</label>
+                {form[`promoBanner${idx}`] ? (
+                  <div style={{ marginBottom: 8 }}>
+                    <img loading="lazy" src={imgUrl(form[`promoBanner${idx}`])} alt={`Promo ${idx}`} style={{ maxWidth: 200, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+                  </div>
+                ) : (
+                  <p style={{ fontSize: 12, color: '#9ca3af', marginBottom: 8 }}>No image uploaded</p>
+                )}
+                <input type="file" accept="image/*" onChange={e => setPromoFiles(prev => ({ ...prev, [idx]: e.target.files[0] }))} />
+                {promoFiles[idx] && <span style={{ fontSize: 12, color: '#059669' }}>New file selected: {promoFiles[idx].name}</span>}
+              </div>
+            ))}
           </div>
         </div>
 

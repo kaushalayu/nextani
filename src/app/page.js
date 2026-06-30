@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useProducts } from '../hooks/useProducts'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
-import { usePageMetaFromAdmin } from '../context/SeoContext'
+import { usePageMetaFromAdmin, useSeo } from '../context/SeoContext'
 import API from '../lib/api'
 
 const CATEGORY_ROUTES = {
@@ -142,6 +142,7 @@ function TestimonialCarousel({ testimonials }) {
 
 export default function Home() {
   usePageMetaFromAdmin('/', 'Home', 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery')
+  const { seo } = useSeo()
 
   const [activeTab, setActiveTab] = useState('all')
   const [toast, setToast] = useState(null)
@@ -377,7 +378,7 @@ export default function Home() {
           <div className="container-fluid">
             <div className="row">
               <div className="col-lg-4 col-md-6 d-flex">
-                <div className="promotion-box w-100 vitamins">
+                <div className="promotion-box w-100 vitamins" style={seo?.promoBanner1 ? { backgroundImage: `url(${getProductImg(seo.promoBanner1)})` } : {}}>
                   <span className="d-block discount-percent">10%</span>
                   <span className="d-block smol-text">OFF</span>
                   <h4 className="specialh4">Bitcoin &amp; <br />Crypto Payments</h4>
@@ -385,7 +386,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-flex">
-                <div className="promotion-box w-100 baby-care">
+                <div className="promotion-box w-100 baby-care" style={seo?.promoBanner2 ? { backgroundImage: `url(${getProductImg(seo.promoBanner2)})` } : {}}>
                   <span className="d-block discount-percent">20%</span>
                   <span className="d-block smol-text">OFF</span>
                   <h4 className="specialh4">Extra Savings<br />on Bitcoin</h4>
@@ -393,7 +394,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-flex">
-                <div className="promotion-box w-100 personal-care">
+                <div className="promotion-box w-100 personal-care" style={seo?.promoBanner3 ? { backgroundImage: `url(${getProductImg(seo.promoBanner3)})` } : {}}>
                   <span className="d-block discount-percent">15%</span>
                   <span className="d-block smol-text">DISCOUNT</span>
                   <h4 className="specialh4">First Crypto<br />Order</h4>

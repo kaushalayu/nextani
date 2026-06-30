@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '../../../context/AuthContext'
 import { usePageMetaFromAdmin } from '../../../context/SeoContext'
+import { useToast } from '../../../components/Toast'
 import API from '../../../lib/api'
 import SubBanner from '../../../components/SubBanner'
 
@@ -23,6 +24,9 @@ export default function OrderDetail() {
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [txHash, setTxHash] = useState('')
+  const [txUpdating, setTxUpdating] = useState(false)
+  const { addToast } = useToast()
 
   usePageMetaFromAdmin('/my-orders', 'Order Details', 'View your order details and status')
 
@@ -30,12 +34,28 @@ export default function OrderDetail() {
     if (!isLoggedIn || !id) return
     API.get(`/orders/${id}`)
       .then(({ data }) => {
-        if (data.success) setOrder(data.order)
-        else setError('Order not found')
+        if (data.success) {
+          setOrder(data.order)
+          setTxHash(data.order.bitcoinTxHash || '')
+        } else setError('Order not found')
       })
       .catch(() => setError('Failed to load order'))
       .finally(() => setLoading(false))
   }, [isLoggedIn, id])
+
+  const handleUpdateTx = async () => {
+    if (!txHash.trim()) { addToast('Enter a transaction hash', 'info'); return }
+    setTxUpdating(true)
+    try {
+      const { data } = await API.put(`/orders/${id}/bitcoin-tx`, { bitcoinTxHash: txHash.trim() })
+      setOrder(data.order)
+      addToast('Transaction hash updated', 'success')
+    } catch (err) {
+      addToast(err.response?.data?.message || 'Failed to update', 'error')
+    } finally {
+      setTxUpdating(false)
+    }
+  }
 
   if (!isLoggedIn) {
     return (
@@ -200,6 +220,56 @@ export default function OrderDetail() {
               </div>
             </div>
           </div>
+
+          {order.paymentMethod === 'bitcoin' && (
+            <div style={{
+              background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 12, padding: 20, marginBottom: 24,
+            }}>
+              <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 12, color: '#92400e' }}>
+                <i className="fa-brands fa-bitcoin" style={{ marginRight: 8 }} /> Bitcoin Payment
+              </h3>
+              {order.bitcoinTxHash ? (
+                <div>
+                  <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 6 }}>Transaction Hash (TXID):</p>
+                  <p style={{
+                    fontSize: 13, fontFamily: 'monospace', color: '#111827', wordBreak: 'break-all',
+                    background: '#fefce8', padding: 10, borderRadius: 8, border: '1px solid #fde68a',
+                  }}>{order.bitcoinTxHash}</p>
+                  <p style={{ fontSize: 12, color: '#6b7280', marginTop: 6 }}>
+                    <a href={`https://blockchair.com/bitcoin/transaction/${order.bitcoinTxHash}`} target="_blank" rel="noopener noreferrer">
+                      View on blockchain <i className="fa-solid fa-external-link-alt" />
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ fontSize: 13, color: '#92400e', marginBottom: 8 }}>
+                    <i className="fa-solid fa-circle-info" style={{ marginRight: 6 }} />
+                    After sending payment, paste the transaction hash below:
+                  </p>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <input
+                      type="text" value={txHash} onChange={e => setTxHash(e.target.value)}
+                      placeholder="Enter Bitcoin transaction hash"
+                      style={{
+                        flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid #d1d5db',
+                        fontSize: 13, fontFamily: 'monospace', outline: 'none',
+                      }}
+                    />
+                    <button onClick={handleUpdateTx} disabled={txUpdating}
+                      style={{
+                        padding: '10px 20px', borderRadius: 8, border: 'none',
+                        background: txUpdating ? '#9ca3af' : '#f59e0b', color: '#fff',
+                        fontWeight: 600, fontSize: 13, cursor: txUpdating ? 'not-allowed' : 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}>
+                      {txUpdating ? 'Saving...' : 'Submit'}
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
 
           <div style={{
             background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, overflow: 'hidden', marginBottom: 24,

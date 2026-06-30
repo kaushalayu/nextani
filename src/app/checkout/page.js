@@ -37,6 +37,8 @@ export default function Checkout() {
 
   const [placing, setPlacing] = useState(false)
   const [seo, setSeo] = useState(null)
+  const [btcPrice, setBtcPrice] = useState(null)
+  const [bitcoinTxHash, setBitcoinTxHash] = useState('')
 
   useEffect(() => {
     if (!isLoggedIn) { router.push('/login'); return }
@@ -44,6 +46,10 @@ export default function Checkout() {
       setForm(prev => ({ ...prev, firstName: user.name || '', email: user.email || '' }))
     }
     API.get('/seo').then(({ data }) => setSeo(data.seo || null)).catch(() => {})
+    fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
+      .then(r => r.json())
+      .then(d => setBtcPrice(d.bitcoin?.usd || null))
+      .catch(() => {})
   }, [isLoggedIn, user, router])
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
@@ -103,6 +109,7 @@ export default function Checkout() {
           expiryDate: cardDetails.expiryDate,
           cvv: cardDetails.cvv,
         } : undefined,
+        bitcoinTxHash: form.paymentMethod === 'bitcoin' ? bitcoinTxHash : '',
       }
 
       await API.post('/orders', orderData)
@@ -277,10 +284,29 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                       <h4><i className="fa-brands fa-bitcoin" />Bitcoin Payment</h4>
                       <p className="checkout-bitcoin-label">Send the exact amount to the address below:</p>
                       <div className="checkout-bitcoin-address">{bitcoinAddress}</div>
-                      <p className="checkout-bitcoin-info">
-                        <i className="fa-solid fa-circle-info checkout-bitcoin-info-icon" />
-                        Amount to send: <strong>${grandTotal.toFixed(2)}</strong> (equivalent in BTC)
-                      </p>
+                      {btcPrice && (
+                        <p className="checkout-bitcoin-info">
+                          <i className="fa-solid fa-circle-info checkout-bitcoin-info-icon" />
+                          Amount to send: <strong>${grandTotal.toFixed(2)}</strong> ≈ <strong>{(grandTotal / btcPrice).toFixed(6)} BTC</strong>
+                        </p>
+                      )}
+                      <div style={{ marginTop: 14, textAlign: 'center' }}>
+                        <img loading="lazy"
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:${bitcoinAddress}?amount=${btcPrice ? (grandTotal / btcPrice).toFixed(6) : ''}`}
+                          alt="Bitcoin QR Code" style={{ borderRadius: 12, border: '2px solid #f59e0b' }} />
+                      </div>
+                      <div style={{ marginTop: 16 }}>
+                        <label className="checkout-form-label">Transaction ID (TXID) — paste after sending payment</label>
+                        <input
+                          type="text" value={bitcoinTxHash} onChange={e => setBitcoinTxHash(e.target.value)}
+                          placeholder="Paste your Bitcoin transaction hash here"
+                          className="checkout-form-input"
+                          style={{ fontSize: 13, fontFamily: 'monospace' }}
+                        />
+                        <p style={{ fontSize: 11, color: '#6b7280', marginTop: 4 }}>
+                          You can also add this later from your order details page.
+                        </p>
+                      </div>
                     </div>
                   )}
 

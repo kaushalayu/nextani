@@ -180,11 +180,11 @@ export default function SingleProduct() {
               <div className="sp-detail-icons">
                 <div className="sp-detail-item">
                   <img loading="lazy" src="/assets/images/product-icon1.png" alt="Free Worldwide Shipping" />
-                  <span>Free Worldwide Shipping on All Orders Over $250</span>
+                  <span>Free all over USA Shipping on All Orders Over $250</span>
                 </div>
                 <div className="sp-detail-item">
                   <img loading="lazy" src="/assets/images/product-icon2.png" alt="Delivery Information" />
-                  <span>Delivers In: 4-7 Working Days <Link href="/terms-of-use">Terms &amp; Conditions</Link></span>
+                  <span>Delivers In: 3-5 Working Days <Link href="/terms-of-use">Terms &amp; Conditions</Link></span>
                 </div>
               </div>
             </div>

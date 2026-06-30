@@ -231,6 +231,31 @@ export default function AdminOrderDetail() {
             <p style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>Configured in SEO Settings. Inform customer to send payment to this address.</p>
           </div>
         )}
+
+        {/* Bitcoin Transaction Hash */}
+        {order.paymentMethod === 'bitcoin' && (
+          <div style={{ marginTop: 12, padding: 16, background: order.bitcoinTxHash ? '#f0fdf4' : '#fef2f2', borderRadius: 8, border: `1px solid ${order.bitcoinTxHash ? '#86efac' : '#fca5a5'}` }}>
+            <h4 style={{ fontSize: 13, fontWeight: 700, color: order.bitcoinTxHash ? '#065f46' : '#991b1b', marginBottom: 8 }}>
+              <i className="fa-brands fa-bitcoin" style={{ marginRight: 6 }} />
+              {order.bitcoinTxHash ? 'Bitcoin Transaction Received' : 'No Bitcoin Transaction Yet'}
+            </h4>
+            {order.bitcoinTxHash ? (
+              <div>
+                <p style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Transaction Hash (TXID):</p>
+                <p style={{ fontSize: 13, fontFamily: 'monospace', color: '#111827', wordBreak: 'break-all' }}>{order.bitcoinTxHash}</p>
+                <p style={{ marginTop: 8 }}>
+                  <a href={`https://blockchair.com/bitcoin/transaction/${order.bitcoinTxHash}`} target="_blank" rel="noopener noreferrer"
+                    style={{ fontSize: 13, color: '#059669', fontWeight: 600 }}>
+                    <i className="fa-solid fa-external-link-alt" style={{ marginRight: 4 }} />
+                    Verify on Blockchair
+                  </a>
+                </p>
+              </div>
+            ) : (
+              <p style={{ fontSize: 12, color: '#92400e' }}>Customer has not submitted a transaction hash yet.</p>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Order Items */}
