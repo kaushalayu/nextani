@@ -8,19 +8,17 @@ import { useWishlist } from '../context/WishlistContext'
 import { usePageMetaFromAdmin } from '../context/SeoContext'
 import API from '../lib/api'
 
-const categories = [
-  { name: 'Nutrition & Weight', img: '/assets/images/popular-category1.jpg' },
-  { name: 'Skin Essentials', img: '/assets/images/popular-category2.jpg' },
-  { name: 'Vitamins & Minerals', img: '/assets/images/popular-category3.jpg' },
-  { name: 'Cold & Flu Care', img: '/assets/images/popular-category4.jpg' },
-]
+const CATEGORY_ROUTES = {
+  'Sleeping Pills': '/sleeping-pills',
+  'Painkillers': '/painkillers',
+  'Anxiety Pills': '/anxiety',
+}
 
 const tabData = [
   { id: 'all', label: 'All' },
-  { id: 'cardiology', label: 'Cardiology' },
-  { id: 'neurology', label: 'Neurology' },
-  { id: 'pediatrics', label: 'Pediatrics' },
-  { id: 'gynecology', label: 'Gynecology' },
+  { id: 'anxiety', label: 'Anxiety Pills', badge: 'calm' },
+  { id: 'painkillers', label: 'Painkillers', badge: 'painkiller' },
+  { id: 'sleeping', label: 'Sleeping Pills', badge: 'sleep aid' },
 ]
 
 const whyChooseUs = [
@@ -149,15 +147,22 @@ export default function Home() {
   const [toast, setToast] = useState(null)
   const [blogPosts, setBlogPosts] = useState([])
   const [testimonials, setTestimonials] = useState([])
+  const [homeCategories, setHomeCategories] = useState([])
   const { addToCart } = useCart()
   const { addToWishlist } = useWishlist()
 
   useEffect(() => {
     API.get('/blogs?limit=3').then(({ data }) => setBlogPosts(data.blogs || [])).catch(() => {})
     API.get('/testimonials').then(({ data }) => setTestimonials(data.testimonials || [])).catch(() => {})
+    API.get('/categories?limit=4').then(({ data }) => setHomeCategories(data.categories || [])).catch(() => {})
   }, [])
 
-  const featuredParams = useMemo(() => ({ isFeatured: true, limit: 8 }), [])
+  const activeBadge = tabData.find(t => t.id === activeTab)?.badge
+  const featuredParams = useMemo(() => {
+    const p = { isFeatured: true, limit: 8 }
+    if (activeBadge) p.badge = activeBadge
+    return p
+  }, [activeBadge])
   const { products: featuredProducts, loading: featuredLoading } = useProducts(featuredParams)
 
   const bestSellerParams = useMemo(() => ({ isBestSeller: true, limit: 8 }), [])
@@ -253,13 +258,25 @@ export default function Home() {
             <h2 className="section-title">Our Popular Categories</h2>
           </div>
           <div className="categories-grid">
-            {categories.map((cat, i) => (
-              <Link href="/shop" className="category-card" key={i}>
+            {homeCategories.length > 0 ? homeCategories.map((cat, i) => {
+              const route = CATEGORY_ROUTES[cat.name] || '/shop'
+              const imgSrc = cat.image
+                ? (cat.image.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${cat.image}` : cat.image)
+                : '/assets/images/popular-category1.jpg'
+              return (
+                <Link href={route} className="category-card" key={cat._id || i}>
+                  <div className="category-image-wrapper">
+                    <img loading="lazy" src={imgSrc} alt={cat.name} />
+                    <div className="category-overlay"><span className="category-name">{cat.name}</span></div>
+                  </div>
+                </Link>
+              )
+            }) : [...Array(4)].map((_, i) => (
+              <div className="category-card" key={i} style={{ opacity: 0.4 }}>
                 <div className="category-image-wrapper">
-                  <img loading="lazy" src={cat.img} alt={cat.name} />
-                  <div className="category-overlay"><span className="category-name">{cat.name}</span></div>
+                  <img loading="lazy" src={`/assets/images/popular-category${i + 1}.jpg`} alt="" />
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -308,7 +325,7 @@ export default function Home() {
                   ))
                 : (<div className="home-empty">
                     <i className="fa-solid fa-box-open" />
-                    <p>No featured products yet. Add them from the admin panel.</p>
+                    <p>{activeBadge ? `No featured products in this category yet.` : 'No featured products yet. Add them from the admin panel.'}</p>
                   </div>)
             }
           </div>
@@ -361,26 +378,26 @@ export default function Home() {
             <div className="row">
               <div className="col-lg-4 col-md-6 d-flex">
                 <div className="promotion-box w-100 vitamins">
-                  <span className="d-block discount-percent">5%</span>
-                  <span className="d-block smol-text">Cashback</span>
-                  <h4 className="specialh4">Vitamins &amp; <br />Supplements</h4>
-                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Browse All</Link>
+                  <span className="d-block discount-percent">10%</span>
+                  <span className="d-block smol-text">OFF</span>
+                  <h4 className="specialh4">Bitcoin &amp; <br />Crypto Payments</h4>
+                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Pay with Crypto</Link>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-flex">
                 <div className="promotion-box w-100 baby-care">
-                  <span className="d-block smol-text">Flat</span>
-                  <span className="d-block discount-percent">10% <span className="d-inline-block smol-text mb-0">OFF</span></span>
-                  <h4 className="specialh4">Baby &amp; <br />Childcare</h4>
-                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Browse All</Link>
+                  <span className="d-block discount-percent">20%</span>
+                  <span className="d-block smol-text">OFF</span>
+                  <h4 className="specialh4">Extra Savings<br />on Bitcoin</h4>
+                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Start Saving</Link>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6 d-flex">
                 <div className="promotion-box w-100 personal-care">
-                  <span className="d-block discount-percent">12%</span>
-                  <span className="d-block smol-text">Cashback</span>
-                  <h4 className="specialh4">Personal care <br />&amp; Wellness</h4>
-                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Browse All</Link>
+                  <span className="d-block discount-percent">15%</span>
+                  <span className="d-block smol-text">DISCOUNT</span>
+                  <h4 className="specialh4">First Crypto<br />Order</h4>
+                  <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Order Now</Link>
                 </div>
               </div>
             </div>

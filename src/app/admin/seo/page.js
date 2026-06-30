@@ -4,11 +4,17 @@ import { useState, useEffect } from 'react'
 import API from '../../../lib/api'
 import { useToast } from '../../../components/Toast'
 
+const imgUrl = (url) => {
+  if (!url) return ''
+  if (url.startsWith('/uploads')) return `${process.env.NEXT_PUBLIC_API_URL}${url}`
+  return url
+}
+
 export default function AdminSeo() {
   const { addToast } = useToast()
   const [form, setForm] = useState({
     siteTitle: '', siteDescription: '', siteKeywords: '',
-    ogTitle: '', ogDescription: '', ogImage: '',
+    siteIcon: '', ogTitle: '', ogDescription: '', ogImage: '',
     footerText: '', whatsappNumber: '', supportEmail: '',
     contactPhone: '', address: '', businessHours: '',
     mapEmbedUrl: '', bitcoinAddress: '',
@@ -26,6 +32,7 @@ export default function AdminSeo() {
         siteTitle: s.siteTitle || '',
         siteDescription: s.siteDescription || '',
         siteKeywords: s.siteKeywords || '',
+        siteIcon: s.siteIcon || '',
         ogTitle: s.ogTitle || '',
         ogDescription: s.ogDescription || '',
         ogImage: s.ogImage || '',
@@ -52,24 +59,50 @@ export default function AdminSeo() {
     e.preventDefault()
     setSaving(true)
     try {
-      const { ogImage: _, ...payload } = form
+      const { ogImage: _, siteIcon: __, ...payload } = form
       const { data } = await API.put('/admin/seo', {
         ...payload,
         socialLinks: { facebook: form.facebook, instagram: form.instagram, linkedin: form.linkedin },
       })
+      if (data.seo) {
+        setForm(prev => ({
+          ...prev,
+          siteTitle: data.seo.siteTitle || '',
+          siteDescription: data.seo.siteDescription || '',
+          siteKeywords: data.seo.siteKeywords || '',
+          footerText: data.seo.footerText || '',
+          whatsappNumber: data.seo.whatsappNumber || '',
+          supportEmail: data.seo.supportEmail || '',
+          contactPhone: data.seo.contactPhone || '',
+          address: data.seo.address || '',
+          businessHours: data.seo.businessHours || '',
+          mapEmbedUrl: data.seo.mapEmbedUrl || '',
+          bitcoinAddress: data.seo.bitcoinAddress || '',
+          ogTitle: data.seo.ogTitle || '',
+          ogDescription: data.seo.ogDescription || '',
+          facebook: data.seo.socialLinks?.facebook || '',
+          instagram: data.seo.socialLinks?.instagram || '',
+          linkedin: data.seo.socialLinks?.linkedin || '',
+        }))
+      }
       addToast('SEO settings saved', 'success')
 
       if (iconFile) {
         const fd = new FormData()
         fd.append('icon', iconFile)
-        await API.post('/admin/seo/upload-icon', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+        const { data: iconData } = await API.post('/admin/seo/upload-icon', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+        if (iconData.seo?.siteIcon) {
+          setForm(prev => ({ ...prev, siteIcon: iconData.seo.siteIcon }))
+        }
         setIconFile(null)
       }
       if (ogFile) {
         const fd = new FormData()
         fd.append('ogImage', ogFile)
         const { data: ogData } = await API.post('/admin/seo/upload-og-image', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
-        setForm(prev => ({ ...prev, ogImage: ogData.seo.ogImage }))
+        if (ogData.seo?.ogImage) {
+          setForm(prev => ({ ...prev, ogImage: ogData.seo.ogImage }))
+        }
         setOgFile(null)
       }
     } catch (err) {
@@ -143,7 +176,7 @@ export default function AdminSeo() {
               <label>OG Image</label>
               {form.ogImage ? (
                 <div style={{ marginBottom: 8 }}>
-                  <img loading="lazy" src={`${process.env.NEXT_PUBLIC_API_URL}${form.ogImage}`} alt="OG" style={{ maxWidth: 200, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+                  <img loading="lazy" src={imgUrl(form.ogImage)} alt="OG" style={{ maxWidth: 200, borderRadius: 8, border: '1px solid #e2e8f0' }} />
                 </div>
               ) : (
                 <p style={{ fontSize: 12, color: '#9ca3af', marginBottom: 8 }}>No OG image uploaded</p>
@@ -167,11 +200,18 @@ export default function AdminSeo() {
           </div>
         </div>
 
-        {/* Icons */}
+        {/* Site Icon */}
         <div className="admin-form-card" style={{ marginBottom: 20 }}>
           <h3 className="admin-section-title"><i className="fa-solid fa-pen-ruler" /> Site Icon / Favicon</h3>
           <div className="admin-form-group">
-            <label>Upload Favicon / Site Icon</label>
+            <label>Current Icon</label>
+            {form.siteIcon ? (
+              <div style={{ marginBottom: 8 }}>
+                <img loading="lazy" src={imgUrl(form.siteIcon)} alt="Favicon" style={{ maxWidth: 64, maxHeight: 64, borderRadius: 4, border: '1px solid #e2e8f0' }} />
+              </div>
+            ) : (
+              <p style={{ fontSize: 12, color: '#9ca3af', marginBottom: 8 }}>No custom icon uploaded (using default favicon)</p>
+            )}
             <input type="file" accept="image/*" onChange={e => setIconFile(e.target.files[0])} />
             {iconFile && <span style={{ fontSize: 12, color: '#059669' }}>New file selected: {iconFile.name}</span>}
           </div>
@@ -186,4 +226,3 @@ export default function AdminSeo() {
     </>
   )
 }
-
