@@ -2524,8 +2524,16 @@ div.country-selector>div.list>div.item {
     background-image: url(../images/sub-banner-bg-img.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     padding-top: 141px;
     padding-bottom: 147px;
+}
+
+.sub-banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 30px;
 }
 
 /* CONTACT */

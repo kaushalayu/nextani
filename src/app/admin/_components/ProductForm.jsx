@@ -8,6 +8,12 @@ import API from '../../../lib/api'
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 import 'react-quill-new/dist/quill.snow.css'
 
+const BADGE_MAP = {
+  'Sleeping Pills': 'sleep aid',
+  'Painkillers': 'painkiller',
+  'Anxiety Pills': 'calm',
+}
+
 export default function AdminProductForm({ productId }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
@@ -70,7 +76,16 @@ export default function AdminProductForm({ productId }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setForm(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }))
+    setForm(prev => {
+      const next = { ...prev, [name]: type === 'checkbox' ? checked : value }
+      if (name === 'category') {
+        const cat = categories.find(c => c._id === value)
+        if (cat && BADGE_MAP[cat.name]) {
+          next.badge = BADGE_MAP[cat.name]
+        }
+      }
+      return next
+    })
   }
 
   const handlePillsChange = (idx, field, value) => {
