@@ -47,7 +47,7 @@ export async function generateMetadata() {
   const metadataBase = siteUrl ? new URL(siteUrl) : undefined
   const ogImage = seo?.ogImage
     ? seo.ogImage.startsWith('http') ? seo.ogImage : `${process.env.NEXT_PUBLIC_API_URL}${seo.ogImage}`
-    : '/assets/images/logo.png'
+    : '/logo.png'
 
   const siteShort = siteTitle.replace(/ - .*$/, '').trim() || 'Painomed'
 

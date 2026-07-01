@@ -15,7 +15,7 @@ export function OrganizationSchema() {
     '@type': 'Pharmacy',
     name: 'Painomed',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-    logo: '/assets/images/logo.png',
+    logo: '/logo.png',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
     address: {
       '@type': 'PostalAddress',

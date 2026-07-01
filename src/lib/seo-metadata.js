@@ -12,8 +12,8 @@ export const defaultMetadata = {
   keywords: ['online pharmacy', 'medicine delivery', 'prescription', 'healthcare', 'pharmacy', 'Painomed'],
   ...(metadataBase && { metadataBase }),
   icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: '/logo.png',
+    apple: '/logo.png',
   },
   openGraph: {
     type: 'website',
@@ -22,13 +22,13 @@ export const defaultMetadata = {
     title: 'Painomed - Online Pharmacy',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
     ...(siteUrl && { url: siteUrl }),
-    images: [{ url: '/assets/images/logo.png', width: 200, height: 60, alt: 'Painomed' }],
+    images: [{ url: '/logo.png', width: 200, height: 60, alt: 'Painomed' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Painomed - Online Pharmacy',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
-    images: ['/assets/images/logo.png'],
+    images: ['/logo.png'],
     creator: '@painomed',
   },
   robots: {

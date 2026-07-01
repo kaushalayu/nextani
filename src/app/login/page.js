@@ -39,7 +39,7 @@ export default function Login() {
       <div className="login-page">
         <div className="login-form-box">
           <div className="login-form-title">
-            <img src="/assets/images/logo.png" alt="Painomed" />
+            <img src="/logo.png" alt="Painomed" />
             <h2>Welcome Back</h2>
             <p>Sign in to your account to continue</p>
           </div>
