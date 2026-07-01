@@ -489,6 +489,12 @@ body {
     padding-left: 14px;
 }
 
+.header-con a.navbar-brand img {
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+}
+
 /* HEADER SECTION */
 /* BACK TO TOP BUTTON */
 #back-to-top-btn {
@@ -899,6 +905,9 @@ div.country-selector>div.list>div.item {
 }
 
 .footer-con .middle_portion .footer-logo img {
+    max-width: 160px;
+    width: 100%;
+    height: auto;
     margin-right: 44px;
 }
 

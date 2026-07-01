@@ -4197,7 +4197,7 @@
     }
 
     .header-con a.navbar-brand img {
-        width: 150px;
+        max-width: 130px;
     }
 
     .country-selector {
