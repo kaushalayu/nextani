@@ -9,10 +9,24 @@ const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false })
 import 'react-quill-new/dist/quill.snow.css'
 
 const BADGE_MAP = {
-  'Sleeping Pills': 'sleep aid',
-  'Painkillers': 'painkiller',
-  'Anxiety Pills': 'calm',
+  'sleeping pills': 'sleep aid',
+  'painkillers': 'painkiller',
+  'anxiety pills': 'calm',
 }
+
+const BADGE_OPTIONS = [
+  { value: '', label: '— Auto from category —' },
+  { value: 'sleep aid', label: 'Sleep Aid (Sleeping Pills)' },
+  { value: 'painkiller', label: 'Painkiller (Painkillers)' },
+  { value: 'calm', label: 'Calm (Anxiety Pills)' },
+  { value: 'vitamin', label: 'Vitamin' },
+  { value: 'herbal', label: 'Herbal' },
+  { value: 'supplement', label: 'Supplement' },
+  { value: 'antibiotic', label: 'Antibiotic' },
+  { value: 'skin care', label: 'Skin Care' },
+  { value: 'sale', label: 'Sale' },
+  { value: 'new', label: 'New' },
+]
 
 export default function AdminProductForm({ productId }) {
   const router = useRouter()
@@ -80,8 +94,11 @@ export default function AdminProductForm({ productId }) {
       const next = { ...prev, [name]: type === 'checkbox' ? checked : value }
       if (name === 'category') {
         const cat = categories.find(c => c._id === value)
-        if (cat && BADGE_MAP[cat.name]) {
-          next.badge = BADGE_MAP[cat.name]
+        if (cat) {
+          const key = cat.name.toLowerCase().trim()
+          if (BADGE_MAP[key]) {
+            next.badge = BADGE_MAP[key]
+          }
         }
       }
       return next
@@ -210,7 +227,11 @@ export default function AdminProductForm({ productId }) {
           </div>
           <div>
             <label style={labelStyle}>Badge</label>
-            <input name="badge" value={form.badge} onChange={handleChange} placeholder="e.g. Sale, New" style={inputStyle} />
+            <select name="badge" value={form.badge} onChange={handleChange} style={inputStyle}>
+              {BADGE_OPTIONS.map(opt => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
           </div>
           <div>
             <label style={labelStyle}>Tags (comma separated)</label>
