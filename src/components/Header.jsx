@@ -33,7 +33,7 @@ function ProductMegaMenu() {
     if (products[badge]) return
     setLoadingBadge(badge)
     try {
-      const { data } = await API.get(`/products?badge=${encodeURIComponent(badge)}&limit=8&isActive=true`)
+      const { data } = await API.get(`/products?badge=${encodeURIComponent(badge)}&limit=50&isActive=true&sort=name`)
       setProducts(prev => ({ ...prev, [badge]: data.products || [] }))
     } catch {
       setProducts(prev => ({ ...prev, [badge]: [] }))
@@ -66,12 +66,6 @@ function ProductMegaMenu() {
   const activeCat   = CATEGORIES[activeIdx]
   const catProducts = products[activeCat.badge] || []
   const isLoading   = loadingBadge === activeCat.badge
-
-  const getImg = (img) => {
-    if (!img) return '/assets/images/best-product1.png'
-    if (img.startsWith('/uploads')) return `${process.env.NEXT_PUBLIC_API_URL}${img}`
-    return img
-  }
 
   return (
     <li className="nav-item dropdown mega-product-nav" ref={menuRef}
@@ -115,23 +109,13 @@ function ProductMegaMenu() {
                 <span>No products yet.<br />Add from Admin Panel.</span>
               </div>
             ) : (
-              <div className="mega-products-grid">
-                {catProducts.map((p) => {
-                  const price = p.hasPillsOptions && p.pillsOptions?.[0]
-                    ? p.pillsOptions[0].price : p.price || 0
-                  return (
-                    <Link key={p._id} href={`/product/${p.slug || p._id}`}
-                      className="mega-product-card" onClick={() => setOpen(false)}>
-                      <div className="mega-product-card__img">
-                        <img loading="lazy" src={getImg(p.image)} alt={p.name} />
-                      </div>
-                      <div className="mega-product-card__info">
-                        <span className="mega-product-card__name">{p.name}</span>
-                        <span className="mega-product-card__price">${price.toFixed(2)}</span>
-                      </div>
-                    </Link>
-                  )
-                })}
+              <div className="mega-products-list">
+                {catProducts.map((p) => (
+                  <Link key={p._id} href={`/product/${p.slug || p._id}`}
+                    className="mega-product-link" onClick={() => setOpen(false)}>
+                    {p.name}
+                  </Link>
+                ))}
               </div>
             )}
           </div>
