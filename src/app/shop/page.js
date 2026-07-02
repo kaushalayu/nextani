@@ -1,11 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
 import SubBanner from '../../components/SubBanner'
+import API from '../../lib/api'
+
+const CAT_PAGE_MAP = {
+  'sleeping pills': '/sleeping-pills',
+  'painkillers':    '/painkillers',
+  'anxiety pills':  '/anxiety',
+}
 
 export default function Shop() {
   usePageMetaFromAdmin('/shop', 'Shop', 'Browse our wide range of medicines and healthcare products.')
@@ -14,8 +21,20 @@ export default function Shop() {
   const [searchInput, setSearchInput] = useState('')
   const [sort, setSort] = useState('')
   const [page, setPage] = useState(1)
+  const [sideCats, setSideCats] = useState([])
+
+  useEffect(() => {
+    API.get('/categories?limit=100')
+      .then(({ data }) => setSideCats(data.categories || []))
+      .catch(() => {})
+  }, [])
 
   const { products, loading, error, total, pages } = useProducts({ search, sort, page, limit: 9 })
+
+  const catPath = (cat) => {
+    const key = cat.name.toLowerCase().trim()
+    return CAT_PAGE_MAP[key] || `/category/${cat.slug}`
+  }
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -47,9 +66,11 @@ export default function Shop() {
                 <div className="widget widget-categories" data-aos="fade-up">
                   <div className="widget-title font_weight_600">Categories :</div>
                   <ul className="list-unstyled mb-0">
-                    <li className="cat-item"><Link href="/sleeping-pills" className="d-block">Sleeping Pills</Link></li>
-                    <li className="cat-item"><Link href="/painkillers" className="d-block">Painkillers</Link></li>
-                    <li className="cat-item"><Link href="/anxiety" className="d-block">Anxiety Pills</Link></li>
+                    {sideCats.map(c => (
+                      <li key={c._id} className="cat-item">
+                        <Link href={catPath(c)} className="d-block">{c.name}</Link>
+                      </li>
+                    ))}
                     <li className="cat-item"><Link href="/new-arrivals" className="d-block">New Arrivals</Link></li>
                     <li className="cat-item"><Link href="/best-sellers" className="d-block">Best Sellers</Link></li>
                   </ul>

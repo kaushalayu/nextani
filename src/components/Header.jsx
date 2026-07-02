@@ -7,19 +7,38 @@ import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import API from '../lib/api'
 
-const CATEGORIES = [
-  { label: 'Sleeping Pills', path: '/sleeping-pills', badge: 'sleep aid', color: '#6366f1' },
-  { label: 'Painkillers',    path: '/painkillers',    badge: 'painkiller', color: '#0f766e' },
-  { label: 'Anxiety Pills',  path: '/anxiety',        badge: 'calm',        color: '#7c3aed' },
-]
+const CAT_COLORS = ['#6366f1', '#0f766e', '#7c3aed', '#d97706', '#dc2626', '#0891b2', '#4f46e5', '#059669']
+
+// Map known category names → existing page paths
+const CAT_PAGE_MAP = {
+  'sleeping pills': '/sleeping-pills',
+  'painkillers':    '/painkillers',
+  'anxiety pills':  '/anxiety',
+}
+
+// Map known category names → badge value for product fetching
+const BADGE_MAP = {
+  'sleeping pills': 'sleep aid',
+  'painkillers':    'painkiller',
+  'anxiety pills':  'calm',
+}
 
 function ProductMegaMenu() {
   const [open, setOpen]               = useState(false)
   const [activeIdx, setActiveIdx]     = useState(0)
   const [products, setProducts]       = useState({})
-  const [loadingBadge, setLoadingBadge] = useState(null)
+  const [categories, setCategories]   = useState([])
+  const [loadingCat, setLoadingCat]   = useState(true)
+  const [fetching, setFetching]       = useState(null)
   const menuRef = useRef(null)
   const closeTimer = useRef(null)
+
+  useEffect(() => {
+    API.get('/categories?limit=100')
+      .then(({ data }) => setCategories(data.categories || []))
+      .catch(() => {})
+      .finally(() => setLoadingCat(false))
+  }, [])
 
   useEffect(() => {
     const handler = (e) => {
@@ -29,23 +48,35 @@ function ProductMegaMenu() {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const fetchCategoryProducts = async (badge) => {
-    if (products[badge]) return
-    setLoadingBadge(badge)
+  const fetchCategoryProducts = async (catId, catName) => {
+    if (products[catId]) return
+    setFetching(catId)
+    const key = catName.toLowerCase().trim()
+    const badgeVal = BADGE_MAP[key]
+    const params = badgeVal
+      ? `badge=${encodeURIComponent(badgeVal)}`
+      : `category=${catId}`
     try {
-      const { data } = await API.get(`/products?badge=${encodeURIComponent(badge)}&limit=50&isActive=true&sort=name`)
-      setProducts(prev => ({ ...prev, [badge]: data.products || [] }))
+      const { data } = await API.get(`/products?${params}&limit=50&isActive=true&sort=name`)
+      setProducts(prev => ({ ...prev, [catId]: data.products || [] }))
     } catch {
-      setProducts(prev => ({ ...prev, [badge]: [] }))
+      setProducts(prev => ({ ...prev, [catId]: [] }))
     } finally {
-      setLoadingBadge(null)
+      setFetching(null)
     }
+  }
+
+  const getCatPath = (cat) => {
+    const key = cat.name.toLowerCase().trim()
+    return CAT_PAGE_MAP[key] || `/category/${cat.slug}`
   }
 
   const handleMouseEnterTrigger = () => {
     clearTimeout(closeTimer.current)
     setOpen(true)
-    fetchCategoryProducts(CATEGORIES[activeIdx].badge)
+    if (categories.length > 0 && !products[categories[0]._id]) {
+      fetchCategoryProducts(categories[0]._id, categories[0].name)
+    }
   }
 
   const handleMouseLeaveTrigger = () => {
@@ -60,12 +91,15 @@ function ProductMegaMenu() {
 
   const handleCategoryHover = (idx) => {
     setActiveIdx(idx)
-    fetchCategoryProducts(CATEGORIES[idx].badge)
+    const cat = categories[idx]
+    if (cat) fetchCategoryProducts(cat._id, cat.name)
   }
 
-  const activeCat   = CATEGORIES[activeIdx]
-  const catProducts = products[activeCat.badge] || []
-  const isLoading   = loadingBadge === activeCat.badge
+  const activeCat  = categories[activeIdx]
+  const catList    = activeCat ? (products[activeCat._id] || []) : []
+  const isLoading  = activeCat && fetching === activeCat._id
+
+  if (loadingCat) return null
 
   return (
     <li className="nav-item dropdown mega-product-nav" ref={menuRef}
@@ -74,43 +108,48 @@ function ProductMegaMenu() {
       <span className="nav-link p-0 dropdown-toggle" style={{ cursor: 'pointer' }}>
         Product
       </span>
-      {open && (
+      {open && activeCat && (
         <div className="mega-panel" onMouseEnter={handleMouseEnterMenu} onMouseLeave={handleMouseLeaveMenu}>
           <div className="mega-panel__left">
             <p className="mega-panel__heading">Categories</p>
-            {CATEGORIES.map((cat, idx) => (
-              <div key={cat.path} className={`mega-cat-item${activeIdx === idx ? ' active' : ''}`}
-                style={{ '--cat-color': cat.color }}
+            {categories.map((cat, idx) => (
+              <div key={cat._id} className={`mega-cat-item${activeIdx === idx ? ' active' : ''}`}
+                style={{ '--cat-color': CAT_COLORS[idx % CAT_COLORS.length] }}
                 onMouseEnter={() => handleCategoryHover(idx)}
                 onClick={() => setOpen(false)}>
-                <Link href={cat.path} className="mega-cat-item__link">
+                <Link href={getCatPath(cat)} className="mega-cat-item__link">
                   <span className="mega-cat-item__dot" />
-                  {cat.label}
+                  {cat.name}
                   <i className="fa-solid fa-chevron-right mega-cat-item__arrow" />
                 </Link>
               </div>
             ))}
           </div>
-          <div className="mega-panel__right" style={{ '--cat-color': activeCat.color }}>
+          <div className="mega-panel__right" style={{ '--cat-color': CAT_COLORS[activeIdx % CAT_COLORS.length] }}>
             <div className="mega-panel__right-header">
-              <p className="mega-panel__heading">{activeCat.label}</p>
-              <Link href={activeCat.path} className="mega-panel__view-all" onClick={() => setOpen(false)}>
+              <p className="mega-panel__heading">{activeCat.name}</p>
+              <Link href={getCatPath(activeCat)} className="mega-panel__view-all" onClick={() => setOpen(false)}>
                 View All <i className="fa-solid fa-arrow-right" />
               </Link>
             </div>
-            {isLoading ? (
+            {!activeCat ? (
+              <div className="mega-products-empty">
+                <i className="fa-solid fa-box-open" />
+                <span>Select a category</span>
+              </div>
+            ) : isLoading ? (
               <div className="mega-products-loading">
                 <i className="fa-solid fa-spinner fa-spin" />
                 <span>Loading...</span>
               </div>
-            ) : catProducts.length === 0 ? (
+            ) : catList.length === 0 ? (
               <div className="mega-products-empty">
                 <i className="fa-solid fa-box-open" />
                 <span>No products yet.<br />Add from Admin Panel.</span>
               </div>
             ) : (
               <div className="mega-products-list">
-                {catProducts.map((p) => (
+                {catList.map((p) => (
                   <Link key={p._id} href={`/product/${p.slug || p._id}`}
                     className="mega-product-link" onClick={() => setOpen(false)}>
                     {p.name}
