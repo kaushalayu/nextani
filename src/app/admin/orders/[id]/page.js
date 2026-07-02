@@ -176,6 +176,13 @@ export default function AdminOrderDetail() {
             </p>
           </div>
           <div><p style={labelStyle}>Sub Payment Method</p><p style={valueStyle}>{order.subPaymentMethod || '-'}</p></div>
+          <div><p style={labelStyle}>Delivery Method</p>
+            <p style={valueStyle}>
+              {order.deliveryMethod === 'overnight' ? 'Overnight Delivery ($60)' :
+               order.deliveryMethod === 'priority' ? 'Priority Mail Delivery ($30.50)' :
+               'First Class Delivery (FREE)'}
+            </p>
+          </div>
           <div><p style={labelStyle}>Payment Status</p>
             <p style={{ ...valueStyle, color: order.isPaid ? '#059669' : '#f59e0b' }}>
               {order.isPaid ? 'Paid' : 'Unpaid'}

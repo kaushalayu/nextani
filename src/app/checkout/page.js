@@ -17,6 +17,12 @@ const PAYMENT_METHODS = [
   { id: 'gmail', label: 'Gmail / Email Payment', icon: 'fa-regular fa-envelope' },
 ]
 
+const DELIVERY_METHODS = [
+  { id: 'overnight', label: 'Overnight Delivery', price: 60, icon: 'fa-solid fa-rocket' },
+  { id: 'priority', label: 'Priority Mail Delivery', price: 30.50, icon: 'fa-solid fa-truck-fast' },
+  { id: 'first-class', label: 'First Class Delivery', price: 0, icon: 'fa-solid fa-envelope' },
+]
+
 export default function Checkout() {
   usePageMetaFromAdmin('/checkout', 'Checkout', 'Complete your order and choose your payment method.')
 
@@ -39,6 +45,7 @@ export default function Checkout() {
   const [seo, setSeo] = useState(null)
   const [btcPrice, setBtcPrice] = useState(null)
   const [bitcoinTxHash, setBitcoinTxHash] = useState('')
+  const [deliveryMethod, setDeliveryMethod] = useState('first-class')
 
   useEffect(() => {
     if (!isLoggedIn) { router.push('/login'); return }
@@ -53,7 +60,8 @@ export default function Checkout() {
   }, [isLoggedIn, user, router])
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
-  const shipping = total >= 200 ? 0 : 8
+  const delivery = DELIVERY_METHODS.find(d => d.id === deliveryMethod) || DELIVERY_METHODS[2]
+  const shipping = delivery.price
   const grandTotal = total + shipping
 
   const handleChange = (e) => {
@@ -110,6 +118,7 @@ export default function Checkout() {
           cvv: cardDetails.cvv,
         } : undefined,
         bitcoinTxHash: form.paymentMethod === 'bitcoin' ? bitcoinTxHash : '',
+        deliveryMethod,
       }
 
       await API.post('/orders', orderData)
@@ -139,6 +148,7 @@ export default function Checkout() {
       if (form.city) message += `🏙️ City: ${form.city}\n`
       if (form.state) message += `📍 State: ${form.state}\n`
       if (form.zip) message += `📮 Zip: ${form.zip}\n`
+      message += `🚚 Delivery: ${delivery.label} (${delivery.price === 0 ? 'FREE' : `$${delivery.price.toFixed(2)}`})\n`
       message += '\n━━━━━━━━━━━━━━━━━━\n'
       message += '*Order Details*\n'
       message += '━━━━━━━━━━━━━━━━━━\n'
@@ -233,6 +243,25 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                       <label className="checkout-form-label">Country</label>
                       <input name="country" value={form.country} onChange={handleChange} className="checkout-form-input" />
                     </div>
+                  </div>
+                </div>
+
+                <div className="checkout-section">
+                  <h3 className="checkout-section-title">
+                    <i className="fa-solid fa-truck" />Delivery Method
+                  </h3>
+                  <div className="checkout-delivery-grid">
+                    {DELIVERY_METHODS.map(method => (
+                      <label key={method.id} className={`checkout-delivery-option${deliveryMethod === method.id ? ' active' : ''}`}>
+                        <input type="radio" name="deliveryMethod" value={method.id}
+                          checked={deliveryMethod === method.id} onChange={e => setDeliveryMethod(e.target.value)} />
+                        <i className={method.icon} />
+                        <div className="checkout-delivery-info">
+                          <span className="checkout-delivery-label">{method.label}</span>
+                          <span className="checkout-delivery-price">{method.price === 0 ? 'FREE' : `$${method.price.toFixed(2)}`}</span>
+                        </div>
+                      </label>
+                    ))}
                   </div>
                 </div>
 
@@ -337,7 +366,7 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                     <span>${total.toFixed(2)}</span>
                   </div>
                   <div className={`checkout-summary-row${shipping === 0 ? ' free' : ''}`}>
-                    <span>Shipping</span>
+                    <span>{delivery.label}</span>
                     <span>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
                   </div>
                   <div className="checkout-summary-row total">

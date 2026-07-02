@@ -204,6 +204,12 @@ export default function OrderDetail() {
                   <strong>Method:</strong> {order.paymentMethod?.charAt(0).toUpperCase() + order.paymentMethod?.slice(1)}
                 </p>
                 <p style={{ margin: '0 0 6px' }}>
+                  <strong>Delivery:</strong>{' '}
+                  {order.deliveryMethod === 'overnight' ? 'Overnight Delivery ($60)' :
+                   order.deliveryMethod === 'priority' ? 'Priority Mail Delivery ($30.50)' :
+                   'First Class Delivery (FREE)'}
+                </p>
+                <p style={{ margin: '0 0 6px' }}>
                   <strong>Status:</strong>{' '}
                   <span style={{ color: order.isPaid ? '#059669' : '#f59e0b' }}>
                     {order.isPaid ? 'Paid' : 'Unpaid'}
