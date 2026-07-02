@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import API from '../../../lib/api'
 import { useToast } from '../../../components/Toast'
 
-const PAGE = '/about'
+const PAGE = 'about'
 
 export default function AdminAbout() {
   const { addToast } = useToast()

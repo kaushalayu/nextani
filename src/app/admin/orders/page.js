@@ -8,6 +8,20 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('')
+  const [deleting, setDeleting] = useState(null)
+
+  const handleDelete = async (id) => {
+    if (!confirm('Delete this order permanently?')) return
+    setDeleting(id)
+    try {
+      await API.delete(`/orders/${id}`)
+      setOrders(prev => prev.filter(o => o._id !== id))
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to delete')
+    } finally {
+      setDeleting(null)
+    }
+  }
 
   useEffect(() => {
     loadOrders()
@@ -121,7 +135,13 @@ export default function AdminOrders() {
                       <i className={`fa-solid ${o.isPaid ? 'fa-circle-check' : 'fa-circle'}`}
                         style={{ color: o.isPaid ? '#059669' : '#d1d5db', fontSize: 14 }} />
                     </td>
-                    <td><Link href={`/admin/orders/${o._id}`} className="btn btn-sm btn-outline-primary">View</Link></td>
+                    <td style={{ whiteSpace: 'nowrap' }}>
+                      <Link href={`/admin/orders/${o._id}`} className="btn btn-sm btn-outline-primary" style={{ marginRight: 4 }}>View</Link>
+                      <button onClick={() => handleDelete(o._id)} disabled={deleting === o._id}
+                        className="btn btn-sm btn-outline-danger">
+                        {deleting === o._id ? <i className="fa-solid fa-spinner fa-spin" /> : <i className="fa-solid fa-trash" />}
+                      </button>
+                    </td>
                   </tr>
                 ))
               )}
