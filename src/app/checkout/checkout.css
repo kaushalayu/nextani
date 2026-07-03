@@ -136,6 +136,18 @@
   margin-bottom: 16px;
 }
 
+@media (min-width: 600px) {
+  .checkout-delivery-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 992px) {
+  .checkout-delivery-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
 .checkout-delivery-option {
   display: flex;
   align-items: center;
@@ -169,6 +181,7 @@
   width: 18px;
   height: 18px;
   margin: 0;
+  flex-shrink: 0;
 }
 
 .checkout-delivery-option i {
@@ -176,23 +189,28 @@
   color: #059669;
   width: 24px;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .checkout-delivery-info {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
+  gap: 4px 12px;
   flex: 1;
+  min-width: 0;
 }
 
 .checkout-delivery-label {
   line-height: 1.3;
+  word-break: break-word;
 }
 
 .checkout-delivery-price {
   font-size: 15px;
   font-weight: 700;
   color: #059669;
+  white-space: nowrap;
 }
 
 .checkout-payment-grid {
@@ -473,12 +491,6 @@
 
 .checkout-bitcoin-info-icon {
   margin-right: 4px;
-}
-
-@media (min-width: 768px) {
-  .checkout-delivery-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 }
 
 @media (max-width: 576px) {

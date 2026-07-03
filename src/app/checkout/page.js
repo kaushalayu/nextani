@@ -83,6 +83,14 @@ export default function Checkout() {
     if (!form.firstName || !form.phone || !form.address) {
       addToast('Please fill in required fields', 'info'); return
     }
+    if (form.paymentMethod === 'bitcoin' && !bitcoinTxHash.trim()) {
+      addToast('Please enter your Bitcoin transaction hash (TXID) after sending payment', 'info'); return
+    }
+    if (form.paymentMethod === 'card') {
+      if (!cardDetails.nameOnCard.trim() || !cardDetails.cardNumber.trim() || !cardDetails.expiryDate.trim() || !cardDetails.cvv.trim()) {
+        addToast('Please fill in all card details (name, number, expiry, CVV)', 'info'); return
+      }
+    }
     setPlacing(true)
 
     try {
@@ -320,9 +328,14 @@ const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUB
                         </p>
                       )}
                       <div style={{ marginTop: 14, textAlign: 'center' }}>
-                        <img loading="lazy"
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=bitcoin:${bitcoinAddress}?amount=${btcPrice ? (grandTotal / btcPrice).toFixed(6) : ''}`}
-                          alt="Bitcoin QR Code" style={{ borderRadius: 12, border: '2px solid #f59e0b' }} />
+                        {seo?.bitcoinQrCode ? (
+                          <img loading="lazy" src={imgUrl(seo.bitcoinQrCode)}
+                            alt="Bitcoin QR Code" style={{ maxWidth: 180, borderRadius: 12, border: '2px solid #f59e0b' }} />
+                        ) : (
+                          <img loading="lazy"
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`bitcoin:${bitcoinAddress}${btcPrice ? `?amount=${(grandTotal / btcPrice).toFixed(6)}` : ''}`)}`}
+                            alt="Bitcoin QR Code" style={{ borderRadius: 12, border: '2px solid #f59e0b' }} />
+                        )}
                       </div>
                       <div style={{ marginTop: 16 }}>
                         <label className="checkout-form-label">Transaction ID (TXID) — paste after sending payment</label>

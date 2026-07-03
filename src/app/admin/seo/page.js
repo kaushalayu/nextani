@@ -17,7 +17,7 @@ export default function AdminSeo() {
     siteIcon: '', ogTitle: '', ogDescription: '', ogImage: '',
     footerText: '', whatsappNumber: '', supportEmail: '',
     contactPhone: '', address: '', businessHours: '',
-    mapEmbedUrl: '', bitcoinAddress: '',
+    mapEmbedUrl: '', bitcoinAddress: '', bitcoinQrCode: '',
     promoBanner1: '', promoBanner2: '', promoBanner3: '',
     facebook: '', instagram: '', linkedin: '',
   })
@@ -26,6 +26,7 @@ export default function AdminSeo() {
   const [iconFile, setIconFile] = useState(null)
   const [ogFile, setOgFile] = useState(null)
   const [promoFiles, setPromoFiles] = useState({ 1: null, 2: null, 3: null })
+  const [bitcoinQrFile, setBitcoinQrFile] = useState(null)
 
   useEffect(() => {
     API.get('/seo')      .then(({ data }) => {
@@ -46,6 +47,7 @@ export default function AdminSeo() {
         businessHours: s.businessHours || '',
         mapEmbedUrl: s.mapEmbedUrl || '',
         bitcoinAddress: s.bitcoinAddress || '',
+        bitcoinQrCode: s.bitcoinQrCode || '',
         promoBanner1: s.promoBanner1 || '',
         promoBanner2: s.promoBanner2 || '',
         promoBanner3: s.promoBanner3 || '',
@@ -83,6 +85,7 @@ export default function AdminSeo() {
           businessHours: data.seo.businessHours || '',
           mapEmbedUrl: data.seo.mapEmbedUrl || '',
           bitcoinAddress: data.seo.bitcoinAddress || '',
+          bitcoinQrCode: data.seo.bitcoinQrCode || '',
           ogTitle: data.seo.ogTitle || '',
           ogDescription: data.seo.ogDescription || '',
           promoBanner1: data.seo.promoBanner1 || '',
@@ -125,6 +128,15 @@ export default function AdminSeo() {
         }
       }
       setPromoFiles({ 1: null, 2: null, 3: null })
+      if (bitcoinQrFile) {
+        const fd = new FormData()
+        fd.append('bitcoinQr', bitcoinQrFile)
+        const { data: qrData } = await API.post('/admin/seo/upload-bitcoin-qr', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+        if (qrData.seo?.bitcoinQrCode) {
+          setForm(prev => ({ ...prev, bitcoinQrCode: qrData.seo.bitcoinQrCode }))
+        }
+        setBitcoinQrFile(null)
+      }
     } catch (err) {
       addToast(err.response?.data?.message || 'Failed to save', 'error')
     } finally {
@@ -216,6 +228,20 @@ export default function AdminSeo() {
               <p style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>
                 This address will be shown to customers during checkout when they select Bitcoin as payment method.
               </p>
+            </div>
+            <div className="admin-form-full">
+              <div className="admin-form-group">
+                <label>Bitcoin QR Code Image</label>
+                {form.bitcoinQrCode ? (
+                  <div style={{ marginBottom: 8 }}>
+                    <img loading="lazy" src={imgUrl(form.bitcoinQrCode)} alt="Bitcoin QR" style={{ maxWidth: 180, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+                  </div>
+                ) : (
+                  <p style={{ fontSize: 12, color: '#9ca3af', marginBottom: 8 }}>No QR code uploaded (auto-generated QR will be used)</p>
+                )}
+                <input type="file" accept="image/*" onChange={e => setBitcoinQrFile(e.target.files[0])} />
+                {bitcoinQrFile && <span style={{ fontSize: 12, color: '#059669' }}>New file selected: {bitcoinQrFile.name}</span>}
+              </div>
             </div>
           </div>
         </div>

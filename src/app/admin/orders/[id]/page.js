@@ -235,6 +235,13 @@ export default function AdminOrderDetail() {
               Bitcoin Payment Address (Global)
             </h4>
             <p style={{ fontSize: 14, fontFamily: 'monospace', color: '#111827', wordBreak: 'break-all' }}>{bitcoinAddress}</p>
+            {seo?.bitcoinQrCode && (
+              <div style={{ marginTop: 10 }}>
+                <img loading="lazy"
+                  src={seo.bitcoinQrCode.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${seo.bitcoinQrCode}` : seo.bitcoinQrCode}
+                  alt="Bitcoin QR" style={{ maxWidth: 140, borderRadius: 8, border: '1px solid #fde68a' }} />
+              </div>
+            )}
             <p style={{ fontSize: 12, color: '#6b7280', marginTop: 4 }}>Configured in SEO Settings. Inform customer to send payment to this address.</p>
           </div>
         )}
