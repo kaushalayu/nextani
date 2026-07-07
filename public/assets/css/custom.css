@@ -1191,21 +1191,24 @@
 .shop-con .premium-card-img {
     position: relative;
     background: #fafbff;
-    padding: 24px;
+    padding: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 200px;
+    min-height: 220px;
+    max-height: 320px;
     overflow: hidden;
 }
 .shop-con .premium-card-img a {
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .shop-con .premium-card-img figure {
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1216,7 +1219,9 @@
 }
 .shop-con .premium-card-img figure img {
     width: 100%;
-    height: 140px;
+    height: 100%;
+    min-height: 200px;
+    max-height: 280px;
     object-fit: contain;
     object-position: center;
     transition: all 0.5s ease;
@@ -1627,11 +1632,12 @@
         margin-bottom: 30px;
     }
     .shop-con .premium-card-img {
-        min-height: 160px;
-        padding: 16px;
+        min-height: 180px;
+        padding: 10px;
     }
     .shop-con .premium-card-img figure img {
-        height: 100px;
+        min-height: 150px;
+        max-height: 220px;
     }
     .shop-con .premium-card-body {
         padding: 12px 14px 14px;
@@ -1645,11 +1651,12 @@
 }
 @media (max-width: 767px) {
     .shop-con .premium-card-img {
-        min-height: 130px;
-        padding: 12px;
+        min-height: 160px;
+        padding: 10px;
     }
     .shop-con .premium-card-img figure img {
-        height: 80px;
+        min-height: 130px;
+        max-height: 200px;
     }
     .shop-con .premium-card-body {
         padding: 10px 10px 12px;
@@ -1700,11 +1707,12 @@
 }
 @media (max-width: 575px) {
     .shop-con .premium-card-img {
-        min-height: 110px;
-        padding: 10px;
+        min-height: 130px;
+        padding: 8px;
     }
     .shop-con .premium-card-img figure img {
-        height: 65px;
+        min-height: 110px;
+        max-height: 170px;
     }
     .shop-con .premium-card-rating {
         font-size: 11px;
