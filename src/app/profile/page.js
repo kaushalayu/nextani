@@ -1,98 +1,104 @@
 'use client'
 
+'use client'
+
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useAuth } from '../../context/AuthContext'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Profile() {
-  usePageMetaFromAdmin('/profile', 'My Profile', 'Manage your Painomed account and view your orders.')
+  usePageMetaFromAdmin('/my-orders', 'My Orders', 'Track your orders by providing your email address.')
 
-  const { isLoggedIn, user, logout } = useAuth()
   const [orders, setOrders] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [email, setEmail] = useState('')
+  const [searched, setSearched] = useState(false)
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      API.get('/orders/my?limit=5')
-        .then(({ data }) => setOrders(data.orders || []))
-        .catch(() => {})
+  const handleLookup = async (e) => {
+    e.preventDefault()
+    if (!email.trim()) return
+    setLoading(true)
+    setSearched(true)
+    try {
+      const { data } = await API.get(`/orders/my?email=${encodeURIComponent(email.trim())}`)
+      setOrders(data.orders || [])
+    } catch {
+      setOrders([])
+    } finally {
+      setLoading(false)
     }
-  }, [isLoggedIn])
-
-  if (!isLoggedIn) {
-    return (
-      <>
-        <SubBanner title="My Profile" description="Please login to view your profile." page="Profile" />
-        <div className="profile-page">
-          <div className="profile-login-prompt">
-            <h3>Please Login</h3>
-            <p>You need to be logged in to view your profile.</p>
-            <Link href="/login" className="btn">Login</Link>
-          </div>
-        </div>
-      </>
-    )
   }
-
-  const initials = user?.name
-    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-    : 'U'
 
   return (
     <>
-      <SubBanner title="My Profile" description="Manage your account details and view recent orders." page="Profile" />
-      <div className="profile-page">
+      <SubBanner title="My Orders" description="Track your orders by providing your email address." page="My Orders" />
+      <div className="orders-page">
         <div className="container">
-          <h1>My Profile</h1>
-          <div className="profile-card">
-            <div className="profile-card-header">
-              <div className="profile-avatar">{initials}</div>
-              <div className="profile-card-info">
-                <h5>{user?.name}</h5>
-                <p>{user?.email}</p>
-              </div>
-            </div>
-            <div className="profile-card-body">
-              <div className="detail-row">
-                <span>Name</span>
-                <span>{user?.name || '-'}</span>
-              </div>
-              <div className="detail-row">
-                <span>Email</span>
-                <span>{user?.email || '-'}</span>
-              </div>
-              {user?.phone && (
-                <div className="detail-row">
-                  <span>Phone</span>
-                  <span>{user.phone}</span>
-                </div>
-              )}
-            </div>
-            <button onClick={logout} className="profile-logout-btn">
-              <i className="fa-solid fa-right-from-bracket" /> Sign Out
-            </button>
+          <h1>My Orders</h1>
+          <div style={{ maxWidth: 480, marginBottom: 32 }}>
+            <p style={{ color: '#6b7280', marginBottom: 12 }}>Enter your email to look up your orders:</p>
+            <form onSubmit={handleLookup} style={{ display: 'flex', gap: 8 }}>
+              <input
+                type="email" value={email} onChange={e => setEmail(e.target.value)}
+                placeholder="Your email address" required
+                style={{
+                  flex: 1, padding: '10px 14px', borderRadius: 8, border: '1px solid #d1d5db',
+                  fontSize: 14, outline: 'none',
+                }}
+              />
+              <button type="submit" style={{
+                padding: '10px 20px', borderRadius: 8, border: 'none',
+                background: '#0f766e', color: '#fff', fontWeight: 600, fontSize: 14, cursor: 'pointer',
+              }}>
+                <i className="fa-solid fa-search" /> Look Up
+              </button>
+            </form>
           </div>
 
-          <h2>Recent Orders</h2>
-          {orders.length > 0 ? (
-            <>
-              <div className="profile-orders-list">
+          {loading && searched ? (
+            <div className="orders-loading">
+              <i className="fa-solid fa-spinner fa-spin orders-loading-icon" /><p className="orders-loading-text">Loading orders...</p>
+            </div>
+          ) : searched && orders.length === 0 ? (
+            <div className="orders-empty">
+              <div className="orders-empty-icon"><i className="fa-solid fa-bag-shopping" /></div>
+              <h3>No orders found</h3>
+              <p>No orders found for this email. Check the email you used when ordering.</p>
+              <Link href="/shop" className="btn">Start Shopping</Link>
+            </div>
+          ) : orders.length > 0 ? (
+            <table className="orders-table">
+              <thead><tr><th>Order</th><th>Date</th><th>Status</th><th>Total</th><th></th></tr></thead>
+              <tbody>
                 {orders.map(order => (
-                  <div key={order._id} className="profile-order-item">
-                    <span className="profile-order-id">#{order._id?.slice(-8).toUpperCase()}</span>
-                    <span className="profile-order-total">${order.total?.toFixed(2)}</span>
-                  </div>
+                  <tr key={order._id}>
+                    <td data-label="Order" className="order-id">#{order._id?.slice(-8).toUpperCase()}</td>
+                    <td data-label="Date">{new Date(order.createdAt).toLocaleDateString()}</td>
+                    <td data-label="Status">
+                      <span style={{
+                        display: 'inline-block', padding: '4px 12px', borderRadius: 12,
+                        fontSize: 12, fontWeight: 700, textTransform: 'capitalize',
+                        color: order.orderStatus === 'confirmed' || order.orderStatus === 'delivered' ? '#059669' : order.orderStatus === 'cancelled' ? '#dc2626' : '#f59e0b',
+                        background: order.orderStatus === 'confirmed' || order.orderStatus === 'delivered' ? '#d1fae5' : order.orderStatus === 'cancelled' ? '#fee2e2' : '#fef3c7',
+                      }}>
+                        {order.orderStatus === 'confirmed' && <><i className="fa-solid fa-circle-check" style={{ marginRight: 4 }} /> Confirmed</>}
+                        {order.orderStatus === 'pending' && 'Pending'}
+                        {order.orderStatus === 'processing' && 'Processing'}
+                        {order.orderStatus === 'shipped' && 'Shipped'}
+                        {order.orderStatus === 'delivered' && <><i className="fa-solid fa-circle-check" style={{ marginRight: 4 }} /> Delivered</>}
+                        {order.orderStatus === 'cancelled' && 'Cancelled'}
+                        {!['pending','confirmed','processing','shipped','delivered','cancelled'].includes(order.orderStatus) && (order.orderStatus || 'pending')}
+                      </span>
+                    </td>
+                    <td data-label="Total" className="order-total">${(order.totalPrice || order.total || 0).toFixed(2)}</td>
+                    <td><Link href={`/my-orders/${order._id}`} className="order-view-btn">View <i className="fa-solid fa-arrow-right" /></Link></td>
+                  </tr>
                 ))}
-              </div>
-              <Link href="/my-orders" className="profile-view-link">
-                View All Orders <i className="fa-solid fa-arrow-right" />
-              </Link>
-            </>
-          ) : (
-            <p className="profile-no-orders">No recent orders.</p>
-          )}
+              </tbody>
+            </table>
+          ) : null}
         </div>
       </div>
     </>

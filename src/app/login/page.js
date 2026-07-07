@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 import { useAuth } from '../../context/AuthContext'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import SubBanner from '../../components/SubBanner'
+import './login.css'
 
 export default function Login() {
   usePageMetaFromAdmin('/login', 'Login', 'Sign in to your Painomed account to manage orders and more.')
@@ -64,7 +64,7 @@ export default function Login() {
               <a href="#" className="forgot-password" onClick={(e) => e.preventDefault()}>Forgot Password?</a>
             </div>
             <div className="join-now-outer">
-              Don&apos;t have an account? <Link href="/join-now">Join Now</Link>
+              Admin access only
             </div>
           </form>
         </div>

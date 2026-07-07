@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { useAuth } from '../../../context/AuthContext'
 import { usePageMetaFromAdmin } from '../../../context/SeoContext'
 import { useToast } from '../../../components/Toast'
 import API from '../../../lib/api'
@@ -20,7 +19,6 @@ const STATUS_BADGE = {
 
 export default function OrderDetail() {
   const { id } = useParams()
-  const { isLoggedIn } = useAuth()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -31,7 +29,7 @@ export default function OrderDetail() {
   usePageMetaFromAdmin('/my-orders', 'Order Details', 'View your order details and status')
 
   useEffect(() => {
-    if (!isLoggedIn || !id) return
+    if (!id) return
     API.get(`/orders/${id}`)
       .then(({ data }) => {
         if (data.success) {
@@ -41,7 +39,7 @@ export default function OrderDetail() {
       })
       .catch(() => setError('Failed to load order'))
       .finally(() => setLoading(false))
-  }, [isLoggedIn, id])
+  }, [id])
 
   const handleUpdateTx = async () => {
     if (!txHash.trim()) { addToast('Enter a transaction hash', 'info'); return }
@@ -55,21 +53,6 @@ export default function OrderDetail() {
     } finally {
       setTxUpdating(false)
     }
-  }
-
-  if (!isLoggedIn) {
-    return (
-      <>
-        <SubBanner title="Order Details" description="Please login to view your order." page="Order Details" />
-        <div className="orders-page">
-          <div className="orders-login-prompt">
-            <h3>Please Login</h3>
-            <p>You need to be logged in to view your order.</p>
-            <Link href="/login" className="btn">Login</Link>
-          </div>
-        </div>
-      </>
-    )
   }
 
   if (loading) {
@@ -341,7 +324,7 @@ export default function OrderDetail() {
           </div>
 
           <div style={{ display: 'flex', gap: 12, marginBottom: 40 }}>
-            <Link href="/my-orders" className="btn" style={{
+            <Link href="/profile" className="btn" style={{
               padding: '10px 24px', borderRadius: 8, background: '#f3f4f6', color: '#374151',
               textDecoration: 'none', fontSize: 14, fontWeight: 600,
             }}>

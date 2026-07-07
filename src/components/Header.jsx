@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect, memo } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { useAuth } from '../context/AuthContext'
 import { useCart } from '../context/CartContext'
 import API from '../lib/api'
 
@@ -165,13 +164,10 @@ function ProductMegaMenu() {
 }
 
 function Header() {
-  const { isLoggedIn, user, logout } = useAuth()
   const { cart } = useCart()
   const router = useRouter()
   const pathname = usePathname()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
-  const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const userMenuRef = useRef(null)
   const [mobileSearch, setMobileSearch] = useState('')
 
   const closeMobileNav = () => setMobileNavOpen(false)
@@ -184,12 +180,6 @@ function Header() {
     closeMobileNav()
   }
 
-  const handleLogout = () => {
-    setUserMenuOpen(false)
-    logout()
-    router.push('/')
-  }
-
   useEffect(() => { setMobileNavOpen(false) }, [pathname])
 
   useEffect(() => {
@@ -197,18 +187,6 @@ function Header() {
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) setUserMenuOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const initials = user?.name
-    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-    : 'U'
 
   return (
     <div className="padding-rl float-left w-100">
@@ -267,15 +245,9 @@ function Header() {
                   </form>
                 </li>
                 <li className="nav-item mobile-login-item">
-                  {isLoggedIn ? (
-                    <Link className="nav-link p-0 mobile-profile-link" href="/profile" onClick={closeMobileNav}>
-                      <i className="fa-solid fa-user" /> {user?.name || 'Profile'}
-                    </Link>
-                  ) : (
-                    <Link className="nav-link p-0 mobile-login-link" href="/login" onClick={closeMobileNav}>
-                      <i className="fa-solid fa-right-to-bracket" /> Login
-                    </Link>
-                  )}
+                  <Link className="nav-link p-0" href="/profile" onClick={closeMobileNav}>
+                    <i className="fa-solid fa-user" /> My Orders
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -291,69 +263,9 @@ function Header() {
                   <img loading="lazy" src="/assets/images/header-cart.png" alt="Cart" />
                   {cart.length > 0 && <span>{cart.length}</span>}
                 </Link>
-                {isLoggedIn ? (
-                  <div className="user-dropdown-wrap" ref={userMenuRef} style={{ position: 'relative', display: 'inline-block', marginLeft: 6 }}>
-                    <button onClick={() => setUserMenuOpen(v => !v)} className="user-avatar-btn"
-                      title={user?.name || 'Account'}
-                      style={{
-                        width: 34, height: 34, borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #0f766e, #14b8a6)',
-                        border: 'none', color: '#fff', fontWeight: 700, fontSize: 13,
-                        cursor: 'pointer', display: 'flex', alignItems: 'center',
-                        justifyContent: 'center', letterSpacing: 0.5,
-                        boxShadow: '0 2px 8px rgba(15,118,110,0.3)',
-                        transition: 'transform 0.2s',
-                      }}>
-                      {initials}
-                    </button>
-                    {userMenuOpen && (
-                      <div style={{
-                        position: 'absolute', top: 'calc(100% + 10px)', right: 0,
-                        background: '#fff', borderRadius: 12,
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.14)',
-                        border: '1px solid #e5e7eb', minWidth: 200,
-                        zIndex: 9999, overflow: 'hidden',
-                      }}>
-                        <div style={{ padding: '14px 16px', borderBottom: '1px solid #f1f5f9', background: '#f8fafc' }}>
-                          <p style={{ fontSize: 13, fontWeight: 700, color: '#111827', margin: 0 }}>{user?.name}</p>
-                          <p style={{ fontSize: 11.5, color: '#6b7280', margin: '2px 0 0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{user?.email}</p>
-                        </div>
-                        {[
-                          { to: '/profile', icon: 'fa-solid fa-user-pen', label: 'My Profile' },
-                          { to: '/my-orders', icon: 'fa-solid fa-bag-shopping', label: 'My Orders' },
-                          { to: '/wishlist', icon: 'fa-regular fa-heart', label: 'Wishlist' },
-                          { to: '/cart', icon: 'fa-solid fa-cart-shopping', label: `Cart${cart.length > 0 ? ` (${cart.length})` : ''}` },
-                        ].map(item => (
-                          <Link key={item.to} href={item.to}
-                            onClick={() => setUserMenuOpen(false)}
-                            style={{
-                              display: 'flex', alignItems: 'center', gap: 10,
-                              padding: '11px 16px', color: '#374151',
-                              textDecoration: 'none', fontSize: 13.5, fontWeight: 500,
-                              transition: 'background 0.15s', borderBottom: '1px solid #f9fafb',
-                            }}>
-                            <i className={item.icon} style={{ width: 16, color: '#0f766e', fontSize: 14 }} />
-                            {item.label}
-                          </Link>
-                        ))}
-                        <button onClick={handleLogout} style={{
-                          display: 'flex', alignItems: 'center', gap: 10,
-                          width: '100%', padding: '11px 16px', background: 'none',
-                          border: 'none', color: '#ef4444', fontSize: 13.5,
-                          fontWeight: 600, cursor: 'pointer', textAlign: 'left',
-                          fontFamily: 'inherit',
-                        }}>
-                          <i className="fa-solid fa-right-from-bracket" style={{ width: 16, fontSize: 14 }} />
-                          Sign Out
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link className="admin mr-0" href="/login" title="Login">
-                    <img loading="lazy" src="/assets/images/header-admin.png" alt="Login" />
-                  </Link>
-                )}
+                <Link className="admin mr-0" href="/login" title="Admin Login">
+                  <img loading="lazy" src="/assets/images/header-admin.png" alt="Admin" />
+                </Link>
               </div>
               <ul className="list-unstyled mb-0">
                 <li className="d-inline-block">

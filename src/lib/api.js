@@ -22,13 +22,13 @@ API.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      localStorage.removeItem('painomed_token')
-      localStorage.removeItem('painomed_user')
       const isAdminRoute = window.location.pathname.startsWith('/admin')
-      const isAuthRoute = window.location.pathname === '/login' || window.location.pathname === '/join-now'
-      if (!isAuthRoute) {
-        const redirectTo = isAdminRoute ? '/login' : `/login?redirect=${encodeURIComponent(window.location.pathname)}`
-        window.location.href = redirectTo
+      if (isAdminRoute) {
+        localStorage.removeItem('painomed_token')
+        localStorage.removeItem('painomed_user')
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
+        }
       }
     }
     return Promise.reject(error)

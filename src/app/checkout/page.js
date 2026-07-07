@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
-import { useAuth } from '../../context/AuthContext'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useToast } from '../../components/Toast'
 import API from '../../lib/api'
@@ -28,7 +27,6 @@ export default function Checkout() {
 
   const router = useRouter()
   const { cart, clearCart } = useCart()
-  const { isLoggedIn, user } = useAuth()
   const { addToast } = useToast()
 
   const [form, setForm] = useState({
@@ -48,16 +46,12 @@ export default function Checkout() {
   const [deliveryMethod, setDeliveryMethod] = useState('first-class')
 
   useEffect(() => {
-    if (!isLoggedIn) { router.push('/login'); return }
-    if (user) {
-      setForm(prev => ({ ...prev, firstName: user.name || '', email: user.email || '' }))
-    }
     API.get('/seo').then(({ data }) => setSeo(data.seo || null)).catch(() => {})
     fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
       .then(r => r.json())
       .then(d => setBtcPrice(d.bitcoin?.usd || null))
       .catch(() => {})
-  }, [isLoggedIn, user, router])
+  }, [])
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
   const delivery = DELIVERY_METHODS.find(d => d.id === deliveryMethod) || DELIVERY_METHODS[2]
@@ -188,8 +182,6 @@ export default function Checkout() {
       setPlacing(false)
     }
   }
-
-  if (!isLoggedIn) return null
 
   const bitcoinAddress = seo?.bitcoinAddress || ''
 const imgUrl = (path) => path?.startsWith('/uploads/') ? `${process.env.NEXT_PUBLIC_API_URL}${path}` : path

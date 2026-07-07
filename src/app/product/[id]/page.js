@@ -6,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation'
 import { usePageMeta } from '../../../context/SeoContext'
 import { useCart } from '../../../context/CartContext'
 import { useWishlist } from '../../../context/WishlistContext'
-import { useAuth } from '../../../context/AuthContext'
 import { useToast } from '../../../components/Toast'
 import { useSingleProduct, useProducts } from '../../../hooks/useProducts'
 import API from '../../../lib/api'
@@ -33,7 +32,6 @@ export default function SingleProduct() {
 
   const { addToCart } = useCart()
   const { addToWishlist, wishlist } = useWishlist()
-  const { isLoggedIn } = useAuth()
   const { addToast } = useToast()
 
   if (loading) {
@@ -74,11 +72,6 @@ export default function SingleProduct() {
   }
 
   const handleBuyNow = () => {
-    if (!isLoggedIn) {
-      addToast('Please login to place an order', 'info')
-      navigate.push('/login')
-      return
-    }
     handleAddToCart()
     navigate.push('/checkout')
   }
@@ -157,17 +150,6 @@ export default function SingleProduct() {
                 <button className="sp-buy-now" onClick={handleBuyNow}>Buy Now</button>
               </div>
 
-              {!isLoggedIn && (
-                <div className="sp-login-notice">
-                  <i className="fa-solid fa-circle-info" />
-                  <span>
-                    <Link href="/login" className="sp-login-notice-link">Login</Link> or{' '}
-                    <Link href="/join-now" className="sp-login-notice-link">Register</Link> to place an order.
-                    You can freely add to cart &amp; wishlist.
-                  </span>
-                </div>
-              )}
-
               <div className="sp-actions">
                 <span className="sp-wishlist-trigger" onClick={handleAddToWishlist}>
                   <i className={isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} /> Add to wishlist
@@ -245,8 +227,7 @@ export default function SingleProduct() {
               ))}
               <div className="sp-review-form">
                 <h4>Write a Review</h4>
-                {isLoggedIn ? (
-                  <form onSubmit={async (e) => {
+                <form onSubmit={async (e) => {
                     e.preventDefault()
                     if (!reviewStars || !reviewComment.trim()) { addToast('Please select rating and write a review', 'info'); return }
                     try {
@@ -269,11 +250,6 @@ export default function SingleProduct() {
                     </div>
                     <button type="submit" className="sp-submit-review">Submit Review <i className="fa-solid fa-arrow-right" /></button>
                   </form>
-                ) : (
-                  <div className="sp-review-login-prompt">
-                    <Link href="/login" className="sp-review-login-link">Login</Link> to write a review.
-                  </div>
-                )}
               </div>
             </div>
           </section>
