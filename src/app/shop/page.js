@@ -29,7 +29,7 @@ export default function Shop() {
       .catch(() => {})
   }, [])
 
-  const { products, loading, error, total, pages } = useProducts({ search, sort, page, limit: 9 })
+  const { products, loading, error, total, pages, refetch } = useProducts({ search, sort, page, limit: 9 })
 
   const catPath = (cat) => {
     const key = cat.name.toLowerCase().trim()
@@ -102,7 +102,10 @@ export default function Shop() {
                     <i className="fa-solid fa-spinner fa-spin shop-state-icon" /><p>Loading products...</p>
                   </div>
                 ) : error ? (
-                  <div className="shop-state shop-state-error"><p>{error}</p></div>
+                  <div className="shop-state shop-state-error">
+                    <p>{error}</p>
+                    <button className="btn btn-primary mt-2" onClick={refetch}><i className="fa-solid fa-rotate mr-1" /> Retry</button>
+                  </div>
                 ) : products.length === 0 ? (
                   <div className="shop-state shop-state-empty">
                     <i className="fa-solid fa-box-open shop-state-icon" /><p>No products found.</p>

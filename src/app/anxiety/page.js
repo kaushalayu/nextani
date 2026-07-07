@@ -2,9 +2,11 @@
 
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
+import { usePageMeta } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function Anxiety() {
+  usePageMeta('Anxiety Relief', 'Effective anxiety relief medications to help you manage stress and find calm.', 'anxiety relief, calm', '/anxiety')
   const { products, loading } = useProducts({ badge: 'calm', limit: 20 })
 
   return (

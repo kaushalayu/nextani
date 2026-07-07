@@ -20,7 +20,10 @@ export default function SingleProduct() {
 
   usePageMeta(
     product?.name ? `${product.name} - Buy Online` : 'Product Details',
-    product?.shortDescription || product?.description?.slice(0, 160) || 'View product details'
+    product?.shortDescription || product?.description?.slice(0, 160) || 'View product details',
+    product ? [product.name, product.badge, 'buy online'].filter(Boolean).join(', ') : undefined,
+    `/product/${id}`,
+    product?.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL || ''}${product.image}` : product?.image || undefined
   )
 
   const [selectedPillsIdx, setSelectedPillsIdx] = useState(0)
@@ -88,7 +91,7 @@ export default function SingleProduct() {
     addToast('Added to wishlist', 'wishlist')
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://painomed.us'
 
   return (
     <>

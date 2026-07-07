@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
-import { generatePageMetadata } from '../../lib/seo-metadata'
+import { usePageMeta } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function NewArrivals() {
+  usePageMeta('New Arrivals', 'Discover the latest additions to our pharmacy — fresh stock, new formulas.', 'new arrivals, latest medicines', '/new-arrivals')
   const { products, loading } = useProducts({ isNewArrival: true, limit: 20 })
 
   return (

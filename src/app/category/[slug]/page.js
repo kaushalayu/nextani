@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { useProducts } from '../../../hooks/useProducts'
 import ProductCard from '../../../components/ProductCard'
+import { usePageMeta } from '../../../context/SeoContext'
 import SubBanner from '../../../components/SubBanner'
 import API from '../../../lib/api'
 
@@ -27,6 +28,7 @@ export default function CategoryPage() {
 
   const title = cat?.name || slug?.replace(/-/g, ' ') || 'Category'
   const desc = cat?.description || `Browse our ${title.toLowerCase()}`
+  usePageMeta(title, desc, `category, ${title.toLowerCase()}`, `/category/${slug}`)
 
   return (
     <>

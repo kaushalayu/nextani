@@ -1,4 +1,4 @@
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://painomed.us'
 
 export default function robots() {
   return {
@@ -8,8 +8,11 @@ export default function robots() {
         allow: '/',
         disallow: ['/admin/', '/api/', '/checkout/', '/my-orders/', '/profile/', '/thank-you/'],
       },
+      {
+        userAgent: 'GPTBot',
+        disallow: '/',
+      },
     ],
-    sitemap: siteUrl ? `${siteUrl}/sitemap.xml` : undefined,
-    host: siteUrl || undefined,
+    sitemap: `${siteUrl}/sitemap.xml`,
   }
 }

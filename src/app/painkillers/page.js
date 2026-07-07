@@ -2,9 +2,11 @@
 
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
+import { usePageMeta } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function Painkillers() {
+  usePageMeta('Painkillers', 'Effective pain relief solutions for various types of discomfort.', 'painkillers, pain relief', '/painkillers')
   const { products, loading } = useProducts({ badge: 'painkiller', limit: 20 })
 
   return (

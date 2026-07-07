@@ -2,9 +2,11 @@
 
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
+import { usePageMeta } from '../../context/SeoContext'
 import SubBanner from '../../components/SubBanner'
 
 export default function SleepingPills() {
+  usePageMeta('Sleeping Pills', 'Quality sleep aids to help you get the rest you deserve.', 'sleeping pills, sleep aids', '/sleeping-pills')
   const { products, loading } = useProducts({ badge: 'sleep aid', limit: 20 })
 
   return (

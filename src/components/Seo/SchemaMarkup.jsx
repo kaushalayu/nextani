@@ -1,4 +1,5 @@
-import Script from 'next/script'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://painomed.us'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || ''
 
 export function JsonLd({ data }) {
   return (
@@ -14,7 +15,7 @@ export function OrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Pharmacy',
     name: 'Painomed',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    url: SITE_URL,
     logo: '/logo.png',
     description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
     address: {
@@ -44,14 +45,15 @@ export function ProductSchema({ product }) {
   const price = product.hasPillsOptions && product.pillsOptions?.[0]
     ? product.pillsOptions[0].price
     : product.price || 0
+  const imageUrl = product.image?.startsWith('/uploads')
+    ? `${API_URL}${product.image}`
+    : product.image || '/assets/images/best-product1.png'
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     description: product.shortDescription || product.description,
-    image: product.image?.startsWith('/uploads')
-      ? `${process.env.NEXT_PUBLIC_API_URL}${product.image}`
-      : product.image || '/assets/images/best-product1.png',
+    image: imageUrl,
     sku: product.sku || product._id,
     brand: {
       '@type': 'Brand',
@@ -61,13 +63,18 @@ export function ProductSchema({ product }) {
       '@type': 'Offer',
       price,
       priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
+      availability: product.stock > 0
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      url: `${SITE_URL}/product/${product.slug || product._id}`,
     },
-    aggregateRating: product.rating ? {
-      '@type': 'AggregateRating',
-      ratingValue: product.rating,
-      reviewCount: product.numReviews || 0,
-    } : undefined,
+    ...(product.rating ? {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: product.rating,
+        reviewCount: product.numReviews || 0,
+      },
+    } : {}),
   }
   return <JsonLd data={schema} />
 }
@@ -80,7 +87,7 @@ export function BreadcrumbSchema({ items }) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: item.url || `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}${item.path}`,
+      item: item.url || `${SITE_URL}${item.path}`,
     })),
   }
   return <JsonLd data={schema} />
@@ -88,14 +95,15 @@ export function BreadcrumbSchema({ items }) {
 
 export function BlogPostSchema({ post }) {
   if (!post) return null
+  const imageUrl = post.image?.startsWith('/uploads')
+    ? `${API_URL}${post.image}`
+    : post.image || '/assets/images/blog-image1.jpg'
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt || post.content?.slice(0, 160),
-    image: post.image?.startsWith('/uploads')
-      ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
-      : post.image || '/assets/images/blog-image1.jpg',
+    image: imageUrl,
     datePublished: post.createdAt,
     author: {
       '@type': 'Person',

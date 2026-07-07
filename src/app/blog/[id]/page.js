@@ -15,7 +15,10 @@ export default function BlogDetail() {
 
   usePageMeta(
     post?.metaTitle || (post?.title ? `${post.title} - Blog` : 'Blog Post'),
-    post?.metaDescription || post?.excerpt || post?.content?.slice(0, 160) || 'Read our latest blog post.'
+    post?.metaDescription || post?.excerpt || post?.content?.slice(0, 160) || 'Read our latest blog post.',
+    'blog, health, wellness',
+    `/blog/${id}`,
+    post?.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL || ''}${post.image}` : post?.image || undefined
   )
 
   useEffect(() => {

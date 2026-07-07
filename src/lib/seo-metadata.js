@@ -1,7 +1,8 @@
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://painomed.us'
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
 const siteName = 'Painomed - Online Pharmacy'
 
-const metadataBase = siteUrl ? new URL(siteUrl) : undefined
+const metadataBase = new URL(siteUrl)
 
 export const defaultMetadata = {
   title: {
@@ -52,7 +53,7 @@ export function generateProductMetadata(product) {
     ? product.pillsOptions[0].price
     : product.price || 0
   const img = product.image?.startsWith('/uploads')
-    ? `${process.env.NEXT_PUBLIC_API_URL}${product.image}`
+    ? `${apiUrl}${product.image}`
     : product.image || '/assets/images/best-product1.png'
 
   return {
@@ -78,7 +79,7 @@ export function generateBlogMetadata(post) {
   if (!post) return {}
   const url = siteUrl ? `${siteUrl}/blog/${post.slug || post._id}` : ''
   const img = post.image?.startsWith('/uploads')
-    ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}`
+    ? `${apiUrl}${post.image}`
     : post.image || '/assets/images/blog-image1.jpg'
 
   return {

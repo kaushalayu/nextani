@@ -3,8 +3,10 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useProducts } from '../../hooks/useProducts'
+import { usePageMeta } from '../../context/SeoContext'
 
 export default function AllMedicines() {
+  usePageMeta('All Medicines', 'Browse our complete A-Z directory of medicines and healthcare products.', 'all medicines, A-Z medicines', '/all-medicines')
   const [search, setSearch] = useState('')
   const { products, loading, error } = useProducts({ limit: 200, sort: 'name' })
 

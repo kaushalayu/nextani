@@ -45,8 +45,9 @@ export async function generateMetadata() {
   const siteKeywords = seo?.siteKeywords || 'online pharmacy, medicine delivery, painomed'
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
   const metadataBase = siteUrl ? new URL(siteUrl) : undefined
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || ''
   const ogImage = seo?.ogImage
-    ? seo.ogImage.startsWith('http') ? seo.ogImage : `${process.env.NEXT_PUBLIC_API_URL}${seo.ogImage}`
+    ? seo.ogImage.startsWith('http') ? seo.ogImage : `${apiUrl}${seo.ogImage}`
     : '/logo.png'
 
   const siteShort = siteTitle.replace(/ - .*$/, '').trim() || 'Painomed'

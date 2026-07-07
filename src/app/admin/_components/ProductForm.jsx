@@ -55,7 +55,6 @@ export default function AdminProductForm({ productId }) {
 
   useEffect(() => {
     if (!productId) return
-    setFetching(true)
     API.get(`/products/${productId}`)
       .then(({ data }) => {
         const p = data.product
