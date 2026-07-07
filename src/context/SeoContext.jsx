@@ -6,19 +6,13 @@ import API from '../lib/api'
 const SeoContext = createContext()
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://painomed.us'
 
-function setOrCreateMeta(selector, tagName, attr, value) {
+function setOrCreateMeta(tagName, attributes) {
+  if (!attributes || !attributes.href) return
+  const selector = `${tagName}[href="${attributes.href}"]`
   let el = document.querySelector(selector)
-  if (el) {
-    el.setAttribute(attr, value)
-  } else if (value) {
-    el = document.createElement(tagName || 'meta')
-    if (tagName === 'link') {
-      const [relAttr, relVal] = attr.split('=')
-      el.setAttribute('rel', relAttr)
-      el.setAttribute('href', relVal || value)
-    } else {
-      el.setAttribute(attr, value)
-    }
+  if (!el) {
+    el = document.createElement(tagName)
+    Object.entries(attributes).forEach(([k, v]) => el.setAttribute(k, v))
     document.head.appendChild(el)
   }
 }
@@ -98,7 +92,7 @@ export function usePageMeta(title, description, keywords, canonicalPath, ogImage
     if (metaKw) metaKw.setAttribute('content', kw)
 
     const canonicalUrl = canonicalPath ? `${SITE_URL}${canonicalPath}` : SITE_URL
-    setOrCreateMeta('link[rel="canonical"]', 'link', 'rel=canonical', canonicalUrl)
+    setOrCreateMeta('link', { rel: 'canonical', href: canonicalUrl })
 
     setOrCreateMetaTag('og:title', fullTitle)
     setOrCreateMetaTag('og:description', desc)
