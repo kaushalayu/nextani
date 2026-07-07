@@ -8,7 +8,7 @@
   NODE_VERSION = "20"
   NPM_VERSION = "10"
   NEXT_PUBLIC_SITE_URL = "https://painomed.us"
-  NEXT_PUBLIC_API_URL = "https://painomed-api.onrender.com"
+  NEXT_PUBLIC_API_URL = "https://ani-backend-8kvn.onrender.com"
 
 [[headers]]
   for = "/*"
