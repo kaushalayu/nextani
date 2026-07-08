@@ -17,6 +17,8 @@
   font-weight: 800;
   color: #fff;
   margin: 0 0 8px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .sp-banner p {
@@ -157,6 +159,8 @@
   color: var(--black--color, #111);
   margin: 0 0 12px;
   line-height: 1.25;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .sp-price-row {
