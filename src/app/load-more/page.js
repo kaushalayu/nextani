@@ -11,7 +11,7 @@ export default function LoadMore() {
       <SubBanner title="Shop All Products" description="Browse all our products with load more functionality." page="Shop" />
       <div className="cat-page">
       <div className="container">
-        <h1>Load More</h1>
+        <h2>Load More</h2>
         <p>Browse our complete collection.</p>
       </div>
     </div>

@@ -516,10 +516,16 @@ a {
 
   .medicine-item {
     flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .medicine-item-info {
+    flex: 1 1 calc(100% - 54px);
   }
 
   .medicine-item-price {
     width: auto;
+    margin-left: auto;
   }
 }
 
@@ -709,4 +715,44 @@ a {
   .error-page-title {
     font-size: 20px;
   }
+}
+
+/* SEO content block for thin pages */
+.seo-text-block {
+  padding: 48px 0 56px;
+}
+
+.seo-text-inner {
+  max-width: 940px;
+  margin: 0 auto;
+  color: #4b5563;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.seo-text-inner h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 12px;
+}
+
+.seo-text-inner h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 24px 0 8px;
+}
+
+.seo-text-inner p {
+  margin: 0 0 14px;
+}
+
+.seo-text-inner ul {
+  margin: 0 0 14px 20px;
+  padding: 0;
+}
+
+.seo-text-inner li {
+  margin-bottom: 6px;
 }

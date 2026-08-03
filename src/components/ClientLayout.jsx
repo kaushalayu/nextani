@@ -8,9 +8,11 @@ import { ToastProvider } from '../components/Toast'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Preloader from '../components/Preloader'
+import LeadPopup from '../components/LeadPopup'
+import AosInit from '../components/AosInit'
 import ErrorBoundary from '../components/ErrorBoundary'
 import { GAPageView } from '../components/Seo/GoogleAnalytics'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
@@ -20,6 +22,9 @@ function BackToTop() {
 }
 
 function SearchOverlay() {
+  const [query, setQuery] = useState('')
+  const router = useRouter()
+
   useEffect(() => {
     const handler = (e) => {
       const href = e.target.closest('a')?.getAttribute('href')
@@ -32,17 +37,26 @@ function SearchOverlay() {
     return () => document.removeEventListener('click', handler)
   }, [])
 
+  const handleSearch = (e) => {
+    e.preventDefault()
+    const q = query.trim()
+    if (!q) return
+    document.getElementById('search')?.classList.remove('open')
+    setQuery('')
+    router.push(`/shop?search=${encodeURIComponent(q)}`)
+  }
+
   return (
     <div id="search">
       <span className="close" onClick={() => document.getElementById('search')?.classList.remove('open')}>X</span>
-      <form role="search" id="searchform" method="get">
-        <input name="q" type="search" placeholder="Type to Search" />
+      <form role="search" id="searchform" method="get" onSubmit={handleSearch}>
+        <input name="q" type="search" placeholder="Type to Search" value={query} onChange={(e) => setQuery(e.target.value)} />
       </form>
     </div>
   )
 }
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname()
@@ -59,6 +73,8 @@ export default function ClientLayout({ children }) {
               {!isAdmin && <Preloader />}
               {!isAdmin && <BackToTop />}
               {!isAdmin && <SearchOverlay />}
+              {!isAdmin && <LeadPopup />}
+              {!isAdmin && <AosInit />}
               {!isAdmin && <Header />}
               <main>{children}</main>
               {!isAdmin && <Footer />}

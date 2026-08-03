@@ -42,6 +42,21 @@ const nextConfig = {
         destination: '/admin/dashboard',
         permanent: true,
       },
+      {
+        source: '/three-column-sidebar',
+        destination: '/shop',
+        permanent: true,
+      },
+      {
+        source: '/load-more',
+        destination: '/shop',
+        permanent: true,
+      },
+      {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
     ]
   },
   compress: true,

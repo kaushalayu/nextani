@@ -4369,3 +4369,30 @@
         font-size: 15px;
     }
 }
+.shop-filter-toggle {
+    display: none;
+    width: 100%;
+    margin-bottom: 18px;
+    padding: 12px 16px;
+    background: #0a5c36;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.shop-filter-toggle i {
+    margin-right: 6px;
+}
+@media (max-width: 991px) {
+    .shop-filter-toggle {
+        display: block;
+    }
+    .shop-con .sidebar {
+        display: none;
+    }
+    .shop-con .sidebar.mobile-open {
+        display: block;
+    }
+}

@@ -84,8 +84,9 @@ function Footer() {
                     <li><i className="fa-solid fa-arrow-right" /><Link href="/" className="text-decoration-none">Home</Link></li>
                     <li><i className="fa-solid fa-arrow-right" /><Link href="/about" className="text-decoration-none">About</Link></li>
                     <li><i className="fa-solid fa-arrow-right" /><Link href="/shop" className="text-decoration-none">Shop</Link></li>
-                    <li><i className="fa-solid fa-arrow-right" /><Link href="/shop" className="text-decoration-none">Team</Link></li>
+                    <li><i className="fa-solid fa-arrow-right" /><Link href="/about" className="text-decoration-none">Team</Link></li>
                     <li><i className="fa-solid fa-arrow-right" /><Link href="/blog" className="text-decoration-none">Blog</Link></li>
+                    <li><i className="fa-solid fa-arrow-right" /><Link href="/html-sitemap" className="text-decoration-none">Sitemap</Link></li>
                   </ul>
                 </div>
               </div>

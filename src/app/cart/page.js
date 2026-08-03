@@ -17,7 +17,7 @@ export default function Cart() {
       <SubBanner title="Shopping Cart" description="Review your selected items and proceed to checkout securely." page="Cart" />
       <div className="cart-page">
         <div className="container">
-          <h1>Shopping Cart ({cart.length})</h1>
+          <h2>Shopping Cart ({cart.length})</h2>
         {cart.length === 0 ? (
           <div className="cart-empty">
             <div className="cart-empty-icon"><i className="fa-solid fa-cart-shopping" /></div>

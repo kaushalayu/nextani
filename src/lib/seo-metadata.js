@@ -43,7 +43,6 @@ export const defaultMetadata = {
       'max-snippet': -1,
     },
   },
-  ...(siteUrl && { alternates: { canonical: siteUrl } }),
 }
 
 export function generateProductMetadata(product) {

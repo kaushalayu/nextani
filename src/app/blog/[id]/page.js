@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation'
 import API from '../../../lib/api'
 import { BlogPostSchema, BreadcrumbSchema } from '../../../components/Seo/SchemaMarkup'
 import { usePageMeta } from '../../../context/SeoContext'
+import { makeExcerpt } from '../../../lib/utils'
 import SubBanner from '../../../components/SubBanner'
 
 export default function BlogDetail() {
@@ -25,10 +26,7 @@ export default function BlogDetail() {
     API.get(`/blogs/${id}`).then(({ data }) => setPost(data.blog || data)).catch(() => setPost(null)).finally(() => setLoading(false))
   }, [id])
 
-  const bannerDesc = useMemo(() => {
-    if (!post?.excerpt) return ''
-    return post.excerpt.length > 120 ? post.excerpt.slice(0, 120) + '...' : post.excerpt
-  }, [post])
+  const bannerDesc = useMemo(() => makeExcerpt(post?.excerpt || post?.content, 120), [post])
 
   if (loading) return (
     <>

@@ -97,7 +97,7 @@ export default function OrderDetail() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
             <div>
-              <h1 style={{ margin: 0, fontSize: 22 }}>Order #{order._id?.slice(-8).toUpperCase()}</h1>
+              <h2 style={{ margin: 0, fontSize: 22 }}>Order #{order._id?.slice(-8).toUpperCase()}</h2>
               <p style={{ color: '#6b7280', margin: '4px 0 0', fontSize: 14 }}>Placed on {createdAt}</p>
             </div>
             <div>

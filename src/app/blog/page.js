@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import API from '../../lib/api'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
+import { makeExcerpt } from '../../lib/utils'
 import SubBanner from '../../components/SubBanner'
 
 export default function Blog() {
@@ -63,9 +64,8 @@ export default function Blog() {
               {categories.map((tab) => (
                 <li key={tab} className="nav-item">
                   <span
-                    className={`nav-link${activeTab === tab ? ' active' : ''}`}
+                    className={`nav-link${activeTab === tab ? ' active' : ''} blog-tab-link`}
                     onClick={() => handleTabChange(tab)}
-                    className="blog-tab-link"
                   >
                     {tab}
                   </span>
@@ -95,7 +95,6 @@ export default function Blog() {
                             src={imgSrc(post.image)}
                             alt={post.title}
                             loading="lazy"
-                            className="img-fluid"
                             className="blog-list-img"
                           />
                         </figure>
@@ -116,8 +115,7 @@ export default function Blog() {
                           </ul>
                           <h4><Link href={`/blog/${post.slug || post._id}`}>{post.title}</Link></h4>
                           <p>
-                            {post.excerpt || post.content?.slice(0, 120)}
-                            {(post.content?.length > 120) ? '...' : ''}
+                            {makeExcerpt(post.excerpt || post.content, 120)}
                           </p>
                           <div className="generic-btn2">
                             <Link href={`/blog/${post.slug || post._id}`}>Read More</Link>

@@ -35,7 +35,7 @@ export default function CategoryPage() {
       <SubBanner title={title} description={desc} page={title} />
       <div className="cat-page">
         <div className="container">
-          <h1>{title}</h1>
+          <h2>{title}</h2>
           {!cat ? (
             <p>Category not found.</p>
           ) : loading ? (

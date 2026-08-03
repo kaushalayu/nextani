@@ -36,7 +36,7 @@ export default function Profile() {
       <SubBanner title="My Orders" description="Track your orders by providing your email address." page="My Orders" />
       <div className="orders-page">
         <div className="container">
-          <h1>My Orders</h1>
+          <h2>My Orders</h2>
           <div style={{ maxWidth: 480, marginBottom: 32 }}>
             <p style={{ color: '#6b7280', marginBottom: 12 }}>Enter your email to look up your orders:</p>
             <form onSubmit={handleLookup} style={{ display: 'flex', gap: 8 }}>

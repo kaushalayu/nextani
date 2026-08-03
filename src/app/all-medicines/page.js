@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { useProducts } from '../../hooks/useProducts'
 import { usePageMeta } from '../../context/SeoContext'
+import SeoTextBlock from '../../components/SeoTextBlock'
 
 export default function AllMedicines() {
   usePageMeta('All Medicines', 'Browse our complete A-Z directory of medicines and healthcare products.', 'all medicines, A-Z medicines', '/all-medicines')
@@ -50,6 +51,7 @@ export default function AllMedicines() {
   }
 
   return (
+    <>
     <div className="all-medicines-page">
       <div className="container">
         <div className="medicines-banner">
@@ -142,5 +144,19 @@ export default function AllMedicines() {
         )}
       </div>
     </div>
+    <SeoTextBlock>
+      <h2>Complete A-Z Medicine Directory</h2>
+      <p>Browse our complete directory of medicines and healthcare products, organized alphabetically for easy navigation. From common painkillers and sleep aids to anxiety relief and general wellness products, the All Medicines page lists everything we offer in one convenient place. Use the alphabetical navigation or the search box to jump straight to the product you need.</p>
+      <p>Every medicine in this directory is sourced from verified manufacturers and reviewed by our licensed pharmacy team. We display the current price, a short description, and a direct link to the full product page where you can read dosing guidance, side effects, and safety information before ordering.</p>
+      <h3>How to Find Your Medicine</h3>
+      <ul>
+        <li>Use the search bar to filter by medicine name or condition</li>
+        <li>Tap a letter to scroll to that part of the alphabet</li>
+        <li>Click any product to open its full details page</li>
+        <li>Add items to your cart and check out securely with card or crypto</li>
+      </ul>
+      <p>If you cannot find a product you are looking for, contact our support team - we may be able to source it for you. Our goal is to make online medicine shopping simple, safe, and affordable for everyone.</p>
+    </SeoTextBlock>
+    </>
   )
 }

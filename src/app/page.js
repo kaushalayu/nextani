@@ -7,6 +7,7 @@ import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { usePageMetaFromAdmin, useSeo } from '../context/SeoContext'
 import API from '../lib/api'
+import { makeExcerpt } from '../lib/utils'
 
 const CATEGORY_ROUTES = {
   'Sleeping Pills': '/sleeping-pills',
@@ -225,6 +226,28 @@ export default function Home() {
         </section>
       </div>
 
+      <section className="home-section section-best">
+        <div className="home-container">
+          <div className="section-header">
+            <span className="section-subtitle">Most Demanding</span>
+            <h2 className="section-title">Best Selling Products</h2>
+          </div>
+          <div className="product-grid">
+            {bestLoading ? [...Array(8)].map((_, i) => <ProductSkeleton key={i} />)
+              : bestSellers.length > 0
+                ? bestSellers.map((product) => (
+                    <ProductCard product={product} key={product._id}
+                      onAddToCart={handleAddToCart} onAddToWishlist={handleAddToWishlist} />
+                  ))
+                : (<div className="home-empty">
+                    <i className="fa-solid fa-box-open" />
+                    <p>No best sellers yet. Add them from the admin panel.</p>
+                  </div>)
+            }
+          </div>
+        </div>
+      </section>
+
       <div className="padding-rl float-left w-100">
         <section className="float-left w-100 benefits-con">
           <div className="main-container">
@@ -275,7 +298,7 @@ export default function Home() {
             }) : [...Array(4)].map((_, i) => (
               <div className="category-card" key={i} style={{ opacity: 0.4 }}>
                 <div className="category-image-wrapper">
-                  <img loading="lazy" src={`/assets/images/popular-category${i + 1}.jpg`} alt="" />
+                  <img loading="lazy" src={`/assets/images/popular-category${i + 1}.jpg`} alt={`Popular category ${i + 1}`} />
                 </div>
               </div>
             ))}
@@ -333,28 +356,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section section-best">
-        <div className="home-container">
-          <div className="section-header">
-            <span className="section-subtitle">Most Demanding</span>
-            <h2 className="section-title">Best Selling Products</h2>
-          </div>
-          <div className="product-grid">
-            {bestLoading ? [...Array(8)].map((_, i) => <ProductSkeleton key={i} />)
-              : bestSellers.length > 0
-                ? bestSellers.map((product) => (
-                    <ProductCard product={product} key={product._id}
-                      onAddToCart={handleAddToCart} onAddToWishlist={handleAddToWishlist} />
-                  ))
-                : (<div className="home-empty">
-                    <i className="fa-solid fa-box-open" />
-                    <p>No best sellers yet. Add them from the admin panel.</p>
-                  </div>)
-            }
-          </div>
-        </div>
-      </section>
-
       <section className="home-section section-why">
         <div className="home-container">
           <div className="section-header">
@@ -381,7 +382,7 @@ export default function Home() {
                 <div className="promotion-box w-100 vitamins" style={seo?.promoBanner1 ? { backgroundImage: `url(${getProductImg(seo.promoBanner1)})` } : {}}>
                   <span className="d-block discount-percent">10%</span>
                   <span className="d-block smol-text">OFF</span>
-                  <h4 className="specialh4">Bitcoin &amp; <br />Crypto Payments</h4>
+                  <h3 className="specialh4">Bitcoin &amp; <br />Crypto Payments</h3>
                   <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Pay with Crypto</Link>
                 </div>
               </div>
@@ -389,7 +390,7 @@ export default function Home() {
                 <div className="promotion-box w-100 baby-care" style={seo?.promoBanner2 ? { backgroundImage: `url(${getProductImg(seo.promoBanner2)})` } : {}}>
                   <span className="d-block discount-percent">20%</span>
                   <span className="d-block smol-text">OFF</span>
-                  <h4 className="specialh4">Extra Savings<br />on Bitcoin</h4>
+                  <h3 className="specialh4">Extra Savings<br />on Bitcoin</h3>
                   <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Start Saving</Link>
                 </div>
               </div>
@@ -397,7 +398,7 @@ export default function Home() {
                 <div className="promotion-box w-100 personal-care" style={seo?.promoBanner3 ? { backgroundImage: `url(${getProductImg(seo.promoBanner3)})` } : {}}>
                   <span className="d-block discount-percent">15%</span>
                   <span className="d-block smol-text">DISCOUNT</span>
-                  <h4 className="specialh4">First Crypto<br />Order</h4>
+                  <h3 className="specialh4">First Crypto<br />Order</h3>
                   <Link href="/shop" className="text-decoration-none elementary_btn d-inline-block">Order Now</Link>
                 </div>
               </div>
@@ -434,7 +435,7 @@ export default function Home() {
                 </div>
                 <div className="blog-content">
                   <h3 className="blog-title">{post.title}</h3>
-                  <p className="blog-excerpt">{post.excerpt || post.content?.slice(0, 120)}</p>
+                  <p className="blog-excerpt">{makeExcerpt(post.excerpt || post.content, 120)}</p>
                   <Link href={`/blog/${post.slug || post._id}`} className="blog-link">Read More <i className="fa-solid fa-arrow-right"></i></Link>
                 </div>
               </div>
@@ -447,4 +448,3 @@ export default function Home() {
     </>
   )
 }
-

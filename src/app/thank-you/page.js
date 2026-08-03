@@ -14,7 +14,7 @@ export default function ThankYou() {
         <div className="container">
           <div className="thank-you-section">
             <div className="thank-you-icon"><i className="fa-solid fa-circle-check" /></div>
-            <h1>Thank You for Your Order!</h1>
+            <h2>Thank You for Your Order!</h2>
             <p className="thank-you-text">Your order has been placed successfully. We will notify you once it ships.</p>
             <Link href="/profile" className="btn btn-primary">View My Orders</Link>
             <Link href="/shop" className="btn btn-outline-secondary ms-2">Continue Shopping</Link>

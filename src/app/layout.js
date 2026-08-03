@@ -89,7 +89,6 @@ export async function generateMetadata() {
         'max-snippet': -1,
       },
     },
-    ...(siteUrl && { alternates: { canonical: siteUrl } }),
   }
 }
 
@@ -109,6 +108,7 @@ export default function RootLayout({ children }) {
         <link href="/assets/css/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/custom.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet" />
         <link href="/assets/css/shop.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/blog.css" rel="stylesheet" type="text/css" />

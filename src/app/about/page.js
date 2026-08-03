@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
+import { makeExcerpt } from '../../lib/utils'
 import SubBanner from '../../components/SubBanner'
 
 export default function About() {
@@ -32,8 +33,6 @@ export default function About() {
     if (img.startsWith('/uploads')) return `${process.env.NEXT_PUBLIC_API_URL}${img}`
     return img
   }
-
-  const truncate = (str, len) => (str && str.length > len ? str.slice(0, len) + '...' : str)
 
   return (
     <>
@@ -262,7 +261,7 @@ export default function About() {
                         <Link href={`/blog/${post.slug || post._id}`} className="text-decoration-none">
                           <h4>{post.title}</h4>
                         </Link>
-                        <p className="mb-0">{post.excerpt || truncate(post.content, 120)}</p>
+                        <p className="mb-0">{makeExcerpt(post.excerpt || post.content, 120)}</p>
                       </div>
                     </div>
                   </div>

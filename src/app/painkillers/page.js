@@ -14,7 +14,7 @@ export default function Painkillers() {
       <SubBanner title="Painkillers" description="Effective pain relief solutions for various types of discomfort." page="Painkillers" />
       <div className="cat-page">
       <div className="container">
-        <h1>Painkillers</h1>
+        <h2>Painkillers</h2>
         {loading ? <p>Loading...</p> : (
           <div className="row">{products.map(p => <ProductCard key={p._id} product={p} layout="grid" />)}</div>
         )}

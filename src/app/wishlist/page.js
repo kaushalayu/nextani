@@ -24,7 +24,7 @@ export default function Wishlist() {
       <SubBanner title="My Wishlist" description="Your saved products — add them to cart when you're ready." page="Wishlist" />
       <div className="wishlist-page">
         <div className="container">
-          <h1>My Wishlist ({wishlist.length})</h1>
+          <h2>My Wishlist ({wishlist.length})</h2>
         {wishlist.length === 0 ? (
           <div className="wishlist-empty">
             <div className="wishlist-empty-icon"><i className="fa-regular fa-heart" /></div>

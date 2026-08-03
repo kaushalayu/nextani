@@ -22,6 +22,17 @@ export default function Shop() {
   const [sort, setSort] = useState('')
   const [page, setPage] = useState(1)
   const [sideCats, setSideCats] = useState([])
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const q = params.get('search') || ''
+    if (q) {
+      setSearch(q)
+      setSearchInput(q)
+      setPage(1)
+    }
+  }, [])
 
   useEffect(() => {
     API.get('/categories?limit=100')
@@ -49,7 +60,15 @@ export default function Shop() {
       <section className="shop-con feature-con position-relative float-left w-100 padding-top padding-bottom">
         <div className="main-container">
           <div className="row">
-            <div className="sidebar sticky-sidebar col-lg-3">
+            <button
+              type="button"
+              className="shop-filter-toggle"
+              aria-expanded={mobileFilterOpen}
+              onClick={() => setMobileFilterOpen(v => !v)}
+            >
+              <i className="fa-solid fa-sliders" /> {mobileFilterOpen ? 'Hide Filters' : 'Show Filters'}
+            </button>
+            <div className={`sidebar sticky-sidebar col-lg-3${mobileFilterOpen ? ' mobile-open' : ''}`}>
               <div className="theiaStickySidebar">
                 <div className="widget widget-newsletter" data-aos="fade-up">
                   <form onSubmit={handleSearch} className="form-inline">

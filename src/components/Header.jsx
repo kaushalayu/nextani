@@ -190,6 +190,11 @@ function Header() {
 
   return (
     <div className="padding-rl float-left w-100">
+      <div className="coupon-bar">
+        <i className="fa-solid fa-tag" />
+        <span><strong>Get 10% OFF</strong> on your first order — use code <strong>WELCOME10</strong> · Extra <strong>15% OFF</strong> on Bitcoin payments</span>
+        <Link href="/shop" className="coupon-bar-link">Shop Offers</Link>
+      </div>
       <header className="w-100 float-left header-con position-relative main-box">
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg navbar-light">

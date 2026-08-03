@@ -6,7 +6,7 @@ export default function ThreeColumnSidebar() {
       <SubBanner title="Products" description="Browse our product catalog in a three-column layout." page="Products" />
       <div className="cat-page">
       <div className="container">
-        <h1>Three Column Sidebar</h1>
+        <h2>Three Column Sidebar</h2>
       </div>
     </div>
     </>
