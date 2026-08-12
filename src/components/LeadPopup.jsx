@@ -11,13 +11,7 @@ export default function LeadPopup() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    let shown = false
-    try { shown = sessionStorage.getItem('painomed_lead_popup_shown') === '1' } catch (e) {}
-    if (shown) return
-    const timer = setTimeout(() => {
-      try { sessionStorage.setItem('painomed_lead_popup_shown', '1') } catch (e) {}
-      setVisible(true)
-    }, 6000)
+    const timer = setTimeout(() => setVisible(true), 1500)
     return () => clearTimeout(timer)
   }, [])
 
