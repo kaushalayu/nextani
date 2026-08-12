@@ -72,7 +72,7 @@
   overflow-wrap: break-word;
 }
 
-.blog-detail-content h1 { font-size: 26px; }
+.blog-detail-content h1 { font-size: 22px; }
 .blog-detail-content h2 { font-size: 24px; }
 .blog-detail-content h3 { font-size: 20px; }
 .blog-detail-content h4 { font-size: 18px; }
@@ -137,7 +137,7 @@
   .blog-detail-container {
     padding: 24px 16px 40px;
   }
-  .blog-detail-content h1 { font-size: 24px; }
+  .blog-detail-content h1 { font-size: 20px; }
   .blog-detail-content h2 { font-size: 22px; }
 }
 
@@ -151,7 +151,7 @@
   .blog-detail-meta {
     gap: 12px;
   }
-  .blog-detail-content h1 { font-size: 22px; }
+  .blog-detail-content h1 { font-size: 19px; }
   .blog-detail-content h2 { font-size: 20px; }
   .blog-detail-content h3 { font-size: 18px; }
   .blog-detail-content h4 { font-size: 16px; }
@@ -171,7 +171,7 @@
     max-height: 240px;
     border-radius: 14px;
   }
-  .blog-detail-content h1 { font-size: 20px; }
+  .blog-detail-content h1 { font-size: 18px; }
   .blog-detail-content h2 { font-size: 19px; }
   .blog-detail-content h3 { font-size: 17px; }
 }

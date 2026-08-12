@@ -2523,8 +2523,8 @@ div.country-selector>div.list>div.item {
 }
 
 .sub-banner-inner-con p {
-    font-size: 22px;
-    line-height: 32px;
+    font-size: 16px;
+    line-height: 26px;
     font-weight: 400;
     color: var(--secondary--color);
     margin-bottom: 35px;

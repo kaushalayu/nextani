@@ -26,7 +26,7 @@ export default function BlogDetail() {
     API.get(`/blogs/${id}`).then(({ data }) => setPost(data.blog || data)).catch(() => setPost(null)).finally(() => setLoading(false))
   }, [id])
 
-  const bannerDesc = useMemo(() => makeExcerpt(post?.excerpt || post?.content, 120), [post])
+  const bannerDesc = useMemo(() => makeExcerpt(post?.excerpt || post?.content, 80), [post])
 
   if (loading) return (
     <>
@@ -49,7 +49,7 @@ export default function BlogDetail() {
         { name: 'Blog', path: '/blog' },
         { name: post.title, path: `/blog/${id}` },
       ]} />
-      <SubBanner title={makeExcerpt(post.title, 40)} description={bannerDesc} page="Blog" />
+      <SubBanner title={makeExcerpt(post.title, 22)} description={bannerDesc} page="Blog" />
 
       <div className="blog-detail-page">
         <div className="blog-detail-container">
