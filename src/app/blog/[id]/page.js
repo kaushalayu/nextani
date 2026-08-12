@@ -49,10 +49,11 @@ export default function BlogDetail() {
         { name: 'Blog', path: '/blog' },
         { name: post.title, path: `/blog/${id}` },
       ]} />
-      <SubBanner title={post.title} description={bannerDesc} page="Blog" />
+      <SubBanner title={makeExcerpt(post.title, 40)} description={bannerDesc} page="Blog" />
 
       <div className="blog-detail-page">
         <div className="blog-detail-container">
+          <h1 className="blog-detail-title">{post.title}</h1>
           {post.image && (
             <img loading="lazy" className="blog-detail-image"
               src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}

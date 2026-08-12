@@ -114,6 +114,15 @@ export default function RootLayout({ children }) {
         <link href="/assets/css/blog.css" rel="stylesheet" type="text/css" />
         <OrganizationSchema />
         <GoogleAnalytics GA_MEASUREMENT_ID={GA_ID} />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-YM42XDWMGC"></script>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-YM42XDWMGC');
+          `
+        }} />
       </head>
       <body>
         <ClientLayout>{children}</ClientLayout>

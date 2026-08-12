@@ -2515,6 +2515,11 @@ div.country-selector>div.list>div.item {
 
 .sub-banner-inner-con h1 {
     margin-bottom: 26px;
+    font-size: 52px;
+    line-height: 60px;
+    font-weight: 700;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .sub-banner-inner-con p {

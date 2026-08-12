@@ -604,6 +604,8 @@
 
     .sub-banner-inner-con h1 {
         margin-bottom: 18px;
+        font-size: 44px;
+        line-height: 52px;
     }
 
     .sub-banner-con {
@@ -1158,6 +1160,8 @@
 
     .sub-banner-inner-con h1 {
         margin-bottom: 14px;
+        font-size: 36px;
+        line-height: 44px;
     }
 
     .sub-banner-inner-con p {
@@ -2038,6 +2042,8 @@
 
     .sub-banner-inner-con h1 {
         margin-bottom: 10px;
+        font-size: 30px;
+        line-height: 38px;
     }
 
     .sub-banner-inner-con p {
@@ -3415,6 +3421,11 @@
         line-height: 36px;
     }
 
+    .sub-banner-inner-con h1 {
+        font-size: 26px;
+        line-height: 34px;
+    }
+
     h2 {
         font-size: 26px;
         line-height: 30px;
@@ -4153,6 +4164,11 @@
     h1 {
         font-size: 30px;
         line-height: 36px;
+    }
+
+    .sub-banner-inner-con h1 {
+        font-size: 22px;
+        line-height: 30px;
     }
 
     .compaign_countdown ul li {
