@@ -11,15 +11,18 @@ export default function LeadPopup() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const dismissed = localStorage.getItem('painomed_lead_popup_dismissed')
-    if (dismissed) return
-    const timer = setTimeout(() => setVisible(true), 6000)
+    let shown = false
+    try { shown = sessionStorage.getItem('painomed_lead_popup_shown') === '1' } catch (e) {}
+    if (shown) return
+    const timer = setTimeout(() => {
+      try { sessionStorage.setItem('painomed_lead_popup_shown', '1') } catch (e) {}
+      setVisible(true)
+    }, 6000)
     return () => clearTimeout(timer)
   }, [])
 
   const close = () => {
     setVisible(false)
-    try { localStorage.setItem('painomed_lead_popup_dismissed', '1') } catch (e) {}
   }
 
   const handleSubmit = async (e) => {
@@ -33,7 +36,6 @@ export default function LeadPopup() {
     try {
       await API.post('/leads', { ...form, source: 'popup' })
       setStatus({ type: 'success', text: 'Thank you! Our team will contact you soon.' })
-      try { localStorage.setItem('painomed_lead_popup_dismissed', '1') } catch (err) {}
     } catch (err) {
       setStatus({ type: 'error', text: 'Something went wrong. Please try again.' })
     } finally {

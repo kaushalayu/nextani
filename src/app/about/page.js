@@ -6,6 +6,45 @@ import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import API from '../../lib/api'
 import { makeExcerpt } from '../../lib/utils'
 import SubBanner from '../../components/SubBanner'
+import JsonLd from '../../components/JsonLd'
+
+const aboutWhyCards = [
+  { icon: 'fa-solid fa-shield-halved', title: 'Quality Focused', desc: 'Healthcare products selected with quality and reliability in mind.' },
+  { icon: 'fa-solid fa-bag-shopping', title: 'Easy Ordering', desc: 'A simple online experience for browsing and placing eligible orders.' },
+  { icon: 'fa-solid fa-file-prescription', title: 'Prescription Support', desc: 'Convenient prescription submission and verification where required.' },
+  { icon: 'fa-solid fa-headset', title: 'Customer Care', desc: 'Support to help you with products, orders, and general enquiries.' },
+]
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://painomed.us/#organization',
+      name: 'Painomed',
+      url: 'https://painomed.us/',
+      description: 'Painomed is an online pharmacy focused on providing convenient access to medicines, healthcare products and wellness solutions.',
+    },
+    {
+      '@type': 'AboutPage',
+      '@id': 'https://painomed.us/about/#webpage',
+      url: 'https://painomed.us/about/',
+      name: 'About Painomed | Online Pharmacy',
+      description: 'Learn about Painomed, our mission, healthcare services and commitment to providing a convenient online pharmacy experience.',
+      isPartOf: { '@id': 'https://painomed.us/#website' },
+      about: { '@id': 'https://painomed.us/#organization' },
+      inLanguage: 'en-AU',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': 'https://painomed.us/about/#breadcrumb',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://painomed.us/' },
+        { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://painomed.us/about/' },
+      ],
+    },
+  ],
+}
 
 export default function About() {
   usePageMetaFromAdmin('/about', 'About Us', 'Learn more about Painomed - your trusted online pharmacy.')
@@ -94,7 +133,7 @@ export default function About() {
                   <li key={i} className="position-relative d-flex align-items-center">
                     <figure><img src={item.img} alt={item.title} className="img-fluid" /></figure>
                     <div className="sub-info-inner">
-                      <h6>{item.title}</h6>
+                      <span className="benefit-title">{item.title}</span>
                       <p className="mb-0 sub-p">{item.desc}</p>
                     </div>
                   </li>
@@ -141,6 +180,61 @@ export default function About() {
                   <Link href="/shop" className="text-decoration-none primary_btn d-inline-block">Shop Now</Link>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div className="about-new-con float-left w-100 position-relative">
+        <section className="float-left w-100 abt-about-con padding-top padding-bottom br-30">
+          <div className="main-container">
+            <div className="row align-items-center">
+              <div className="col-lg-6 col-md-6">
+                <div className="abt-about-img">
+                  <img src="/assets/images/main-abt-img2.jpg" alt="About Painomed pharmacy" className="img-fluid br-30" />
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6">
+                <div className="abt-about-content">
+                  <div className="heading-title-con">
+                    <span className="special-text d-inline-block">About Painomed</span>
+                    <h2 className="mb-0">Healthcare Made Simple &amp; Accessible</h2>
+                  </div>
+                  <p className="mb-0">Painomed is an online pharmacy built to make healthcare products easier to access. We bring together medicines, healthcare essentials, and wellness products in one convenient place, with a simple ordering process designed around your needs.</p>
+                  <p className="mb-0">Our focus is on convenience, quality, and dependable service. Whether you are reordering everyday essentials or exploring wellness products, Painomed aims to support you with a straightforward and secure online experience.</p>
+                  <Link href="/shop" className="text-decoration-none primary_btn d-inline-block">Explore Our Products</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="float-left w-100 abt-mission-con padding-top padding-bottom br-30">
+          <div className="main-container">
+            <div className="heading-title-con text-center">
+              <span className="special-text d-inline-block">Our Mission</span>
+              <h2>Making Healthcare Products Easy to Access</h2>
+            </div>
+            <p className="mb-0">At Painomed, our mission is to create a dependable online destination for healthcare and wellness products. We strive to combine convenience with quality, so you can focus on what matters most — your health and the health of the people you care about.</p>
+          </div>
+        </section>
+
+        <section className="float-left w-100 abt-why-con padding-top padding-bottom br-30">
+          <div className="main-container">
+            <div className="heading-title-con text-center">
+              <span className="special-text d-inline-block">Why Choose Us</span>
+              <h2>Why Choose Painomed</h2>
+            </div>
+            <div className="row all_row">
+              {aboutWhyCards.map((card) => (
+                <div key={card.title} className="col-lg-3 col-md-6 col-sm-6 col-12">
+                  <div className="abt-why-card text-center">
+                    <span className="abt-why-icon"><i className={card.icon}></i></span>
+                    <h4>{card.title}</h4>
+                    <p className="mb-0">{card.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -271,6 +365,8 @@ export default function About() {
           </div>
         </section>
       </div>
+
+      <JsonLd data={aboutSchema} />
     </>
   )
 }

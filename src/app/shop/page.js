@@ -6,7 +6,31 @@ import { usePageMetaFromAdmin } from '../../context/SeoContext'
 import { useProducts } from '../../hooks/useProducts'
 import ProductCard from '../../components/ProductCard'
 import SubBanner from '../../components/SubBanner'
+import JsonLd from '../../components/JsonLd'
 import API from '../../lib/api'
+
+const shopSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': 'https://painomed.us/shop/#webpage',
+      url: 'https://painomed.us/shop/',
+      name: 'Shop Medicines & Healthcare Products Online | Painomed',
+      description: 'Browse Painomed’s range of medicines, healthcare products and wellness products with convenient online ordering.',
+      isPartOf: { '@id': 'https://painomed.us/#website' },
+      inLanguage: 'en-AU',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': 'https://painomed.us/shop/#breadcrumb',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://painomed.us/' },
+        { '@type': 'ListItem', position: 2, name: 'Shop', item: 'https://painomed.us/shop/' },
+      ],
+    },
+  ],
+}
 
 const CAT_PAGE_MAP = {
   'sleeping pills': '/sleeping-pills',
@@ -161,6 +185,8 @@ export default function Shop() {
           </div>
         </div>
       </section>
+
+      <JsonLd data={shopSchema} />
     </>
   )
 }

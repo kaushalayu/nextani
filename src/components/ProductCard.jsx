@@ -62,7 +62,7 @@ function ProductCard({ product, layout = 'grid' }) {
         </div>
         <div className="product-card-body">
           <span className="product-tag">{product.badge || product.category?.name}</span>
-          <h3><Link href={productLink}>{product.name}</Link></h3>
+          <span className="product-card-name"><Link href={productLink}>{product.name}</Link></span>
           {product.shortDescription && (
             <p className="product-desc">{product.shortDescription}</p>
           )}

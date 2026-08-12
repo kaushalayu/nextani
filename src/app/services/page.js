@@ -8,6 +8,39 @@ import SubBanner from '../../components/SubBanner'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
 import { useToast } from '../../components/Toast'
+import InfoSection from '../../components/InfoSection'
+import JsonLd from '../../components/JsonLd'
+
+const servicesSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://painomed.us/services/#webpage',
+      url: 'https://painomed.us/services/',
+      name: 'Pharmacy Services | Painomed',
+      description: 'Painomed offers prescription support, healthcare delivery and online pharmacy services to make healthcare products easy to access.',
+      isPartOf: { '@id': 'https://painomed.us/#website' },
+      inLanguage: 'en-AU',
+    },
+    {
+      '@type': 'Service',
+      name: 'Painomed Prescription Support',
+      serviceType: 'Prescription Support',
+      provider: { '@id': 'https://painomed.us/#organization' },
+      areaServed: 'Worldwide',
+      url: 'https://painomed.us/services/',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': 'https://painomed.us/services/#breadcrumb',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://painomed.us/' },
+        { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://painomed.us/services/' },
+      ],
+    },
+  ],
+}
 
 export default function Services() {
   usePageMetaFromAdmin('/services', 'Services', 'Explore our healthcare services at Painomed.')
@@ -125,6 +158,39 @@ export default function Services() {
           </div>
         </section>
       </div>
+
+      <InfoSection
+        tag="Prescription Support"
+        title="Simple & Secure Prescription Handling"
+        content="Managing prescriptions should never slow you down. With Painomed, prescription support is simple — upload your prescription during checkout, and our team will verify and process eligible orders with care."
+        bullets={[
+          'Prescription upload and verification where required',
+          'Guidance on prescription-only medicines',
+          'Secure, confidential handling of your information',
+          'Help with repeat prescriptions for eligible products',
+        ]}
+        cta={{ href: '/shop', label: 'Order Medicines' }}
+        image="/assets/images/work-img.jpg"
+        imageAlt="Prescription support at Painomed"
+        reverse
+      />
+
+      <InfoSection
+        tag="Healthcare Delivery & Support"
+        title="Reliable Delivery & Caring Support"
+        content="We bring healthcare closer to you with dependable delivery and dedicated support. From dispatch to doorstep, our team keeps your order moving and answers your questions along the way."
+        bullets={[
+          'Fast, reliable home delivery',
+          'Order tracking once your order is dispatched',
+          'Secure and discreet packaging',
+          '24/7 customer support',
+        ]}
+        cta={{ href: '/contact', label: 'Contact Us' }}
+        image="/assets/images/popular-category1.jpg"
+        imageAlt="Healthcare delivery and support at Painomed"
+      />
+
+      <JsonLd data={servicesSchema} />
 
       <div className="padding-rl float-left w-100">
         <section className="position-relative padding-top padding-bottom services-featured-section">

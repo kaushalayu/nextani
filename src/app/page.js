@@ -8,6 +8,8 @@ import { useWishlist } from '../context/WishlistContext'
 import { usePageMetaFromAdmin, useSeo } from '../context/SeoContext'
 import API from '../lib/api'
 import { makeExcerpt } from '../lib/utils'
+import FaqAccordion from '../components/FaqAccordion'
+import JsonLd from '../components/JsonLd'
 
 const CATEGORY_ROUTES = {
   'Sleeping Pills': '/sleeping-pills',
@@ -34,6 +36,57 @@ const processSteps = [
   { icon: '/assets/images/work-icon3.png', title: 'Upload Prescription', desc: 'Upload a valid prescription from your doctor for prescription-only medicines.' },
   { icon: '/assets/images/capsule-icon.png', title: 'Get It Delivered', desc: 'Receive your order at your doorstep — fast, safe, and hassle-free.' },
 ]
+
+const homeFaqs = [
+  { question: 'What is Painomed?', answer: 'Painomed is an online pharmacy platform offering medicines, healthcare products, wellness products, and convenient online ordering services.' },
+  { question: 'Do I need a prescription to order medicines from Painomed?', answer: 'Some medicines require a valid prescription. Prescription requirements depend on the specific product and applicable regulations.' },
+  { question: 'How can I upload my prescription?', answer: 'You can upload your valid prescription through the prescription upload option during the ordering process. Our team may verify it where required.' },
+  { question: 'How can I search for a medicine on Painomed?', answer: 'Use the website search bar to search by product name, medicine name, or category and explore the available products.' },
+  { question: 'How long does Painomed delivery take?', answer: 'Delivery time can vary depending on product availability, order verification, delivery location, and shipping method. Check the applicable delivery information during checkout.' },
+  { question: 'How can I track my Painomed order?', answer: 'Once your order has been processed and shipped, you can use the available order tracking option and tracking details provided with your order.' },
+  { question: 'Is online payment secure on Painomed?', answer: 'Painomed provides a secure checkout experience through its available payment processing system. Always ensure you are using the official Painomed website when placing an order.' },
+  { question: 'Can I cancel or return my order?', answer: 'Cancellation and return eligibility depends on the order status, product type, and applicable Painomed policies. Please review the relevant policy before requesting a cancellation or return.' },
+  { question: 'How can I contact Painomed customer support?', answer: 'You can contact the Painomed support team through the contact details provided on the website for assistance with orders, products, and general enquiries.' },
+  { question: 'Are all medicines available for online purchase?', answer: 'No. Availability and purchasing requirements vary by product. Certain medicines may require a valid prescription or may be subject to applicable legal and regulatory restrictions.' },
+]
+
+const homeSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://painomed.us/#organization',
+      name: 'Painomed',
+      url: 'https://painomed.us/',
+      logo: '/logo.png',
+      description: 'Painomed is an online pharmacy providing convenient access to medicines, healthcare products, wellness products and healthcare solutions.',
+      email: 'support@painomed.com',
+      telephone: '+61 3 8376 6284',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://painomed.us/#website',
+      url: 'https://painomed.us/',
+      name: 'Painomed',
+      publisher: { '@id': 'https://painomed.us/#organization' },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: { '@type': 'EntryPoint', urlTemplate: 'https://painomed.us/?s={search_term_string}' },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://painomed.us/#webpage',
+      url: 'https://painomed.us/',
+      name: 'Painomed – Online Pharmacy',
+      description: 'Shop medicines, healthcare products and wellness products online with Painomed.',
+      isPartOf: { '@id': 'https://painomed.us/#website' },
+      about: { '@id': 'https://painomed.us/#organization' },
+      inLanguage: 'en-AU',
+    },
+  ],
+}
 
 function Toast({ message, type }) {
   return (
@@ -79,9 +132,9 @@ function ProductCard({ product, onAddToCart, onAddToWishlist }) {
         <button className="wishlist-btn" onClick={() => onAddToWishlist(product)}><i className="fa-regular fa-heart"></i></button>
       </div>
       <div className="product-info">
-        <h3 className="product-name">
+        <span className="product-name">
           <Link href={productId ? `/product/${productSlug}` : '/shop'}>{product.name}</Link>
-        </h3>
+        </span>
         <StarRating rating={product.ratings || product.rating} />
         <div className="product-price-row">
           <span className="product-price">${price.toFixed ? price.toFixed(2) : price}.00</span>
@@ -255,19 +308,19 @@ export default function Home() {
               <ul className="d-flex list-unstyled p-0 mb-0 align-items-center justify-content-between">
                 <li className="position-relative d-flex align-items-center">
                   <figure><img loading="lazy" src="/assets/images/benefits-icon1.png" alt="Free Shipping" className="img-fluid" /></figure>
-                  <div className="sub-info-inner"><h6>Free Shipping &amp; Returns</h6><p className="mb-0 sub-p">For all order over $200</p></div>
+                  <div className="sub-info-inner"><span className="benefit-title">Free Shipping &amp; Returns</span><p className="mb-0 sub-p">For all order over $200</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
                   <figure><img loading="lazy" src="/assets/images/benefits-icon2.png" alt="Secure Payment" className="img-fluid" /></figure>
-                  <div className="sub-info-inner"><h6>Secure Payment</h6><p className="mb-0 sub-p">Ensure Secure Payment</p></div>
+                  <div className="sub-info-inner"><span className="benefit-title">Secure Payment</span><p className="mb-0 sub-p">Ensure Secure Payment</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
                   <figure><img loading="lazy" src="/assets/images/benefits-icon3.png" alt="Money Back" className="img-fluid" /></figure>
-                  <div className="sub-info-inner"><h6>Money Back Guarantee</h6><p className="mb-0 sub-p">Returning Money in 30 days</p></div>
+                  <div className="sub-info-inner"><span className="benefit-title">Money Back Guarantee</span><p className="mb-0 sub-p">Returning Money in 30 days</p></div>
                 </li>
                 <li className="position-relative d-flex align-items-center">
                   <figure><img loading="lazy" src="/assets/images/benefits-icon4.png" alt="24/7 Support" className="img-fluid" /></figure>
-                  <div className="sub-info-inner"><h6>24/7 Customer Support</h6><p className="mb-0 sub-p">Friendly Customer Support</p></div>
+                  <div className="sub-info-inner"><span className="benefit-title">24/7 Customer Support</span><p className="mb-0 sub-p">Friendly Customer Support</p></div>
                 </li>
               </ul>
             </div>
@@ -443,6 +496,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section className="home-section home-faq-section">
+        <div className="home-container">
+          <div className="section-header">
+            <span className="section-subtitle">Need Help?</span>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+          </div>
+          <div className="home-faq-inner">
+            <FaqAccordion items={homeFaqs} />
+          </div>
+        </div>
+      </section>
+
+      <JsonLd data={homeSchema} />
 
       {toast && <Toast message={toast.message} type={toast.type} />}
     </>
