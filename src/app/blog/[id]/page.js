@@ -53,7 +53,6 @@ export default function BlogDetail() {
 
       <div className="blog-detail-page">
         <div className="blog-detail-container">
-          <h1 className="blog-detail-title">{post.title}</h1>
           {post.image && (
             <img loading="lazy" className="blog-detail-image"
               src={post.image?.startsWith('/uploads') ? `${process.env.NEXT_PUBLIC_API_URL}${post.image}` : post.image}
