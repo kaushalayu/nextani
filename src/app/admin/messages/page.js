@@ -1,8 +1,23 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import API from '../../../lib/api'
 import { useToast } from '../../../components/Toast'
+
+const normalizeLead = (lead) => ({
+  ...lead,
+  name: lead.name || 'Unknown',
+  email: lead.email || '',
+  phone: lead.mobile || '',
+  subject: lead.source || 'popup',
+  message: lead.email
+    ? `Popup lead request • Mobile: ${lead.mobile || 'N/A'} • Email: ${lead.email}`
+    : `Popup lead request • Mobile: ${lead.mobile || 'N/A'}`,
+  kind: 'lead',
+  isRead: Boolean(lead.isRead),
+  isStarred: Boolean(lead.isStarred),
+  createdAt: lead.createdAt || new Date().toISOString(),
+})
 
 export default function AdminMessages() {
   const { addToast } = useToast()
@@ -10,42 +25,68 @@ export default function AdminMessages() {
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
 
-  useEffect(() => { load() }, [])
-
-  const load = () => {
+  const load = useCallback(async () => {
     setLoading(true)
-    API.get('/contact?limit=100')
-      .then(({ data }) => setMessages((data.contacts || data.messages || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))))
-      .catch(() => {})
-      .finally(() => setLoading(false))
-  }
+    try {
+      const [contactsRes, leadsRes] = await Promise.all([
+        API.get('/contact?limit=100'),
+        API.get('/leads'),
+      ])
+
+      const contacts = (contactsRes.data.contacts || contactsRes.data.messages || []).map(message => ({
+        ...message,
+        kind: 'contact',
+        phone: message.phone || '',
+      }))
+
+      const leads = (leadsRes.data.leads || []).map(normalizeLead)
+      const merged = [...contacts, ...leads].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      setMessages(merged)
+    } catch (err) {
+      setMessages([])
+      addToast(err.response?.data?.message || 'Failed to load messages', 'error')
+    } finally {
+      setLoading(false)
+    }
+  }, [addToast])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      void load()
+    }, 0)
+
+    return () => clearTimeout(timer)
+  }, [load])
 
   const toggleRead = async (msg) => {
     try {
-      await API.put(`/contact/${msg._id}`, { isRead: !msg.isRead })
+      const endpoint = msg.kind === 'lead' ? `/leads/${msg._id}` : `/contact/${msg._id}`
+      await API.put(endpoint, { isRead: !msg.isRead })
       setMessages(prev => prev.map(m => m._id === msg._id ? { ...m, isRead: !m.isRead } : m))
       if (selected?._id === msg._id) setSelected(prev => ({ ...prev, isRead: !prev.isRead }))
     } catch (err) {
-      addToast('Failed to update', 'error')
+      addToast(err.response?.data?.message || 'Failed to update', 'error')
     }
   }
 
   const toggleStar = async (msg) => {
     try {
-      await API.put(`/contact/${msg._id}`, { isStarred: !msg.isStarred })
+      const endpoint = msg.kind === 'lead' ? `/leads/${msg._id}` : `/contact/${msg._id}`
+      await API.put(endpoint, { isStarred: !msg.isStarred })
       setMessages(prev => prev.map(m => m._id === msg._id ? { ...m, isStarred: !m.isStarred } : m))
       if (selected?._id === msg._id) setSelected(prev => ({ ...prev, isStarred: !prev.isStarred }))
     } catch (err) {
-      addToast('Failed to update', 'error')
+      addToast(err.response?.data?.message || 'Failed to update', 'error')
     }
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (msg) => {
     if (!confirm('Delete this message?')) return
     try {
-      await API.delete(`/contact/${id}`)
+      const endpoint = msg.kind === 'lead' ? `/leads/${msg._id}` : `/contact/${msg._id}`
+      await API.delete(endpoint)
       addToast('Message deleted', 'success')
-      if (selected?._id === id) setSelected(null)
+      if (selected?._id === msg._id) setSelected(null)
       load()
     } catch (err) {
       addToast(err.response?.data?.message || 'Failed to delete', 'error')
@@ -53,11 +94,28 @@ export default function AdminMessages() {
   }
 
   const subjectBadge = (s) => {
-    const colors = { order: '#dbeafe', prescription: '#fef3c7', delivery: '#d1fae5', product: '#e0e7ff', other: '#f3f4f6' }
-    const textColors = { order: '#1d4ed8', prescription: '#92400e', delivery: '#065f46', product: '#3730a3', other: '#374151' }
+    const colors = {
+      order: '#dbeafe',
+      prescription: '#fef3c7',
+      delivery: '#d1fae5',
+      product: '#e0e7ff',
+      popup: '#fce7f3',
+      lead: '#fdf2f8',
+      other: '#f3f4f6',
+    }
+    const textColors = {
+      order: '#1d4ed8',
+      prescription: '#92400e',
+      delivery: '#065f46',
+      product: '#3730a3',
+      popup: '#be185d',
+      lead: '#9d174d',
+      other: '#374151',
+    }
+    const label = s || 'general'
     return (
       <span className="status-badge" style={{ background: colors[s] || '#f3f4f6', color: textColors[s] || '#374151' }}>
-        {s || 'general'}
+        {label}
       </span>
     )
   }
@@ -65,7 +123,7 @@ export default function AdminMessages() {
   return (
     <>
       <div className="admin-page-header">
-        <h1><i className="fa-solid fa-envelope" /> Contact Messages</h1>
+        <h1><i className="fa-solid fa-envelope" /> Messages</h1>
       </div>
 
       {loading ? (
@@ -89,7 +147,7 @@ export default function AdminMessages() {
                   <th style={{ width: 30 }}></th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Subject</th>
+                  <th>Type</th>
                   <th>Message</th>
                   <th>Date</th>
                   <th style={{ width: 100 }}>Actions</th>
@@ -105,16 +163,16 @@ export default function AdminMessages() {
                       <div style={{ width: 10, height: 10, borderRadius: '50%', background: msg.isRead ? 'transparent' : '#6366f1', display: 'inline-block' }} />
                     </td>
                     <td style={{ fontWeight: msg.isRead ? 400 : 600 }}>{msg.name}</td>
-                    <td style={{ color: '#64748b', fontSize: 13 }}>{msg.email}</td>
-                    <td>{subjectBadge(msg.subject)}</td>
-                    <td style={{ maxWidth: 200, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#64748b' }}>{msg.message}</td>
+                    <td style={{ color: '#64748b', fontSize: 13 }}>{msg.email || msg.phone || 'No email'}</td>
+                    <td>{subjectBadge(msg.kind === 'lead' ? (msg.source || 'popup') : (msg.subject || 'general'))}</td>
+                    <td style={{ maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: '#64748b' }}>{msg.message}</td>
                     <td style={{ fontSize: 12, color: '#94a3b8', whiteSpace: 'nowrap' }}>{new Date(msg.createdAt).toLocaleDateString()} {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                     <td>
                       <div style={{ display: 'flex', gap: 4 }} onClick={e => e.stopPropagation()}>
                         <button onClick={() => toggleRead(msg)} className="admin-btn admin-btn-sm admin-btn-outline" title={msg.isRead ? 'Mark unread' : 'Mark read'}>
                           <i className={`fa-solid ${msg.isRead ? 'fa-envelope-open' : 'fa-envelope'}`} />
                         </button>
-                        <button onClick={() => handleDelete(msg._id)} className="admin-btn admin-btn-sm admin-btn-outline" style={{ color: '#ef4444', borderColor: '#fecaca' }}>
+                        <button onClick={() => handleDelete(msg)} className="admin-btn admin-btn-sm admin-btn-outline" style={{ color: '#ef4444', borderColor: '#fecaca' }}>
                           <i className="fa-solid fa-trash" />
                         </button>
                       </div>
@@ -131,7 +189,7 @@ export default function AdminMessages() {
         <div className="admin-modal-overlay" onClick={() => setSelected(null)}>
           <div className="admin-modal" onClick={e => e.stopPropagation()} style={{ maxWidth: 650 }}>
             <div className="admin-modal-header">
-              <h2><i className="fa-solid fa-envelope" /> Message from {selected.name}</h2>
+              <h2><i className="fa-solid fa-envelope" /> {selected.kind === 'lead' ? 'Lead' : 'Message'} from {selected.name}</h2>
               <button onClick={() => setSelected(null)} className="admin-modal-close"><i className="fa-solid fa-xmark" /></button>
             </div>
             <div className="admin-form-grid" style={{ marginBottom: 16 }}>
@@ -141,7 +199,7 @@ export default function AdminMessages() {
               </div>
               <div>
                 <p style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>Email</p>
-                <p><a href={`mailto:${selected.email}`} style={{ color: '#6366f1' }}>{selected.email}</a></p>
+                <p>{selected.email ? <a href={`mailto:${selected.email}`} style={{ color: '#6366f1' }}>{selected.email}</a> : 'Not provided'}</p>
               </div>
               {selected.phone && (
                 <div>
@@ -150,8 +208,8 @@ export default function AdminMessages() {
                 </div>
               )}
               <div>
-                <p style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>Subject</p>
-                <p>{subjectBadge(selected.subject)}</p>
+                <p style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>Type</p>
+                <p>{subjectBadge(selected.kind === 'lead' ? (selected.source || 'popup') : (selected.subject || 'general'))}</p>
               </div>
               <div className="admin-form-full">
                 <p style={{ fontSize: 12, color: '#64748b', fontWeight: 600 }}>Message</p>
@@ -168,7 +226,7 @@ export default function AdminMessages() {
               <button onClick={() => toggleStar(selected)} className="admin-btn admin-btn-outline">
                 <i className={`fa-solid ${selected.isStarred ? 'fa-star' : 'fa-star-o'}`} style={{ color: selected.isStarred ? '#f59e0b' : undefined }} /> {selected.isStarred ? 'Unstar' : 'Star'}
               </button>
-              <button onClick={() => { handleDelete(selected._id); setSelected(null) }} className="admin-btn admin-btn-danger" style={{ marginLeft: 'auto' }}>
+              <button onClick={() => { handleDelete(selected); setSelected(null) }} className="admin-btn admin-btn-danger" style={{ marginLeft: 'auto' }}>
                 <i className="fa-solid fa-trash" /> Delete
               </button>
             </div>
