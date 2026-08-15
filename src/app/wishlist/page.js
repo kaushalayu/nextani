@@ -8,7 +8,7 @@ import { useToast } from '../../components/Toast'
 import SubBanner from '../../components/SubBanner'
 
 export default function Wishlist() {
-  usePageMetaFromAdmin('/wishlist', 'Wishlist', 'Your saved items at Painomed.')
+  usePageMetaFromAdmin('/wishlist', 'My Wishlist', 'Your saved medicines and healthcare products at Painomed.')
 
   const { wishlist, removeFromWishlist, clearWishlist } = useWishlist()
   const { addToCart } = useCart()

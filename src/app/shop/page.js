@@ -16,10 +16,18 @@ const shopSchema = {
       '@type': 'CollectionPage',
       '@id': 'https://painomed.us/shop/#webpage',
       url: 'https://painomed.us/shop/',
-      name: 'Shop Medicines & Healthcare Products Online | Painomed',
-      description: 'Browse Painomed’s range of medicines, healthcare products and wellness products with convenient online ordering.',
+      name: 'Shop | Painomed',
+      description: 'Browse healthcare products, medicines, wellness products and healthcare essentials available from Painomed.',
       isPartOf: { '@id': 'https://painomed.us/#website' },
-      inLanguage: 'en-AU',
+      inLanguage: 'en-US',
+    },
+    {
+      '@type': 'ItemList',
+      '@id': 'https://painomed.us/shop/#itemlist',
+      name: 'Painomed Healthcare Products',
+      description: 'Healthcare products and wellness products available through Painomed.',
+      numberOfItems: 0,
+      itemListOrder: 'https://schema.org/ItemListOrderAscending',
     },
     {
       '@type': 'BreadcrumbList',
@@ -39,7 +47,7 @@ const CAT_PAGE_MAP = {
 }
 
 export default function Shop() {
-  usePageMetaFromAdmin('/shop', 'Shop', 'Browse our wide range of medicines and healthcare products.')
+  usePageMetaFromAdmin('/shop', 'Shop Medicines & Healthcare Products Online', "Browse Painomed's wide range of medicines and healthcare products online. Secure checkout, discreet packaging and fast delivery.")
 
   const [search, setSearch] = useState('')
   const [searchInput, setSearchInput] = useState('')
@@ -66,6 +74,21 @@ export default function Shop() {
 
   const { products, loading, error, total, pages, refetch } = useProducts({ search, sort, page, limit: 9 })
 
+  const shopItemList = {
+    '@type': 'ItemList',
+    '@id': 'https://painomed.us/shop/#itemlist',
+    name: 'Painomed Healthcare Products',
+    description: 'Healthcare products and wellness products available through Painomed.',
+    numberOfItems: total || 0,
+    itemListOrder: 'https://schema.org/ItemListOrderAscending',
+    itemListElement: products.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: p.name,
+      url: `https://painomed.us/product/${p.slug || p._id}`,
+    })),
+  }
+
   const catPath = (cat) => {
     const key = cat.name.toLowerCase().trim()
     return CAT_PAGE_MAP[key] || `/category/${cat.slug}`
@@ -79,7 +102,7 @@ export default function Shop() {
 
   return (
     <>
-      <SubBanner title="Shop" description="Our one-stop shop for prescription and OTC medicines — fast, safe, and reliable delivery to your door." page="Shop" />
+      <SubBanner title="Shop" description="No prescription required for eligible medicines — fast, safe, and reliable delivery across the USA." page="Shop" />
 
       <section className="shop-con feature-con position-relative float-left w-100 padding-top padding-bottom">
         <div className="main-container">
@@ -94,7 +117,7 @@ export default function Shop() {
             </button>
             <div className={`sidebar sticky-sidebar col-lg-3${mobileFilterOpen ? ' mobile-open' : ''}`}>
               <div className="theiaStickySidebar">
-                <div className="widget widget-newsletter" data-aos="fade-up">
+                <div className="widget widget-newsletter">
                   <form onSubmit={handleSearch} className="form-inline">
                     <div className="input-group">
                       <input type="text" className="form-control widget-search-form" placeholder="Search" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} />
@@ -106,7 +129,7 @@ export default function Shop() {
                     </div>
                   </form>
                 </div>
-                <div className="widget widget-categories" data-aos="fade-up">
+                <div className="widget widget-categories">
                   <div className="widget-title font_weight_600">Categories :</div>
                   <ul className="list-unstyled mb-0">
                     {sideCats.map(c => (
@@ -124,7 +147,7 @@ export default function Shop() {
             <div className="col-lg-9">
               <div className="row default-sorting-con">
                 <div className="col-12">
-                  <div className="top-icons" data-aos="fade-up">
+                  <div className="top-icons">
                     <div className="icons-list"><span>Showing {products.length} of {total} results</span></div>
                     <div id="toolbar">
                       <select className="form-control" value={sort} onChange={(e) => { setSort(e.target.value); setPage(1) }}>
@@ -154,15 +177,15 @@ export default function Shop() {
                     <i className="fa-solid fa-box-open shop-state-icon" /><p>No products found.</p>
                   </div>
                 ) : (
-                  <div className="row best-products-con" data-aos="fade-up">
-                    {products.map((product) => (
-                      <ProductCard key={product._id} product={product} layout="grid" />
+                  <div className="row best-products-con">
+              {products.map((product, index) => (
+                        <ProductCard key={product._id} product={product} layout="grid" eager={index === 0} />
                     ))}
                   </div>
                 )}
 
                 {pages > 1 && (
-                  <ul className="pagination" data-aos="fade-up">
+                  <ul className="pagination">
                     {page > 1 && (
                       <li className="page-item">
                         <button className="page-link" onClick={() => setPage(p => p - 1)}><i className="fas fa-angle-left" /></button>
@@ -186,7 +209,7 @@ export default function Shop() {
         </div>
       </section>
 
-      <JsonLd data={shopSchema} />
+      <JsonLd data={{ ...shopSchema, '@graph': [...shopSchema['@graph'], shopItemList] }} />
     </>
   )
 }

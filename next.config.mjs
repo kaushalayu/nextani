@@ -57,6 +57,16 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/my-orders',
+        destination: '/profile',
+        permanent: true,
+      },
+      {
+        source: '/join-now',
+        destination: '/login',
+        permanent: true,
+      },
     ]
   },
   compress: true,

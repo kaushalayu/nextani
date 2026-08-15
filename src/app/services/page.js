@@ -15,21 +15,29 @@ const servicesSchema = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'WebPage',
+      '@type': 'CollectionPage',
       '@id': 'https://painomed.us/services/#webpage',
       url: 'https://painomed.us/services/',
-      name: 'Pharmacy Services | Painomed',
-      description: 'Painomed offers prescription support, healthcare delivery and online pharmacy services to make healthcare products easy to access.',
+      name: 'Healthcare Services | Painomed',
+      description: 'Explore Painomed healthcare services including no-prescription ordering, healthcare product assistance, delivery and customer support.',
       isPartOf: { '@id': 'https://painomed.us/#website' },
-      inLanguage: 'en-AU',
+      inLanguage: 'en-US',
     },
     {
       '@type': 'Service',
-      name: 'Painomed Prescription Support',
-      serviceType: 'Prescription Support',
-      provider: { '@id': 'https://painomed.us/#organization' },
-      areaServed: 'Worldwide',
-      url: 'https://painomed.us/services/',
+      '@id': 'https://painomed.us/services/#no-prescription-ordering',
+      name: 'No Prescription Required Ordering',
+      description: 'Order eligible medicines online without a prescription, with fast and discreet delivery across the USA.',
+      provider: { '@type': 'Organization', name: 'Painomed', url: 'https://painomed.us/' },
+      areaServed: 'United States',
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://painomed.us/services/#healthcare-delivery-support',
+      name: 'Healthcare Delivery & Customer Support',
+      description: 'Convenient delivery and customer support for eligible healthcare products and orders.',
+      provider: { '@type': 'Organization', name: 'Painomed', url: 'https://painomed.us/' },
+      areaServed: 'United States',
     },
     {
       '@type': 'BreadcrumbList',
@@ -43,7 +51,7 @@ const servicesSchema = {
 }
 
 export default function Services() {
-  usePageMetaFromAdmin('/services', 'Services', 'Explore our healthcare services at Painomed.')
+  usePageMetaFromAdmin('/services', 'Healthcare Services', "Explore Painomed's healthcare services — fast medicine delivery and no prescription required across the USA.")
 
   const [services, setServices] = useState([])
   const [categories, setCategories] = useState([])
@@ -85,7 +93,7 @@ export default function Services() {
 
   return (
     <>
-      <SubBanner title="Services" description="Trusted source for prescription and over-the-counter medicines — delivered with care and confidence." page="Services" />
+      <SubBanner title="Services" description="Trusted source for medicines and healthcare products with no prescription required — delivered with care and confidence across the USA." page="Services" />
 
       <div className="padding-rl float-left w-100">
         <section className="float-left w-100 srv-intro-con">
@@ -95,7 +103,7 @@ export default function Services() {
                 <div className="srv-intro-content">
                   <span className="srv-section-tag">What We Offer</span>
                   <h2>Comprehensive <span>Healthcare</span> Services</h2>
-                  <p>From prescription medicines to wellness supplements, we provide end-to-end pharmaceutical care with expert guidance, fast delivery, and unwavering quality — because your health is our priority.</p>
+                  <p>From pain relief and anxiety medicines to wellness supplements, we provide end-to-end pharmaceutical care with expert guidance, fast delivery across the USA, and no prescription required for eligible products — because your health is our priority.</p>
                   <div className="srv-intro-stats">
                     <div className="srv-stat-item">
                       <span className="srv-stat-num">{services.length > 0 ? services.length + '+' : '5+'}</span>
@@ -160,35 +168,50 @@ export default function Services() {
       </div>
 
       <InfoSection
-        tag="Prescription Support"
-        title="Simple & Secure Prescription Handling"
-        content="Managing prescriptions should never slow you down. With Painomed, prescription support is simple — upload your prescription during checkout, and our team will verify and process eligible orders with care."
+        tag="No Prescription Required"
+        title="Order Medicines Without a Prescription"
+        content="No prescription required for eligible medicines at Painomed. Simply browse, add to cart, and checkout — we handle the rest and deliver fast and discreetly across the USA."
         bullets={[
-          'Prescription upload and verification where required',
-          'Guidance on prescription-only medicines',
-          'Secure, confidential handling of your information',
-          'Help with repeat prescriptions for eligible products',
+          'No Prescription Required',
+          'Fast Discreet Delivery',
+          'Secure Online Ordering',
+          '24/7 Customer Support',
         ]}
-        cta={{ href: '/shop', label: 'Order Medicines' }}
+        cta={{ href: '/shop', label: 'Shop Medicines' }}
         image="/assets/images/work-img.jpg"
-        imageAlt="Prescription support at Painomed"
+        imageAlt="Order medicines without a prescription at Painomed"
         reverse
       />
 
-      <InfoSection
-        tag="Healthcare Delivery & Support"
-        title="Reliable Delivery & Caring Support"
-        content="We bring healthcare closer to you with dependable delivery and dedicated support. From dispatch to doorstep, our team keeps your order moving and answers your questions along the way."
-        bullets={[
-          'Fast, reliable home delivery',
-          'Order tracking once your order is dispatched',
-          'Secure and discreet packaging',
-          '24/7 customer support',
-        ]}
-        cta={{ href: '/contact', label: 'Contact Us' }}
-        image="/assets/images/popular-category1.jpg"
-        imageAlt="Healthcare delivery and support at Painomed"
-      />
+      <div className="padding-rl float-left w-100">
+        <section className="float-left w-100 srv-support-con">
+          <div className="main-container">
+            <div className="text-center srv-support-head">
+              <span className="srv-section-tag">Healthcare Delivery &amp; Support</span>
+              <h2>Reliable Healthcare Delivery &amp; Support</h2>
+              <p className="srv-support-desc">From placing your order to receiving it, Painomed aims to provide a convenient and customer-focused experience. Our team is available to assist with product enquiries, order-related questions, and the purchasing process.</p>
+            </div>
+            <div className="row">
+              {[
+                { icon: 'fa-solid fa-truck-fast', title: 'Convenient Delivery', desc: 'Eligible healthcare products delivered to your selected address.' },
+                { icon: 'fa-solid fa-headset', title: 'Customer Support', desc: 'Get assistance with products, orders, and general enquiries.' },
+                { icon: 'fa-solid fa-shield-halved', title: 'Secure Ordering', desc: 'A secure and convenient experience for browsing and placing eligible orders.' },
+              ].map((card) => (
+                <div key={card.title} className="col-lg-4 col-md-6">
+                  <div className="srv-support-card">
+                    <span className="srv-support-icon"><i className={card.icon} /></span>
+                    <h3>{card.title}</h3>
+                    <p className="mb-0">{card.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center srv-support-cta">
+              <Link href="/contact" className="srv-primary-btn">Contact Our Team <i className="fa-solid fa-arrow-right" /></Link>
+            </div>
+          </div>
+        </section>
+      </div>
 
       <JsonLd data={servicesSchema} />
 

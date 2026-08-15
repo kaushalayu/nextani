@@ -31,6 +31,7 @@ const navSections = [
     label: 'Settings',
     links: [
       { href: '/admin/users', label: 'Users', icon: 'fa-solid fa-users' },
+      { href: '/admin/settings', label: 'Settings', icon: 'fa-solid fa-gear' },
       { href: '/admin/seo', label: 'SEO', icon: 'fa-solid fa-magnifying-glass' },
       { href: '/admin/page-meta', label: 'Page Meta', icon: 'fa-solid fa-file-pen' },
       { href: '/admin/messages', label: 'Messages', icon: 'fa-solid fa-envelope' },

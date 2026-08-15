@@ -7,13 +7,14 @@ import SubBanner from '../../components/SubBanner'
 import SeoTextBlock from '../../components/SeoTextBlock'
 import FaqAccordion from '../../components/FaqAccordion'
 import JsonLd from '../../components/JsonLd'
+import Link from 'next/link'
 
 const anxietyFaqs = [
-  { question: 'What anxiety relief medicines does Painomed offer?', answer: 'Painomed offers a range of anxiety relief medicines selected for their quality and reliability. Available products include medicines used to support calm, manage stress, and relieve symptoms of anxiety where appropriate.' },
-  { question: 'Do I need a prescription to buy anxiety medicines?', answer: 'Yes. Prescription-only anxiety medicines require a valid prescription from a licensed healthcare provider, which you can upload during checkout for verification.' },
-  { question: 'How quickly does anxiety relief medicine work?', answer: 'The time for a medicine to take effect varies by product and individual response. Always follow the dosage instructions provided and the advice of your healthcare provider.' },
-  { question: 'Are anxiety relief medicines safe to use?', answer: 'When used as directed and under appropriate medical guidance, anxiety medicines can be safe. Follow product guidance, avoid exceeding recommended doses, and consult a healthcare professional if you have questions.' },
-  { question: 'How is my anxiety medicine order delivered?', answer: 'Your order is packed securely and discreetly and delivered to your chosen address. Once dispatched, you can track your order using the tracking details provided.' },
+  { question: 'Can I buy anxiety medicines online?', answer: 'Yes, you can buy eligible anxiety medicines online at Painomed — no prescription required, with discreet fast delivery across the USA.' },
+  { question: 'Do anxiety medicines require a prescription?', answer: 'No prescription required for eligible anxiety medicines at Painomed. Simply add to cart and checkout.' },
+  { question: 'Do I need to upload a prescription?', answer: 'No. Most anxiety medicines at Painomed can be ordered without a prescription.' },
+  { question: 'How should I choose an anxiety medicine?', answer: 'The appropriate medicine depends on your individual circumstances. Consult a qualified healthcare professional rather than choosing medication based only on symptoms.' },
+  { question: 'Are anxiety medicines safe?', answer: 'Medicines can have risks, side effects, and interactions. Always follow professional medical advice and the product information.' },
 ]
 
 const anxietySchema = {
@@ -26,7 +27,7 @@ const anxietySchema = {
       name: 'Buy Anxiety Relief Medicines Online | Painomed',
       description: 'Shop anxiety relief medicines at Painomed — effective options to help you manage stress, reduce panic symptoms, and restore calm.',
       isPartOf: { '@id': 'https://painomed.us/#website' },
-      inLanguage: 'en-AU',
+      inLanguage: 'en-US',
     },
     {
       '@type': 'BreadcrumbList',
@@ -41,7 +42,7 @@ const anxietySchema = {
 }
 
 export default function Anxiety() {
-  usePageMeta('Anxiety Relief', 'Effective anxiety relief medications to help you manage stress and find calm.', 'anxiety relief, calm', '/anxiety')
+  usePageMeta('Buy Anxiety Relief Medicines Online', 'Shop anxiety relief medicines at Painomed — effective options to help you manage stress, reduce panic symptoms, and restore calm.', 'anxiety relief, calm', '/anxiety')
   const { products, loading } = useProducts({ badge: 'calm', limit: 20 })
 
   const anxietyItemList = {
@@ -73,14 +74,36 @@ export default function Anxiety() {
       <div className="container">
         <h2>Anxiety Relief</h2>
         {loading ? <p>Loading...</p> : (
-          <div className="row">{products.map(p => <ProductCard key={p._id} product={p} layout="grid" />)}</div>
+          <div className="row">{products.map((p, i) => <ProductCard key={p._id} product={p} layout="grid" eager={i === 0} />)}</div>
         )}
       </div>
     </div>
+    <section className="cat-info-section">
+      <div className="container">
+        <div className="cat-info-grid">
+          <div className="cat-info-media">
+            <img src="/assets/images/main-abt-img1.jpg" alt="Understanding Anxiety Medicines" loading="lazy" />
+          </div>
+          <div className="cat-info-content">
+            <span className="cat-info-tag">Anxiety &amp; Medication Safety</span>
+            <h2>Understanding Anxiety Medicines</h2>
+            <p>Anxiety medicines can work differently from person to person, and the right treatment depends on individual needs and professional medical advice. Before using any prescription medicine, always follow your healthcare professional&apos;s instructions and read the product information carefully.</p>
+            <p className="cat-info-label"><strong>Important:</strong></p>
+            <ul className="cat-info-list">
+              <li>No prescription required for eligible medicines — order online in minutes.</li>
+              <li>Follow the recommended dosage and directions.</li>
+              <li>Do not share medicines with others.</li>
+              <li>Speak with a qualified healthcare professional if you have questions about your treatment.</li>
+            </ul>
+            <Link href="/shop" className="cat-info-btn">Learn More</Link>
+          </div>
+        </div>
+      </div>
+    </section>
     <SeoTextBlock>
       <h2>Buy Anxiety Relief Medicines Online</h2>
       <p>Anxiety can affect anyone at any time, and finding the right relief makes all the difference. At Painomed, we offer a carefully selected range of anxiety relief medicines designed to help you manage stress, reduce panic symptoms, and restore a sense of calm to your daily routine.</p>
-      <p>All anxiety medications in this category are sourced from verified manufacturers and reviewed by our licensed pharmacy team. We handle your order with complete discretion and deliver it safely and quickly to your doorstep. Prescription medicines require a valid prescription, which you can upload during checkout.</p>
+      <p>All anxiety medications in this category are sourced from verified manufacturers and reviewed by our licensed pharmacy team. We handle your order with complete discretion and deliver it safely and quickly to your doorstep. No prescription required for eligible medicines — order online in minutes and get discreet delivery across the USA.</p>
       <h3>Common Options for Anxiety Support</h3>
       <ul>
         <li>Medications to reduce general anxiety and stress</li>
@@ -95,7 +118,7 @@ export default function Anxiety() {
       <div className="container">
         <div className="section-header">
           <span className="section-subtitle">Common Questions</span>
-          <h2 className="section-title">Anxiety Medicine FAQs</h2>
+          <h2 className="section-title">Frequently Asked Questions About Anxiety Medicines</h2>
         </div>
         <FaqAccordion items={anxietyFaqs} />
       </div>

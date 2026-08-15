@@ -9,7 +9,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Preloader from '../components/Preloader'
 import LeadPopup from '../components/LeadPopup'
-import AosInit from '../components/AosInit'
 import ErrorBoundary from '../components/ErrorBoundary'
 import { GAPageView } from '../components/Seo/GoogleAnalytics'
 import { usePathname, useRouter } from 'next/navigation'
@@ -74,7 +73,6 @@ export default function ClientLayout({ children }) {
               {!isAdmin && <BackToTop />}
               {!isAdmin && <SearchOverlay />}
               {!isAdmin && <LeadPopup />}
-              {!isAdmin && <AosInit />}
               {!isAdmin && <Header />}
               <main>{children}</main>
               {!isAdmin && <Footer />}

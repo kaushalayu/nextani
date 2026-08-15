@@ -7,7 +7,7 @@ import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function FAQ() {
-  usePageMetaFromAdmin('/faq', 'FAQ', 'Frequently asked questions about Painomed online pharmacy.')
+  usePageMetaFromAdmin('/faq', 'Frequently Asked Questions', 'Answers to frequently asked questions about ordering, prescription, delivery and payments at Painomed.')
 
   const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(true)

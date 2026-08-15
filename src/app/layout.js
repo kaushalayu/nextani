@@ -1,7 +1,6 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import ClientLayout from '../components/ClientLayout'
 import { OrganizationSchema } from '../components/Seo/SchemaMarkup'
-import { GoogleAnalytics } from '../components/Seo/GoogleAnalytics'
 import './globals.css'
 import './home.css'
 import '../components/MegaMenu.css'
@@ -38,8 +37,8 @@ async function fetchSeoData() {
 
 export async function generateMetadata() {
   const seo = await fetchSeoData()
-  const siteTitle = seo?.siteTitle || 'Painomed - Online Pharmacy'
-  const siteDescription = seo?.siteDescription || 'Painomed is your trusted online pharmacy. Upload your prescription & get medicines delivered to your doorstep. Safe, reliable & always on time.'
+  const siteTitle = seo?.siteTitle || 'Painomed - Online Pharmacy | Pain Relief & Anxiety Medicine Online in USA'
+  const siteDescription = seo?.siteDescription || 'Buy pain relief, anxiety and sleep medicines online in the USA. No prescription required. Fast, discreet delivery from Painomed — your trusted online pharmacy.'
   const siteKeywords = seo?.siteKeywords || 'online pharmacy, medicine delivery, painomed'
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
   const metadataBase = siteUrl ? new URL(siteUrl) : undefined
@@ -92,28 +91,21 @@ export async function generateMetadata() {
   }
 }
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
         <link href="/assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/responsive.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/owl.carousel.min.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/custom.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/animate.css" rel="stylesheet" type="text/css" />
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet" />
         <link href="/assets/css/shop.css" rel="stylesheet" type="text/css" />
         <link href="/assets/css/blog.css" rel="stylesheet" type="text/css" />
         <OrganizationSchema />
-        <GoogleAnalytics GA_MEASUREMENT_ID={GA_ID} />
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-YM42XDWMGC"></script>
         <script dangerouslySetInnerHTML={{
           __html: `

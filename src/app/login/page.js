@@ -9,7 +9,7 @@ import SubBanner from '../../components/SubBanner'
 import './login.css'
 
 export default function Login() {
-  usePageMetaFromAdmin('/login', 'Login', 'Sign in to your Painomed account to manage orders and more.')
+  usePageMetaFromAdmin('/login', 'Login to Your Account', 'Sign in to your Painomed account to manage orders, wishlist and more.')
 
   const router = useRouter()
   const searchParams = useSearchParams()

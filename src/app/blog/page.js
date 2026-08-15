@@ -8,7 +8,7 @@ import { makeExcerpt } from '../../lib/utils'
 import SubBanner from '../../components/SubBanner'
 
 export default function Blog() {
-  usePageMetaFromAdmin('/blog', 'Blog', 'Read our latest blog posts about health and wellness.')
+  usePageMetaFromAdmin('/blog', 'Health & Wellness Blog', 'Read our latest health and wellness articles, medicine guides and pharmacy tips at Painomed.')
 
   const [activeTab, setActiveTab] = useState('All')
   const [blogs, setBlogs] = useState([])
@@ -55,7 +55,7 @@ export default function Blog() {
 
   return (
     <>
-      <SubBanner title="Our Blog" description="Trusted source for prescription and over-the-counter medicines — delivered with care and confidence." page="Blog" />
+      <SubBanner title="Our Blog" description="Trusted source for medicines and healthcare products with no prescription required — delivered with care and confidence across the USA." page="Blog" />
 
       <div className="blog-tabs-section padding-top padding-bottom float-left w-100">
         <div className="container">

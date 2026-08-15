@@ -200,7 +200,7 @@ function Header() {
           <nav className="navbar navbar-expand-lg navbar-light">
             <Link className="navbar-brand" href="/">
               <figure className="mb-0">
-                <img loading="lazy" src="/logo.png" alt="Painomed Logo" />
+                <img src="/logo.png" alt="Painomed Logo" width="400" height="171" fetchpriority="high" />
               </figure>
             </Link>
             <button className={`navbar-toggler collapsed${mobileNavOpen ? '' : ' collapsed'}`}

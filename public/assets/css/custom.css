@@ -3942,6 +3942,19 @@
     color: #fdf485;
 }
 
+.abt-mission-icon-wrap {
+    width: 66px;
+    height: 66px;
+    border-radius: 100%;
+    background: rgba(253, 244, 133, 0.14);
+    border: 1px solid rgba(253, 244, 133, 0.35);
+    color: #fdf485;
+    font-size: 26px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
 .abt-mission-con > .main-container > p {
     font-size: 17px;
     line-height: 30px;
@@ -4099,6 +4112,213 @@
     .home-faq-section,
     .cat-faq-section {
         padding: 40px 0;
+    }
+}
+
+/* ============================================================
+   SEO UPDATES — category pages (anxiety / painkillers / sleeping)
+   ============================================================ */
+.section-header {
+    text-align: center;
+    margin-bottom: 44px;
+}
+
+.section-subtitle {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent--color);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--black--color);
+    margin: 0;
+    line-height: 1.18;
+}
+
+.cat-info-section {
+    padding: 80px 0;
+    background-color: #faf9ff;
+}
+
+.cat-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+}
+
+.cat-info-media img {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(92, 69, 191, 0.14);
+}
+
+.cat-info-tag {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #5c45bf;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    margin-bottom: 12px;
+}
+
+.cat-info-content h2 {
+    font-size: 34px;
+    font-weight: 800;
+    color: var(--black--color);
+    margin: 0 0 18px;
+    line-height: 1.2;
+}
+
+.cat-info-content p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text--color);
+    margin: 0 0 16px;
+}
+
+.cat-info-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black--color);
+    margin: 8px 0 10px !important;
+}
+
+.cat-info-list {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+}
+
+.cat-info-list li {
+    position: relative;
+    padding-left: 26px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text--color);
+    margin-bottom: 10px;
+}
+
+.cat-info-list li::before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 13px;
+    color: #5c45bf;
+}
+
+.cat-info-btn {
+    display: inline-block;
+    padding: 13px 32px;
+    border-radius: 50px;
+    background: #5c45bf;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cat-info-btn:hover {
+    background: #46308f;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.cat-info-text-first .cat-info-grid .cat-info-content {
+    order: 1;
+}
+
+.cat-info-text-first .cat-info-grid .cat-info-media {
+    order: 2;
+}
+
+.cat-safety-section {
+    padding: 80px 0;
+    background-color: #faf9ff;
+}
+
+.cat-safety-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+.cat-safety-info h2 {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--black--color);
+    margin: 0 0 18px;
+    line-height: 1.22;
+}
+
+.cat-safety-info p {
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--text--color);
+    margin: 0;
+}
+
+.cat-safety-faq .faq-item {
+    background: #ffffff;
+    border: 1px solid rgba(92, 69, 191, 0.10);
+}
+
+@media (max-width: 991px) {
+    .cat-info-section,
+    .cat-safety-section {
+        padding: 60px 0;
+    }
+    .cat-info-grid,
+    .cat-safety-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+    .cat-info-media {
+        max-width: 560px;
+        margin: 0 auto;
+    }
+    .cat-info-text-first .cat-info-grid .cat-info-media {
+        order: 1;
+    }
+    .cat-info-text-first .cat-info-grid .cat-info-content {
+        order: 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .cat-info-section,
+    .cat-safety-section {
+        padding: 48px 0;
+    }
+    .cat-info-content h2,
+    .cat-safety-info h2 {
+        font-size: 26px;
+    }
+    .section-title {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cat-info-section,
+    .cat-safety-section {
+        padding: 40px 0;
+    }
+    .cat-info-btn {
+        padding: 12px 26px;
+        font-size: 14px;
     }
 }
 

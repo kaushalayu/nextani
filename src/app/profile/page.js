@@ -9,7 +9,7 @@ import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Profile() {
-  usePageMetaFromAdmin('/my-orders', 'My Orders', 'Track your orders by providing your email address.')
+  usePageMetaFromAdmin('/my-orders', 'My Orders & Account', 'Track your orders and manage your Painomed account profile.')
 
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)

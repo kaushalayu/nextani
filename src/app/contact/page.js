@@ -39,11 +39,11 @@ export default function Contact() {
     } finally { setLoading(false) }
   }
 
-  const address = seo?.address || '121 King Street, Melbourne Victoria 3000 Australia'
+  const address = seo?.address || '350 5th Avenue, New York, NY 10118, United States'
   const supportEmail = seo?.supportEmail || 'support@painomed.com'
-  const contactPhone = seo?.contactPhone || '+61 3 8376 6284'
-  const businessHours = seo?.businessHours || 'Monday–Friday, 9 am–6 pm'
-  const mapUrl = seo?.mapEmbedUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.367176743588!2d144.95736461590413!3d-37.81813957974638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65cbce858f6d7%3A0x9cc486b305ba3fb1!2s21%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2s!4v1669200882885!5m2!1sen!2s'
+  const contactPhone = seo?.contactPhone || '+1 212 555 0134'
+  const businessHours = seo?.businessHours || 'Monday–Friday, 9 am–6 pm (ET)'
+  const mapUrl = seo?.mapEmbedUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.606309821906!2d-73.98784452407186!3d40.74844067138925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b30eac9f%3A0xaca05ca48ab5ac2c!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus'
 
   return (
     <>
@@ -110,9 +110,8 @@ export default function Contact() {
                     <select name="subject" id="subject" value={form.subject} onChange={handleChange}>
                       <option value="">Select a subject</option>
                       <option value="order">Order Inquiry</option>
-                      <option value="prescription">Prescription Question</option>
-                      <option value="delivery">Delivery Issue</option>
                       <option value="product">Product Information</option>
+                      <option value="delivery">Delivery Issue</option>
                       <option value="other">Other</option>
                     </select>
                   </div>

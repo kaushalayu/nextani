@@ -6,7 +6,7 @@ import API from '../../lib/api'
 import SubBanner from '../../components/SubBanner'
 
 export default function Testimonials() {
-  usePageMetaFromAdmin('/testimonials', 'Testimonials', 'Read what our customers say about Painomed.')
+  usePageMetaFromAdmin('/testimonials', 'Customer Reviews & Testimonials', "Read what our customers say about Painomed's medicines, delivery and service.")
 
   const [testimonials, setTestimonials] = useState([])
   const [loading, setLoading] = useState(true)

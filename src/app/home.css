@@ -514,6 +514,95 @@
   line-height: 1.6;
 }
 
+.section-about {
+  background: #fff;
+  position: relative;
+}
+
+.home-about-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.home-about-media {
+  position: relative;
+}
+
+.home-about-media img {
+  width: 100%;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(92,69,191,0.14);
+}
+
+.home-about-text p {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text--color);
+  margin: 0 0 16px;
+  line-height: 1.75;
+}
+
+.home-about-commitment {
+  background: var(--light--lemon--color, #fffeef);
+  border: 1px solid var(--border--color, #e8e8e8);
+  border-left: 4px solid var(--accent--color);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin: 8px 0 18px;
+}
+
+.home-about-commitment h3 {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--black--color);
+  margin: 0 0 6px;
+}
+
+.home-about-commitment .home-about-caretag {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent--color);
+  margin: 0 0 8px;
+  letter-spacing: 0.5px;
+}
+
+.home-about-commitment p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text--color);
+}
+
+.home-about-tagline {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--accent--color);
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  .home-about-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .home-about-media {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-about-grid { gap: 28px; }
+  .home-about-commitment { padding: 18px 20px; }
+}
+
+@media (max-width: 480px) {
+  .home-about-commitment h3 { font-size: 17px; }
+  .home-about-tagline { font-size: 15px; }
+}
+
 .section-testimonials {
   background: var(--light--lemon--color, #fffeef);
 }

@@ -78,7 +78,7 @@ export function usePageMeta(title, description, keywords, canonicalPath, ogImage
     const siteName = seo?.siteTitle || 'Painomed - Online Pharmacy'
     const siteShort = siteName.replace(/ - .*$/, '').trim() || 'Painomed'
     const fullTitle = title ? `${title} | ${siteShort}` : siteName
-    const desc = description || seo?.siteDescription || 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery'
+    const desc = description || seo?.siteDescription || 'Buy pain relief, anxiety and sleep medicines online in the USA. No prescription required. Fast, discreet delivery from Painomed.'
     const kw = keywords || seo?.siteKeywords || 'painomed, online pharmacy'
 
     document.title = fullTitle

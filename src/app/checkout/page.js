@@ -23,7 +23,7 @@ const DELIVERY_METHODS = [
 ]
 
 export default function Checkout() {
-  usePageMetaFromAdmin('/checkout', 'Checkout', 'Complete your order and choose your payment method.')
+  usePageMetaFromAdmin('/checkout', 'Secure Checkout', 'Complete your order securely at Painomed — choose your payment method and delivery options.')
 
   const router = useRouter()
   const { cart, clearCart } = useCart()
@@ -162,7 +162,7 @@ export default function Checkout() {
       message += '\n────────────────────\n'
       message += 'Thank you for choosing Painomed! 🙏'
 
-      const waNumber = seo?.whatsappNumber || '61383766284'
+      const waNumber = seo?.whatsappNumber || '12125550134'
       const supportEmail = seo?.supportEmail || 'support@pharmez.com'
 
       if (form.paymentMethod === 'whatsapp') {

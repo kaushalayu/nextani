@@ -6,11 +6,11 @@ const metadataBase = new URL(siteUrl)
 
 export const defaultMetadata = {
   title: {
-    default: 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery',
+    default: 'Painomed - Online Pharmacy | Pain Relief & Anxiety Medicine Online in USA',
     template: '%s | Painomed',
   },
-  description: 'Painomed is your trusted online pharmacy. Upload your prescription & get medicines delivered to your doorstep. Safe, reliable & always on time.',
-  keywords: ['online pharmacy', 'medicine delivery', 'prescription', 'healthcare', 'pharmacy', 'Painomed'],
+  description: 'Buy pain relief, anxiety and sleep medicines online in the USA. No prescription required. Fast, discreet delivery from Painomed — your trusted online pharmacy.',
+  keywords: ['online pharmacy', 'medicine delivery', 'pain relief medicine online', 'anxiety medicine online', 'sleeping pills online', 'no prescription required', 'healthcare', 'pharmacy', 'Painomed'],
   ...(metadataBase && { metadataBase }),
   icons: {
     icon: '/logo.png',
@@ -21,14 +21,14 @@ export const defaultMetadata = {
     locale: 'en_US',
     siteName,
     title: 'Painomed - Online Pharmacy',
-    description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
+    description: 'Buy pain relief, anxiety & sleep medicines online in the USA — no prescription required, fast delivery.',
     ...(siteUrl && { url: siteUrl }),
     images: [{ url: '/logo.png', width: 200, height: 60, alt: 'Painomed' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Painomed - Online Pharmacy',
-    description: 'Fast & trusted medicine delivery. Upload prescription & get medicines delivered.',
+    description: 'Buy pain relief, anxiety & sleep medicines online in the USA — no prescription required, fast delivery.',
     images: ['/logo.png'],
     creator: '@painomed',
   },

@@ -2,7 +2,10 @@ import { generatePageMetadata } from '../../lib/seo-metadata'
 import SubBanner from '../../components/SubBanner'
 import Link from 'next/link'
 
-export const metadata = generatePageMetadata('Coming Soon', 'Stay tuned for exciting new products and features coming soon to Painomed online pharmacy.', '/coming-soon')
+export const metadata = {
+  ...generatePageMetadata('Coming Soon', 'Stay tuned for exciting new products and features coming soon to Painomed online pharmacy.', '/coming-soon'),
+  robots: { index: false, follow: true },
+}
 
 export default function ComingSoon() {
   return (

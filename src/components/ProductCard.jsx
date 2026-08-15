@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import { useToast } from './Toast'
 
-function ProductCard({ product, layout = 'grid' }) {
+function ProductCard({ product, layout = 'grid', eager = false }) {
   const { addToCart } = useCart()
   const { addToWishlist, wishlist } = useWishlist()
   const { addToast } = useToast()
@@ -54,7 +54,7 @@ function ProductCard({ product, layout = 'grid' }) {
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <div className="product-card-image">
           <Link href={productLink}>
-            <img loading="lazy" src={imgSrc} alt={product.name} />
+            <img src={imgSrc} alt={product.name} {...(!eager && { loading: 'lazy' })} />
           </Link>
           <button className="wishlist-btn" title="Add to wishlist" onClick={handleAddToWishlist}>
             <i className={isInWishlist ? 'fa-solid fa-heart' : 'fa-regular fa-heart'} />
@@ -91,7 +91,7 @@ function ProductCard({ product, layout = 'grid' }) {
         <div className="premium-card-img">
           <Link href={productLink}>
             <figure className="mb-0">
-              <img loading="lazy" src={imgSrc} alt={product.name} className="img-fluid" />
+              <img src={imgSrc} alt={product.name} className="img-fluid" {...(!eager && { loading: 'lazy' })} />
             </figure>
           </Link>
           {product.badge && <div className="premium-card-badge">{product.badge}</div>}

@@ -11,7 +11,7 @@ import JsonLd from '../../components/JsonLd'
 const aboutWhyCards = [
   { icon: 'fa-solid fa-shield-halved', title: 'Quality Focused', desc: 'Healthcare products selected with quality and reliability in mind.' },
   { icon: 'fa-solid fa-bag-shopping', title: 'Easy Ordering', desc: 'A simple online experience for browsing and placing eligible orders.' },
-  { icon: 'fa-solid fa-file-prescription', title: 'Prescription Support', desc: 'Convenient prescription submission and verification where required.' },
+  { icon: 'fa-solid fa-file-prescription', title: 'No Prescription Required', desc: 'Order eligible medicines without a prescription — fast and hassle-free.' },
   { icon: 'fa-solid fa-headset', title: 'Customer Care', desc: 'Support to help you with products, orders, and general enquiries.' },
 ]
 
@@ -33,7 +33,7 @@ const aboutSchema = {
       description: 'Learn about Painomed, our mission, healthcare services and commitment to providing a convenient online pharmacy experience.',
       isPartOf: { '@id': 'https://painomed.us/#website' },
       about: { '@id': 'https://painomed.us/#organization' },
-      inLanguage: 'en-AU',
+      inLanguage: 'en-US',
     },
     {
       '@type': 'BreadcrumbList',
@@ -75,7 +75,7 @@ export default function About() {
 
   return (
     <>
-      <SubBanner title="About Us" description="Trusted source for prescription and over-the-counter medicines — delivered with care and confidence." page="About" />
+      <SubBanner title="About Us" description="Trusted source for medicines and healthcare products with no prescription required — delivered with care and confidence across the USA." page="About" />
 
       <div className="padding-rl float-left w-100">
         <section className="float-left w-100 main-about-con position-relative padding-top padding-bottom">
@@ -86,8 +86,8 @@ export default function About() {
                   <div className="heading-title-con">
                     <span className="special-text d-inline-block">About Us</span>
                     <h2>Committed to Making <br />Healthcare Accessible</h2>
-                    <p className="text-margin">We offer a trusted platform where you can confidently order both prescription and over-the-counter medicines online. Our team is dedicated to safety, reliability, and exceptional customer care—ensuring that you receive the medications you need, when you need them, without hassle.</p>
-                    <p>With a focus on convenience and quality, we partner with licensed pharmacies and healthcare professionals. Our mission is to simplify your healthcare journey, one delivery at a time.</p>
+                    <p className="text-margin">We offer a trusted platform where you can confidently order medicines and healthcare products online — with no prescription required for eligible items. Our team is dedicated to safety, reliability, and exceptional customer care—ensuring that you receive the medications you need, when you need them, without hassle.</p>
+                    <p>With a focus on convenience and quality, we partner with licensed pharmacies and healthcare professionals. Our mission is to simplify your healthcare journey across the USA, one delivery at a time.</p>
                   </div>
                   <div className="position-relative">
                     <figure><img src="/assets/images/main-abt-img1.jpg" alt="About Painomed" className="img-fluid br-30" /></figure>
@@ -212,10 +212,10 @@ export default function About() {
         <section className="float-left w-100 abt-mission-con padding-top padding-bottom br-30">
           <div className="main-container">
             <div className="heading-title-con text-center">
-              <span className="special-text d-inline-block">Our Mission</span>
-              <h2>Making Healthcare Products Easy to Access</h2>
+              <span className="abt-mission-icon-wrap d-inline-flex"><i className="fa-solid fa-heart-pulse"></i></span>
+              <h2 className="mb-0">Our Mission</h2>
             </div>
-            <p className="mb-0">At Painomed, our mission is to create a dependable online destination for healthcare and wellness products. We strive to combine convenience with quality, so you can focus on what matters most — your health and the health of the people you care about.</p>
+            <p className="mb-0">Our mission is to make healthcare more convenient and accessible through a reliable online pharmacy experience. We focus on quality-focused products, no prescription required for eligible medicines, convenient ordering, and fast delivery across the USA.</p>
           </div>
         </section>
 

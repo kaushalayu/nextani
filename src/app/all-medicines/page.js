@@ -7,7 +7,7 @@ import { usePageMeta } from '../../context/SeoContext'
 import SeoTextBlock from '../../components/SeoTextBlock'
 
 export default function AllMedicines() {
-  usePageMeta('All Medicines', 'Browse our complete A-Z directory of medicines and healthcare products.', 'all medicines, A-Z medicines', '/all-medicines')
+  usePageMeta('All Medicines A–Z', 'Browse our complete A–Z directory of medicines and healthcare products at Painomed.', 'all medicines, A-Z medicines', '/all-medicines')
   const [search, setSearch] = useState('')
   const { products, loading, error } = useProducts({ limit: 200, sort: 'name' })
 

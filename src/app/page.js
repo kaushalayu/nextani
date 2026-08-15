@@ -25,29 +25,29 @@ const tabData = [
 ]
 
 const whyChooseUs = [
-  { icon: '/assets/images/product-icon1.png', title: 'Certified Pharmacists', desc: 'Licensed experts verify every prescription before dispatch.' },
+  { icon: '/assets/images/product-icon1.png', title: 'Certified Pharmacists', desc: 'Licensed experts ensure every order is safe, verified, and trusted.' },
   { icon: '/assets/images/product-icon2.png', title: '100% Quality Assured', desc: 'All medicines are sourced from verified & trusted manufacturers.' },
-  { icon: '/assets/images/benefits-icon1.png', title: 'Free Fast Delivery', desc: 'Get your order delivered to your doorstep — absolutely free.' },
+  { icon: '/assets/images/benefits-icon1.png', title: 'Free Fast Delivery', desc: 'Get your order delivered anywhere across the USA — absolutely free.' },
   { icon: '/assets/images/benefits-icon4.png', title: '24/7 Customer Care', desc: 'Our support team is available round the clock to help you.' },
 ]
 
 const processSteps = [
   { icon: '/assets/images/work-icon2.png', title: 'Choose Your Products', desc: 'Browse and select the medicines or health products you need from our extensive catalog.' },
-  { icon: '/assets/images/work-icon3.png', title: 'Upload Prescription', desc: 'Upload a valid prescription from your doctor for prescription-only medicines.' },
+  { icon: '/assets/images/work-icon3.png', title: 'No Prescription Required', desc: 'Order eligible medicines without a prescription — simple, fast, and discreet.' },
   { icon: '/assets/images/capsule-icon.png', title: 'Get It Delivered', desc: 'Receive your order at your doorstep — fast, safe, and hassle-free.' },
 ]
 
 const homeFaqs = [
   { question: 'What is Painomed?', answer: 'Painomed is an online pharmacy platform offering medicines, healthcare products, wellness products, and convenient online ordering services.' },
-  { question: 'Do I need a prescription to order medicines from Painomed?', answer: 'Some medicines require a valid prescription. Prescription requirements depend on the specific product and applicable regulations.' },
-  { question: 'How can I upload my prescription?', answer: 'You can upload your valid prescription through the prescription upload option during the ordering process. Our team may verify it where required.' },
+  { question: 'Do I need a prescription to order medicines from Painomed?', answer: 'No prescription required for eligible medicines at Painomed. Just add your items to the cart and checkout — no uploads, no waiting.' },
+  { question: 'Do I need to upload a prescription?', answer: 'No. Most medicines at Painomed can be ordered without a prescription for fast, hassle-free delivery across the USA.' },
   { question: 'How can I search for a medicine on Painomed?', answer: 'Use the website search bar to search by product name, medicine name, or category and explore the available products.' },
   { question: 'How long does Painomed delivery take?', answer: 'Delivery time can vary depending on product availability, order verification, delivery location, and shipping method. Check the applicable delivery information during checkout.' },
   { question: 'How can I track my Painomed order?', answer: 'Once your order has been processed and shipped, you can use the available order tracking option and tracking details provided with your order.' },
   { question: 'Is online payment secure on Painomed?', answer: 'Painomed provides a secure checkout experience through its available payment processing system. Always ensure you are using the official Painomed website when placing an order.' },
   { question: 'Can I cancel or return my order?', answer: 'Cancellation and return eligibility depends on the order status, product type, and applicable Painomed policies. Please review the relevant policy before requesting a cancellation or return.' },
   { question: 'How can I contact Painomed customer support?', answer: 'You can contact the Painomed support team through the contact details provided on the website for assistance with orders, products, and general enquiries.' },
-  { question: 'Are all medicines available for online purchase?', answer: 'No. Availability and purchasing requirements vary by product. Certain medicines may require a valid prescription or may be subject to applicable legal and regulatory restrictions.' },
+  { question: 'Are all medicines available for online purchase?', answer: 'Yes — most of our medicines are available for online purchase with no prescription required. Just add to cart and checkout for fast delivery across the USA.' },
 ]
 
 const homeSchema = {
@@ -61,7 +61,7 @@ const homeSchema = {
       logo: '/logo.png',
       description: 'Painomed is an online pharmacy providing convenient access to medicines, healthcare products, wellness products and healthcare solutions.',
       email: 'support@painomed.com',
-      telephone: '+61 3 8376 6284',
+      telephone: '+1 212 555 0134',
     },
     {
       '@type': 'WebSite',
@@ -83,7 +83,7 @@ const homeSchema = {
       description: 'Shop medicines, healthcare products and wellness products online with Painomed.',
       isPartOf: { '@id': 'https://painomed.us/#website' },
       about: { '@id': 'https://painomed.us/#organization' },
-      inLanguage: 'en-AU',
+      inLanguage: 'en-US',
     },
   ],
 }
@@ -195,7 +195,7 @@ function TestimonialCarousel({ testimonials }) {
 }
 
 export default function Home() {
-  usePageMetaFromAdmin('/', 'Home', 'Painomed - Online Pharmacy | Fast & Trusted Medicine Delivery')
+  usePageMetaFromAdmin('/', '', 'Buy pain relief, anxiety and sleep medicines online in the USA. No prescription required. Fast, discreet delivery from Painomed — your trusted online pharmacy.')
   const { seo } = useSeo()
 
   const [activeTab, setActiveTab] = useState('all')
@@ -264,8 +264,8 @@ export default function Home() {
           <div className="wrapper1560 position-relative">
             <div className="hero-content">
               <span className="hero-tag"><i className="fa-solid fa-circle-check"></i> Trusted Online Pharmacy</span>
-              <h1 className="hero-title">Fast &amp; Trusted<br />Medicine Delivery</h1>
-              <p className="hero-desc">Upload your prescription &amp; get medicines delivered to your doorstep. Safe, reliable &amp; always on time.</p>
+              <h1 className="hero-title">Pain Relief and Anxiety<br />Medicine Online in USA</h1>
+              <p className="hero-desc">Healthcare &amp; wellness products online at Painomed. Fast delivery in USA, Safe &amp; trusted pharmacy in USA.</p>
               <div className="hero-btns">
                 <Link href="/shop" className="hero-btn-primary">Shop Medicines</Link>
               </div>
@@ -413,7 +413,7 @@ export default function Home() {
         <div className="home-container">
           <div className="section-header">
             <span className="section-subtitle">Why Trust Us</span>
-            <h2 className="section-title">Why Thousands Choose Us</h2>
+            <h2 className="section-title">Why Trust Painomed</h2>
           </div>
           <div className="why-grid">
             {whyChooseUs.map((item, i) => (
@@ -423,6 +423,33 @@ export default function Home() {
                 <p className="why-desc">{item.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section section-about">
+        <div className="home-container">
+          <div className="section-header">
+            <span className="section-subtitle">About Us</span>
+            <h2 className="section-title">About Painomed</h2>
+          </div>
+          <div className="home-about-grid">
+            <div className="home-about-media">
+              <img loading="lazy" src="/assets/images/main-abt-img1.jpg" alt="About Painomed — online pharmacy" />
+            </div>
+            <div className="home-about-text">
+              <p>At Painomed, we believe that accessing healthcare products should be simple, convenient, and reliable. Our online pharmacy is designed to provide customers with a convenient way to explore medicines, healthcare products, wellness solutions, and everyday health essentials from the comfort of their homes.</p>
+              <p>We understand that healthcare is personal, which is why we focus on creating a trustworthy and customer-friendly online experience. From browsing products and understanding ordering requirements to secure checkout and convenient delivery, we aim to make every step as simple and seamless as possible.</p>
+              <p>Painomed offers a growing selection of pain relief medicines, anxiety medicines, sleep aids, wellness products, healthcare essentials, and other healthcare solutions — with no prescription required for eligible products.</p>
+              <p>Our commitment goes beyond providing products. We focus on quality, convenience, fast delivery, and customer support. Our team works to provide helpful assistance with product enquiries, orders, and the overall shopping experience across the USA.</p>
+              <p>At Painomed, our vision is to build a trusted online healthcare destination where customers can conveniently access the products and information they need. We continuously work to improve our platform, services, product selection, and customer experience as we grow.</p>
+              <div className="home-about-commitment">
+                <h3>Our Commitment</h3>
+                <p className="home-about-caretag">Quality. Convenience. Trust. Care.</p>
+                <p>Whether you are looking for everyday healthcare essentials, wellness products, pain relief solutions, or anxiety and sleep medicines, Painomed is here to make your online healthcare journey more convenient — with no prescription required and fast delivery across the USA.</p>
+              </div>
+              <p className="home-about-tagline">Painomed — Your Health, Delivered With Care.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -465,7 +492,7 @@ export default function Home() {
         <div className="home-container">
           <div className="section-header">
             <span className="section-subtitle">Testimonials</span>
-            <h2 className="section-title">What Our Clients Say</h2>
+            <h2 className="section-title">Customer Reviews</h2>
           </div>
           <TestimonialCarousel testimonials={testimonials} />
         </div>
@@ -475,7 +502,7 @@ export default function Home() {
         <div className="home-container">
           <div className="section-header">
             <span className="section-subtitle">News &amp; Articles</span>
-            <h2 className="section-title">Our Latest Blog Posts</h2>
+            <h2 className="section-title">Latest Health &amp; Wellness Articles</h2>
           </div>
           <div className="blog-grid">
             {(blogPosts.length > 0 ? blogPosts : [

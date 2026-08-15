@@ -36,10 +36,10 @@ function Footer() {
     }
   }
 
-  const waNumber = seo?.whatsappNumber || '61383766284'
-  const phone = seo?.contactPhone || '+61 3 8376 6284'
+  const waNumber = seo?.whatsappNumber || '12125550134'
+  const phone = seo?.contactPhone || '+1 212 555 0134'
   const supportEmail = seo?.supportEmail || 'support@painomed.com'
-  const address = seo?.address || '21 King Street, Melbourne, 3000, Australia'
+  const address = seo?.address || '350 5th Avenue, New York, NY 10118, United States'
   const businessHours = seo?.businessHours || 'Mon - Sat: 9:00 am to 6:00 pm'
   const fb = seo?.socialLinks?.facebook || 'https://www.facebook.com/'
   const ig = seo?.socialLinks?.instagram || 'https://instagram.com/'
@@ -61,7 +61,7 @@ function Footer() {
               <div className="col-lg-6 col-md-12 col-sm-12 col-12">
                 <div className="logo-content">
                   <Link href="/" className="footer-logo d-flex align-items-center">
-                    <img loading="lazy" src="/logo.png" alt="Painomed" className="d-inline-block" />
+                    <img loading="lazy" src="/logo.png" alt="Painomed" width="400" height="171" className="d-inline-block" />
                     <span className="text-white d-inline-block special-heading1">Painomed.</span>
                   </Link>
                   <h4 className="text-white">Subscribe to Our Newsletter:</h4>
@@ -104,7 +104,7 @@ function Footer() {
                     </li>
                     <li className="text">
                       <i className="fa-solid fa-location-dot" />
-                      <a className="address mb-0" href="https://maps.app.goo.gl/H8B9kcfVpLPDYcH89">{address}</a>
+                      <a className="address mb-0" href="https://maps.google.com/?q=350+5th+Avenue,+New+York,+NY+10118" target="_blank" rel="noopener noreferrer">{address}</a>
                     </li>
                     <li className="text">
                       <i className="fa-solid fa-clock" />
